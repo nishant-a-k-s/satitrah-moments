@@ -6,61 +6,65 @@
 
 @layer base {
   :root {
-    /* Core Brand Colors */
-    --background: 220 27% 8%;
-    --foreground: 210 40% 98%;
+    /* Slice-inspired Premium Design System */
+    --background: 11 11% 7%;
+    --foreground: 213 31% 91%;
 
     /* Card System */
-    --card: 220 27% 12%;
-    --card-foreground: 210 40% 98%;
-    --card-elevated: 220 27% 15%;
+    --card: 11 11% 10%;
+    --card-foreground: 213 31% 91%;
+    --card-elevated: 11 11% 13%;
+    --card-premium: 11 11% 8%;
 
     /* Interactive Elements */
-    --popover: 220 27% 12%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 11 11% 10%;
+    --popover-foreground: 213 31% 91%;
 
-    /* Primary: Satitrah Blue */
-    --primary: 214 84% 56%;
-    --primary-foreground: 210 40% 98%;
-    --primary-glow: 214 84% 66%;
+    /* Primary: Sophisticated Blue */
+    --primary: 217 91% 60%;
+    --primary-foreground: 11 11% 7%;
+    --primary-muted: 217 50% 30%;
 
-    /* Secondary: Trust Green */
-    --secondary: 158 64% 52%;
-    --secondary-foreground: 210 40% 98%;
+    /* Secondary: Elegant Purple */
+    --secondary: 262 83% 58%;
+    --secondary-foreground: 11 11% 7%;
 
     /* Muted Elements */
-    --muted: 220 27% 18%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 11 11% 15%;
+    --muted-foreground: 213 20% 55%;
 
-    /* Accent: Warm Gold */
-    --accent: 43 96% 56%;
-    --accent-foreground: 220 27% 8%;
+    /* Accent: Premium Gold */
+    --accent: 45 93% 47%;
+    --accent-foreground: 11 11% 7%;
 
     /* Status Colors */
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --success: 158 64% 52%;
-    --warning: 43 96% 56%;
+    --destructive-foreground: 213 31% 91%;
+    --success: 142 71% 45%;
+    --warning: 38 92% 50%;
 
     /* Interactive States */
-    --border: 220 27% 18%;
-    --input: 220 27% 18%;
-    --ring: 214 84% 56%;
+    --border: 11 11% 18%;
+    --input: 11 11% 15%;
+    --ring: 217 91% 60%;
 
     /* Visual Design */
     --radius: 0.75rem;
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-success: linear-gradient(135deg, hsl(var(--secondary)), hsl(158 64% 62%));
-    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(43 96% 66%));
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(262 83% 58%));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(262 70% 50%));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(45 93% 57%));
+    --gradient-card: linear-gradient(135deg, hsl(var(--card)), hsl(var(--card-elevated)));
     
-    /* Shadows & Glows */
-    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.3);
-    --shadow-card: 0 4px 20px -4px hsl(220 27% 4% / 0.5);
-    --glow-primary: 0 0 40px hsl(var(--primary-glow) / 0.4);
+    /* Premium Shadows & Effects */
+    --shadow-premium: 0 25px 50px -12px hsl(11 11% 4% / 0.8);
+    --shadow-card: 0 8px 32px -8px hsl(11 11% 4% / 0.6);
+    --shadow-elevated: 0 16px 40px -8px hsl(11 11% 4% / 0.7);
+    --glow-primary: 0 0 50px hsl(var(--primary) / 0.3);
+    --glow-accent: 0 0 40px hsl(var(--accent) / 0.2);
     
     /* Animations */
+    --transition-premium: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 }
 

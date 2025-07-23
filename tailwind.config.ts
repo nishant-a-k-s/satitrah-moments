@@ -18,6 +18,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'sans': ['Inter', 'system-ui', 'sans-serif'],
+				'mono': ['JetBrains Mono', 'monospace'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -27,7 +31,7 @@ export default {
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))',
-					glow: 'hsl(var(--primary-glow))'
+					muted: 'hsl(var(--primary-muted))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -52,7 +56,8 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))',
-					elevated: 'hsl(var(--card-elevated))'
+					elevated: 'hsl(var(--card-elevated))',
+					premium: 'hsl(var(--card-premium))'
 				},
 				success: 'hsl(var(--success))',
 				warning: 'hsl(var(--warning))',
@@ -74,13 +79,16 @@ export default {
 			},
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',
-				'gradient-success': 'var(--gradient-success)',
-				'gradient-accent': 'var(--gradient-accent)'
+				'gradient-secondary': 'var(--gradient-secondary)',
+				'gradient-accent': 'var(--gradient-accent)',
+				'gradient-card': 'var(--gradient-card)'
 			},
 			boxShadow: {
-				'elegant': 'var(--shadow-elegant)',
+				'premium': 'var(--shadow-premium)',
 				'card': 'var(--shadow-card)',
-				'glow': 'var(--glow-primary)'
+				'elevated': 'var(--shadow-elevated)',
+				'glow': 'var(--glow-primary)',
+				'glow-accent': 'var(--glow-accent)'
 			},
 			keyframes: {
 				'accordion-down': {
