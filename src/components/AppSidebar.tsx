@@ -38,7 +38,7 @@ const mainItems = [
 
 const specialItems = [
   { title: "SOS Emergency", url: "/sos", icon: Shield, urgent: true },
-  { title: "Maternity Wallet", url: "/maternity", icon: Baby },
+  { title: "Maternity Wallet", url: "/maternity", icon: Baby, femaleOnly: true },
   { title: "Squirrel Lending", url: "/lending", icon: Coins },
   { title: "Investments", url: "/investments", icon: TrendingUp },
 ];
@@ -55,12 +55,20 @@ export function AppSidebar() {
   const collapsed = state === "collapsed";
   const location = useLocation();
   const currentPath = location.pathname;
+  
+  // Mock user data - in real app this would come from auth context
+  const userGender = "female"; // This would be set based on user profile
 
   const isActive = (path: string) => currentPath === path;
   const getNavClass = ({ isActive }: { isActive: boolean }) =>
     isActive 
       ? "bg-primary/10 text-primary border-r-2 border-primary font-medium" 
       : "hover:bg-muted/50 text-muted-foreground hover:text-foreground";
+
+  // Filter special items based on user gender
+  const filteredSpecialItems = specialItems.filter(item => 
+    !item.femaleOnly || userGender === "female"
+  );
 
   return (
     <Sidebar className={`${collapsed ? "w-16" : "w-64"} border-r border-border bg-card`}>
@@ -114,7 +122,7 @@ export function AppSidebar() {
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {specialItems.map((item) => (
+              {filteredSpecialItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <NavLink 
