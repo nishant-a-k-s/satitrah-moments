@@ -13,7 +13,7 @@ const Index = () => {
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">
-            Good morning, Priya 👋
+            Good morning, Sati 👋
           </h1>
           <p className="text-muted-foreground">
             Here's what's happening with your finances today

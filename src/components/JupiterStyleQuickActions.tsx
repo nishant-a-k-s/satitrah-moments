@@ -63,13 +63,6 @@ export const JupiterStyleQuickActions = () => {
 
   const specialFeatures = [
     { 
-      icon: Shield, 
-      label: "SOS Emergency", 
-      subtitle: "Instant help",
-      urgent: true,
-      color: "text-destructive bg-destructive/10 hover:bg-destructive/20"
-    },
-    { 
       icon: Baby, 
       label: "Maternity Wallet", 
       subtitle: "Save for pregnancy",
@@ -82,9 +75,15 @@ export const JupiterStyleQuickActions = () => {
       color: "text-accent bg-accent/10 hover:bg-accent/20"
     },
     { 
-      icon: MapPin, 
-      label: "Walk With Me", 
-      subtitle: "Safe escort mode",
+      icon: TrendingUp, 
+      label: "Auto Invest", 
+      subtitle: "Smart savings",
+      color: "text-success bg-success/10 hover:bg-success/20"
+    },
+    { 
+      icon: Gift, 
+      label: "Rewards", 
+      subtitle: "Earn & redeem",
       color: "text-primary bg-primary/10 hover:bg-primary/20"
     },
   ];
@@ -176,9 +175,6 @@ export const JupiterStyleQuickActions = () => {
                   <p className="text-xs opacity-70">{action.subtitle}</p>
                 </div>
               </div>
-              {action.urgent && (
-                <div className="absolute top-2 right-2 w-2 h-2 bg-destructive rounded-full animate-pulse" />
-              )}
             </Button>
           ))}
         </div>

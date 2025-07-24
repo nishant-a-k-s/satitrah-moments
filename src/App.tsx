@@ -11,6 +11,9 @@ import { LoginPage } from "@/components/LoginPage";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import Index from "./pages/Index";
+import SOS from "./pages/SOS";
+import Transfers from "./pages/Transfers";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -58,6 +61,9 @@ const App = () => {
                   <div className="flex-1 overflow-auto">
                     <Routes>
                       <Route path="/" element={<Index />} />
+                      <Route path="/sos" element={<SOS />} />
+                      <Route path="/transfers" element={<Transfers />} />
+                      <Route path="/profile" element={<Profile />} />
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>
