@@ -131,16 +131,12 @@ const SOS = () => {
                   <div className="flex items-center gap-2">
                     <Badge variant="secondary">Pregnant Users</Badge>
                   </div>
-                  <h4 className="font-semibold">50/50 Split Service</h4>
+                  <h4 className="font-semibold">Special Benefits</h4>
                   <p className="text-sm text-muted-foreground">
-                    One-time offer: You pay 50%, Satitrah covers 50%
+                    Enhanced ambulance services available through Maternal Wallet
                   </p>
-                  <Button 
-                    variant="secondary" 
-                    size="sm"
-                    onClick={() => setAmbulanceAccepted(!ambulanceAccepted)}
-                  >
-                    {ambulanceAccepted ? "Accepted" : "Accept Offer"}
+                  <Button variant="secondary" size="sm">
+                    View in Wallet
                   </Button>
                 </div>
               </Card>

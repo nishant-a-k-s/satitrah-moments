@@ -14,6 +14,11 @@ import Index from "./pages/Index";
 import SOS from "./pages/SOS";
 import Transfers from "./pages/Transfers";
 import Profile from "./pages/Profile";
+import Wallet from "./pages/Wallet";
+import PayBills from "./pages/PayBills";
+import Statements from "./pages/Statements";
+import Notifications from "./pages/Notifications";
+import HelpSupport from "./pages/HelpSupport";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,7 +28,7 @@ const App = () => {
 
   if (!isLoggedIn) {
     return (
-      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <Toaster />
@@ -36,7 +41,7 @@ const App = () => {
   }
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
@@ -61,10 +66,14 @@ const App = () => {
                   <div className="flex-1 overflow-auto">
                     <Routes>
                       <Route path="/" element={<Index />} />
-                      <Route path="/sos" element={<SOS />} />
+                      <Route path="/wallet" element={<Wallet />} />
                       <Route path="/transfers" element={<Transfers />} />
+                      <Route path="/pay-bills" element={<PayBills />} />
+                      <Route path="/statements" element={<Statements />} />
+                      <Route path="/sos" element={<SOS />} />
+                      <Route path="/notifications" element={<Notifications />} />
+                      <Route path="/help" element={<HelpSupport />} />
                       <Route path="/profile" element={<Profile />} />
-                      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </div>
