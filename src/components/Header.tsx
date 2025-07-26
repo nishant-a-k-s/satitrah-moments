@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Bell, Menu, User, Wifi, Signal, Battery } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
 export const Header = () => {
@@ -35,12 +37,17 @@ export const Header = () => {
         </div>
         
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" className="relative">
-            <Bell size={20} />
-            <div className="absolute -top-1 -right-1 w-2 h-2 bg-destructive rounded-full" />
+          <Button variant="ghost" size="sm" className="relative" asChild>
+            <Link to="/notifications">
+              <Bell size={20} />
+              <div className="absolute -top-1 -right-1 w-2 h-2 bg-destructive rounded-full" />
+            </Link>
           </Button>
-          <Button variant="ghost" size="sm">
-            <User size={20} />
+          <ThemeToggle />
+          <Button variant="ghost" size="sm" asChild>
+            <Link to="/profile">
+              <User size={20} />
+            </Link>
           </Button>
         </div>
       </div>

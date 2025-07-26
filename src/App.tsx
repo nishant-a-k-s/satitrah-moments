@@ -19,6 +19,9 @@ import PayBills from "./pages/PayBills";
 import Statements from "./pages/Statements";
 import Notifications from "./pages/Notifications";
 import HelpSupport from "./pages/HelpSupport";
+import SatiSafe from "./pages/SatiSafe";
+import Investments from "./pages/Investments";
+import SquirrelLending from "./pages/SquirrelLending";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -68,11 +71,14 @@ const App = () => {
                       <Route path="/" element={<Index />} />
                       <Route path="/wallet" element={<Wallet />} />
                       <Route path="/transfers" element={<Transfers />} />
-                      <Route path="/pay-bills" element={<PayBills />} />
+                      <Route path="/bills" element={<PayBills />} />
                       <Route path="/statements" element={<Statements />} />
                       <Route path="/sos" element={<SOS />} />
                       <Route path="/notifications" element={<Notifications />} />
-                      <Route path="/help" element={<HelpSupport />} />
+          <Route path="/help" element={<HelpSupport />} />
+          <Route path="/satisafe" element={<SatiSafe />} />
+          <Route path="/investments" element={<Investments />} />
+          <Route path="/lending" element={<SquirrelLending />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>

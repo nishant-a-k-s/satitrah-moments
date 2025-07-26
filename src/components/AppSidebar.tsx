@@ -38,6 +38,7 @@ const mainItems = [
 
 const specialItems = [
   { title: "SOS Emergency", url: "/sos", icon: Shield, urgent: true },
+  { title: "SatiSafe Wallet", url: "/satisafe", icon: Shield },
   { title: "Maternity Wallet", url: "/maternity", icon: Baby, femaleOnly: true },
   { title: "Squirrel Lending", url: "/lending", icon: Coins },
   { title: "Investments", url: "/investments", icon: TrendingUp },

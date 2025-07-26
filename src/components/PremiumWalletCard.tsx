@@ -54,9 +54,9 @@ export const PremiumWalletCard = ({
         </div>
 
         {/* Balance Display */}
-        <div className="relative mb-8">
+        <div className="relative mb-6">
           <p className="text-sm opacity-80 mb-2">Total Balance</p>
-          <h1 className="text-4xl font-bold tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
             {isBalanceVisible ? formatCurrency(balance) : "••••••••"}
           </h1>
           <p className="text-sm opacity-70 mt-2">
@@ -64,27 +64,47 @@ export const PremiumWalletCard = ({
           </p>
         </div>
 
+        {/* SatiSafe Savings Goal */}
+        <div className="relative mb-6 p-4 bg-white/10 rounded-lg backdrop-blur-sm">
+          <h2 className="text-lg font-semibold text-primary-foreground mb-2">
+            SatiSafe Savings Goal
+          </h2>
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span className="opacity-80">Progress</span>
+              <span className="font-medium">32%</span>
+            </div>
+            <div className="w-full bg-white/20 rounded-full h-2">
+              <div className="bg-white h-2 rounded-full" style={{ width: '32%' }}></div>
+            </div>
+            <div className="flex justify-between text-xs opacity-70">
+              <span>₹45,000</span>
+              <span>₹1,50,000</span>
+            </div>
+          </div>
+        </div>
+
         {/* Quick Actions */}
-        <div className="relative flex gap-3">
+        <div className="relative flex gap-2">
           <Button 
             size="sm" 
-            className="flex-1 bg-white/10 hover:bg-white/20 text-primary-foreground border-0 backdrop-blur-sm"
+            className="flex-1 bg-white/10 hover:bg-white/20 text-primary-foreground border-0 backdrop-blur-sm text-xs"
           >
-            <Plus size={16} className="mr-2" />
+            <Plus size={14} className="mr-1" />
             Add Money
           </Button>
           <Button 
             size="sm" 
-            className="flex-1 bg-white/10 hover:bg-white/20 text-primary-foreground border-0 backdrop-blur-sm"
+            className="flex-1 bg-white/10 hover:bg-white/20 text-primary-foreground border-0 backdrop-blur-sm text-xs"
           >
-            <ArrowUpRight size={16} className="mr-2" />
+            <ArrowUpRight size={14} className="mr-1" />
             Send
           </Button>
           <Button 
             size="sm" 
-            className="bg-white/10 hover:bg-white/20 text-primary-foreground border-0 backdrop-blur-sm px-3"
+            className="bg-white/10 hover:bg-white/20 text-primary-foreground border-0 backdrop-blur-sm px-2"
           >
-            <MoreHorizontal size={16} />
+            <MoreHorizontal size={14} />
           </Button>
         </div>
       </Card>

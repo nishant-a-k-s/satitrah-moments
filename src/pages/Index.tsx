@@ -12,11 +12,11 @@ const Index = () => {
       <div className="max-w-7xl mx-auto p-6">
         {/* Welcome Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
             Good morning, Sati 👋
           </h1>
-          <p className="text-muted-foreground">
-            Here's what's happening with your finances today
+          <p className="text-sm md:text-base text-muted-foreground">
+            Your SatiSafe digital banking companion for security, stability, and financial growth
           </p>
         </div>
 
