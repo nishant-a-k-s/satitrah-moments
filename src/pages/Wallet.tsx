@@ -17,14 +17,41 @@ import {
   Target,
   Heart,
   Ambulance,
-  Users
+  Users,
+  ShieldCheck,
+  TrendingUp,
+  ArrowUpDown,
+  DollarSign,
+  Euro,
+  IndianRupee
 } from "lucide-react";
 
 const Wallet = () => {
   const [isPregnancyMode, setIsPregnancyMode] = useState(false);
   const [ambulanceBenefit, setAmbulanceBenefit] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState('INR');
+
+  const currencies = [
+    { code: 'INR', symbol: '₹', name: 'Indian Rupee', rate: 1, icon: IndianRupee },
+    { code: 'USD', symbol: '$', name: 'US Dollar', rate: 0.012, icon: DollarSign },
+    { code: 'EUR', symbol: '€', name: 'Euro', rate: 0.011, icon: Euro },
+    { code: 'AED', symbol: 'د.إ', name: 'UAE Dirham', rate: 0.044, icon: DollarSign }
+  ];
 
   const walletTypes = [
+    {
+      id: 'satisafe',
+      name: 'SatiSafe Wallet',
+      icon: ShieldCheck,
+      description: 'Emergency, trauma, safety, and dignity coverage - your primary protection',
+      balance: 89000,
+      target: 200000,
+      monthlyContribution: 5000,
+      color: 'text-emerald-600',
+      bgColor: 'bg-emerald-50 dark:bg-emerald-950/20',
+      borderColor: 'border-emerald-200 dark:border-emerald-800',
+      features: ['Emergency coverage', 'Safety & dignity fund', 'Auto squirrel investment', 'Instant credit access']
+    },
     {
       id: 'maternal',
       name: 'Maternal Wallet',
@@ -137,6 +164,59 @@ const Wallet = () => {
           </div>
         </Card>
 
+        {/* Multi-Currency Wallet */}
+        <Card className="p-4 md:p-6 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 border-blue-200 dark:border-blue-800">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-blue-600 text-white">
+                  <ArrowUpDown className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground">Multi-Currency Wallet</h3>
+                  <p className="text-sm text-muted-foreground">Transparent rates • Easy conversion</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {currencies.map((currency) => {
+                const IconComponent = currency.icon;
+                const isSelected = selectedCurrency === currency.code;
+                return (
+                  <Card 
+                    key={currency.code}
+                    className={`p-3 cursor-pointer transition-all ${
+                      isSelected 
+                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30' 
+                        : 'hover:border-blue-300 hover:bg-blue-50/50 dark:hover:bg-blue-950/10'
+                    }`}
+                    onClick={() => setSelectedCurrency(currency.code)}
+                  >
+                    <div className="text-center space-y-2">
+                      <IconComponent className="h-5 w-5 mx-auto text-blue-600" />
+                      <div>
+                        <p className="text-sm font-semibold">{currency.code}</p>
+                        <p className="text-xs text-muted-foreground">Rate: {currency.rate.toFixed(4)}</p>
+                      </div>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+            
+            <div className="flex gap-2">
+              <Button className="flex-1" size="sm">
+                <ArrowUpDown className="h-4 w-4 mr-2" />
+                Convert Currency
+              </Button>
+              <Button variant="outline" size="sm">
+                View Rates
+              </Button>
+            </div>
+          </div>
+        </Card>
+
         {/* Wallets Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {walletTypes.map((wallet) => {
@@ -200,9 +280,16 @@ const Wallet = () => {
                     ))}
                   </div>
 
-                  <Button className="w-full" size="sm">
-                    {wallet.target > 0 ? 'Add Money' : 'Create Wallet'}
-                  </Button>
+                   <div className="flex gap-2">
+                    <Button className="flex-1" size="sm">
+                      {wallet.target > 0 ? 'Add Money' : 'Create Wallet'}
+                    </Button>
+                    {wallet.target > 0 && (
+                      <Button variant="outline" size="sm" className="px-3">
+                        <TrendingUp className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </Card>
             );
