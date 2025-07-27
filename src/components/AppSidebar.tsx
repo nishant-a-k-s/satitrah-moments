@@ -72,10 +72,15 @@ export function AppSidebar() {
   );
 
   return (
-    <Sidebar className={`${collapsed ? "w-16" : "w-64"} border-r border-border bg-card`}>
-      <SidebarContent className="p-0">
+    <Sidebar className={`${collapsed ? "w-16" : "w-64"} border-r border-border bg-card/95 backdrop-blur-md`}>
+      <SidebarContent className="p-0 relative overflow-hidden">
+        {/* Background Animation */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 right-5 w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full blur-xl animate-pulse"></div>
+          <div className="absolute bottom-20 left-5 w-16 h-16 bg-gradient-to-r from-accent to-primary rounded-full blur-lg animate-bounce"></div>
+        </div>
         {/* Header */}
-        <div className={`p-4 border-b border-border ${collapsed ? "px-2" : ""}`}>
+        <div className={`p-4 border-b border-border relative z-10 ${collapsed ? "px-2" : ""}`}>
           <div className="flex items-center gap-3">
             <img 
               src={squirrelMascot} 
@@ -92,7 +97,7 @@ export function AppSidebar() {
         </div>
 
         {/* Main Navigation */}
-        <SidebarGroup>
+        <SidebarGroup className="relative z-10">
           <SidebarGroupLabel className={collapsed ? "sr-only" : ""}>
             Main
           </SidebarGroupLabel>
@@ -117,7 +122,7 @@ export function AppSidebar() {
         </SidebarGroup>
 
         {/* Special Features */}
-        <SidebarGroup>
+        <SidebarGroup className="relative z-10">
           <SidebarGroupLabel className={collapsed ? "sr-only" : ""}>
             Features
           </SidebarGroupLabel>
@@ -149,7 +154,7 @@ export function AppSidebar() {
 
         {/* Bottom Navigation */}
         <div className="mt-auto">
-          <SidebarGroup>
+          <SidebarGroup className="relative z-10">
             <SidebarGroupContent>
               <SidebarMenu>
                 {bottomItems.map((item) => (

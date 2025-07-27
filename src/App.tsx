@@ -22,6 +22,7 @@ import HelpSupport from "./pages/HelpSupport";
 import SatiSafe from "./pages/SatiSafe";
 import Investments from "./pages/Investments";
 import SquirrelLending from "./pages/SquirrelLending";
+import Maternity from "./pages/Maternity";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -79,6 +80,7 @@ const App = () => {
           <Route path="/satisafe" element={<SatiSafe />} />
           <Route path="/investments" element={<Investments />} />
           <Route path="/lending" element={<SquirrelLending />} />
+          <Route path="/maternity" element={<Maternity />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>

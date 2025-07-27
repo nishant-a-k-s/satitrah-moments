@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Bell, Menu, User, Wifi, Signal, Battery } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
 export const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex items-center justify-between p-4 bg-background">
       {/* Status Bar Simulation */}

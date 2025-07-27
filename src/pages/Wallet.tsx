@@ -286,7 +286,7 @@ const Wallet = () => {
                     </Button>
                     {wallet.target > 0 && (
                       <Button variant="outline" size="sm" className="px-3">
-                        <TrendingUp className="h-4 w-4" />
+                        Withdraw
                       </Button>
                     )}
                   </div>

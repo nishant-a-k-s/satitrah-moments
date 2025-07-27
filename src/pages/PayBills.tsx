@@ -16,7 +16,8 @@ import {
   Plus,
   Clock,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  QrCode
 } from "lucide-react";
 
 const PayBills = () => {
@@ -128,8 +129,9 @@ const PayBills = () => {
         </div>
 
         <Tabs defaultValue="bills" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="bills">Bills</TabsTrigger>
+            <TabsTrigger value="qr-pay">QR Pay</TabsTrigger>
             <TabsTrigger value="subscriptions">Subscriptions</TabsTrigger>
             <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
           </TabsList>
@@ -182,6 +184,60 @@ const PayBills = () => {
                   </Card>
                 );
               })}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="qr-pay" className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* QR Scanner */}
+              <Card className="p-6">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-primary text-primary-foreground">
+                      <QrCode className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground">Scan QR Code</h3>
+                  </div>
+                  <div className="aspect-square max-w-64 mx-auto bg-muted/50 rounded-lg flex items-center justify-center border-2 border-dashed border-border">
+                    <div className="text-center space-y-2">
+                      <QrCode className="h-12 w-12 mx-auto text-muted-foreground" />
+                      <p className="text-sm text-muted-foreground">Camera will open here</p>
+                      <Button size="sm">Open Camera</Button>
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs text-muted-foreground mb-2">Or enter UPI ID manually</p>
+                    <Input placeholder="example@upi" className="text-center" />
+                  </div>
+                </div>
+              </Card>
+
+              {/* Recent QR Payments */}
+              <Card className="p-6">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground">Recent QR Payments</h3>
+                  <div className="space-y-3">
+                    {[
+                      { merchant: "Starbucks Coffee", amount: 385, date: "Today" },
+                      { merchant: "Metro Station", amount: 45, date: "Yesterday" },
+                      { merchant: "Local Grocery", amount: 1250, date: "2 days ago" },
+                    ].map((payment, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                        <div>
+                          <h4 className="font-medium text-sm">{payment.merchant}</h4>
+                          <p className="text-xs text-muted-foreground">{payment.date}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-semibold text-sm">₹{payment.amount}</p>
+                          <Button size="sm" variant="outline" className="text-xs mt-1">
+                            Pay Again
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Card>
             </div>
           </TabsContent>
 
