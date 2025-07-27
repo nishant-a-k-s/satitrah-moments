@@ -31,36 +31,40 @@ export const JupiterStyleQuickActions = () => {
       label: "Add Money", 
       subtitle: "UPI, Cards, Bank",
       gradient: "bg-gradient-to-br from-primary/20 to-primary/10 hover:from-primary/30 hover:to-primary/20",
-      iconColor: "text-primary"
+      iconColor: "text-primary",
+      route: "/add-money"
     },
     { 
       icon: ArrowUpRight, 
       label: "Send Money", 
       subtitle: "To contacts, UPI",
       gradient: "bg-gradient-to-br from-accent/20 to-accent/10 hover:from-accent/30 hover:to-accent/20",
-      iconColor: "text-accent"
+      iconColor: "text-accent",
+      route: "/send-money"
     },
     { 
       icon: QrCode, 
       label: "Scan & Pay", 
       subtitle: "Quick payments",
       gradient: "bg-gradient-to-br from-secondary/20 to-secondary/10 hover:from-secondary/30 hover:to-secondary/20",
-      iconColor: "text-secondary"
+      iconColor: "text-secondary",
+      route: "/qr-scanner"
     },
     { 
       icon: ArrowDownLeft, 
       label: "Request", 
       subtitle: "Ask for money",
       gradient: "bg-gradient-to-br from-success/20 to-success/10 hover:from-success/30 hover:to-success/20",
-      iconColor: "text-success"
+      iconColor: "text-success",
+      route: "/request-money"
     },
   ];
 
   const billsAndRecharge = [
-    { icon: Smartphone, label: "Mobile Recharge", color: "text-primary" },
-    { icon: Zap, label: "Electricity", color: "text-warning" },
-    { icon: CreditCard, label: "Credit Card", color: "text-secondary" },
-    { icon: FileText, label: "Broadband", color: "text-accent" },
+    { icon: Smartphone, label: "Mobile Recharge", color: "text-primary", route: "/recharge" },
+    { icon: Zap, label: "Electricity", color: "text-warning", route: "/bills" },
+    { icon: CreditCard, label: "Credit Card", color: "text-secondary", route: "/bills" },
+    { icon: FileText, label: "Broadband", color: "text-accent", route: "/bills" },
   ];
 
   const specialFeatures = [
@@ -117,6 +121,7 @@ export const JupiterStyleQuickActions = () => {
           {primaryActions.map((action, index) => (
             <Button
               key={action.label}
+              onClick={() => action.route && navigate(action.route)}
               className={`
                 h-auto py-4 md:py-6 px-3 md:px-4 flex-col gap-2 md:gap-3 text-left justify-start relative
                 ${action.gradient}
@@ -146,7 +151,7 @@ export const JupiterStyleQuickActions = () => {
             <Button
               key={action.label}
               variant="ghost"
-              onClick={() => navigate("/bills")}
+              onClick={() => navigate(action.route)}
               className="h-auto py-3 md:py-4 px-2 flex-col gap-2 bg-muted/30 hover:bg-muted/50 transition-all duration-200"
               style={{
                 animationDelay: `${index * 0.05}s`

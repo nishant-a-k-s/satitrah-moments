@@ -24,6 +24,11 @@ import Investments from "./pages/Investments";
 import SquirrelLending from "./pages/SquirrelLending";
 import Maternity from "./pages/Maternity";
 import NotFound from "./pages/NotFound";
+import AddMoney from "./pages/AddMoney";
+import SendMoney from "./pages/SendMoney";
+import QRScanner from "./pages/QRScanner";
+import RequestMoney from "./pages/RequestMoney";
+import Recharge from "./pages/Recharge";
 
 const queryClient = new QueryClient();
 
@@ -76,11 +81,16 @@ const App = () => {
                       <Route path="/statements" element={<Statements />} />
                       <Route path="/sos" element={<SOS />} />
                       <Route path="/notifications" element={<Notifications />} />
-          <Route path="/help" element={<HelpSupport />} />
-          <Route path="/satisafe" element={<SatiSafe />} />
-          <Route path="/investments" element={<Investments />} />
-          <Route path="/lending" element={<SquirrelLending />} />
-          <Route path="/maternity" element={<Maternity />} />
+                      <Route path="/help" element={<HelpSupport />} />
+                      <Route path="/satisafe" element={<SatiSafe />} />
+                      <Route path="/investments" element={<Investments />} />
+                      <Route path="/lending" element={<SquirrelLending />} />
+                      <Route path="/maternity" element={<Maternity />} />
+                      <Route path="/add-money" element={<AddMoney />} />
+                      <Route path="/send-money" element={<SendMoney />} />
+                      <Route path="/qr-scanner" element={<QRScanner />} />
+                      <Route path="/request-money" element={<RequestMoney />} />
+                      <Route path="/recharge" element={<Recharge />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
