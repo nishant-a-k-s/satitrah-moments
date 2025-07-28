@@ -14,7 +14,9 @@ export default function SendMoney() {
   const methods = [
     { id: "contact", label: "Send to Contact", icon: Users, desc: "From phonebook" },
     { id: "upi", label: "Send to UPI ID", icon: Hash, desc: "Enter UPI ID" },
-    { id: "bank", label: "Send to Bank A/c", icon: Building2, desc: "NEFT/IMPS" },
+    { id: "imps", label: "IMPS Transfer", icon: Building2, desc: "Instant transfer" },
+    { id: "neft", label: "NEFT Transfer", icon: Building2, desc: "Next working day" },
+    { id: "rtgs", label: "RTGS Transfer", icon: Building2, desc: "Real-time (₹2L+)" },
   ];
 
   return (
@@ -74,11 +76,16 @@ export default function SendMoney() {
                 </Button>
               )}
 
-              {selectedMethod === "bank" && (
+              {(selectedMethod === "imps" || selectedMethod === "neft" || selectedMethod === "rtgs") && (
                 <div className="space-y-3">
                   <Input placeholder="Account Number" />
                   <Input placeholder="IFSC Code" />
                   <Input placeholder="Beneficiary Name" />
+                  {selectedMethod === "rtgs" && (
+                    <p className="text-xs text-muted-foreground">
+                      RTGS minimum amount: ₹2,00,000
+                    </p>
+                  )}
                 </div>
               )}
             </div>

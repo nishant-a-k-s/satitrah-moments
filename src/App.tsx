@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { AppSidebar } from "@/components/AppSidebar";
+import { GetStartedScreen } from "@/components/GetStartedScreen";
 import { LoginPage } from "@/components/LoginPage";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { BottomNavigation } from "@/components/BottomNavigation";
@@ -29,20 +30,45 @@ import SendMoney from "./pages/SendMoney";
 import QRScanner from "./pages/QRScanner";
 import RequestMoney from "./pages/RequestMoney";
 import Recharge from "./pages/Recharge";
+import Settings from "./pages/Settings";
+import Rewards from "./pages/Rewards";
+import SplitBills from "./pages/SplitBills";
+import SignUp from "./pages/SignUp";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentScreen, setCurrentScreen] = useState("getStarted"); // "getStarted", "login", "signUp", "forgotPassword", "loggedIn"
 
-  if (!isLoggedIn) {
+  if (currentScreen === "getStarted") {
     return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <Toaster />
             <Sonner />
-            <LoginPage onLogin={() => setIsLoggedIn(true)} />
+            <GetStartedScreen onGetStarted={() => setCurrentScreen("login")} />
+          </TooltipProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
+    );
+  }
+
+  if (currentScreen === "login") {
+    return (
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<LoginPage onLogin={() => setCurrentScreen("loggedIn")} />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+              </Routes>
+            </BrowserRouter>
           </TooltipProvider>
         </QueryClientProvider>
       </ThemeProvider>
@@ -91,6 +117,9 @@ const App = () => {
                       <Route path="/qr-scanner" element={<QRScanner />} />
                       <Route path="/request-money" element={<RequestMoney />} />
                       <Route path="/recharge" element={<Recharge />} />
+                      <Route path="/settings" element={<Settings />} />
+                      <Route path="/rewards" element={<Rewards />} />
+                      <Route path="/split-bills" element={<SplitBills />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>

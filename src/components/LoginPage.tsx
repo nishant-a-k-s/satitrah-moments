@@ -11,8 +11,12 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    // Simulate login
-    onLogin();
+    // Check credentials
+    if (phone === "Nishant" && password === "Nishant") {
+      onLogin();
+    } else {
+      alert("Invalid credentials. Use username: Nishant, password: Nishant");
+    }
   };
 
   return (
@@ -37,11 +41,11 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
         <Card className="p-8 bg-card border-0 shadow-premium">
           <div className="space-y-6">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Phone Number</label>
+              <label className="text-sm font-medium text-foreground">Username</label>
               <div className="relative">
                 <Smartphone className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
                 <Input
-                  placeholder="+91 98765 43210"
+                  placeholder="Enter username"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   className="pl-10 h-12 bg-input border-border text-foreground"
@@ -77,9 +81,12 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
               Login to Satitrah
             </Button>
 
-            <div className="text-center">
-              <Button variant="link" className="text-primary">
+            <div className="flex justify-between text-center">
+              <Button variant="link" className="text-primary" onClick={() => window.location.href = "/forgot-password"}>
                 Forgot Password?
+              </Button>
+              <Button variant="link" className="text-primary" onClick={() => window.location.href = "/signup"}>
+                Sign Up
               </Button>
             </div>
           </div>
@@ -103,10 +110,7 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
 
         <div className="text-center">
           <p className="text-xs text-muted-foreground">
-            Don't have an account?{" "}
-            <Button variant="link" className="text-primary p-0 h-auto">
-              Sign up
-            </Button>
+            Demo Credentials: Username: <strong>Nishant</strong>, Password: <strong>Nishant</strong>
           </p>
         </div>
       </div>
