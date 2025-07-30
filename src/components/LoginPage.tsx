@@ -12,10 +12,10 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
 
   const handleLogin = () => {
     // Check credentials
-    if (phone === "Nishant" && password === "Nishant") {
+    if (phone === "nishant" && password === "nishant") {
       onLogin();
     } else {
-      alert("Invalid credentials. Use username: Nishant, password: Nishant");
+      alert("Invalid credentials. Use username: nishant, password: nishant");
     }
   };
 
@@ -33,7 +33,7 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
           </div>
           <div>
             <h1 className="text-4xl font-bold text-foreground">Satitrah</h1>
-            <p className="text-muted-foreground text-lg mt-2">Safety. Stability. Satitrah.</p>
+            <p className="text-muted-foreground text-lg mt-2">Built for Her. Backed by All. </p>
           </div>
         </div>
 
@@ -100,7 +100,7 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
           </Card>
           <Card className="p-4 text-center bg-card-elevated border-0">
             <Baby className="h-6 w-6 mx-auto mb-2 text-secondary" />
-            <p className="text-xs text-muted-foreground">Maternity Wallet</p>
+            <p className="text-xs text-muted-foreground">SatiSafe Wallet</p>
           </Card>
           <Card className="p-4 text-center bg-card-elevated border-0">
             <Coins className="h-6 w-6 mx-auto mb-2 text-accent" />
