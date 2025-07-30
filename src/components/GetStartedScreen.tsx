@@ -60,7 +60,7 @@ export const GetStartedScreen = ({ onGetStarted }: { onGetStarted: () => void })
         {/* App Name */}
         <div className="space-y-2 animate-fade-in" style={{ animationDelay: "0.2s" }}>
           <h1 className="text-4xl font-bold text-foreground">Satitrah</h1>
-          <p className="text-muted-foreground text-lg">Safety. Stability. Satitrah.</p>
+          <p className="text-muted-foreground text-lg">Built for Her. Backed by All.</p>
         </div>
 
         {/* Feature Slides */}
