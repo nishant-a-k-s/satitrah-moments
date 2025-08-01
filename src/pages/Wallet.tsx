@@ -6,6 +6,8 @@ import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useWalletData } from "@/hooks/useWalletData";
+import { useNavigate } from "react-router-dom";
 import { 
   Wallet as WalletIcon, 
   Baby, 
@@ -30,6 +32,8 @@ const Wallet = () => {
   const [isPregnancyMode, setIsPregnancyMode] = useState(false);
   const [ambulanceBenefit, setAmbulanceBenefit] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('INR');
+  const { wallets, isLoading, getTotalBalance } = useWalletData();
+  const navigate = useNavigate();
 
   const currencies = [
     { code: 'INR', symbol: '₹', name: 'Indian Rupee', rate: 1, icon: IndianRupee },
@@ -155,11 +159,13 @@ const Wallet = () => {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <h2 className="text-lg md:text-xl font-semibold text-foreground">Total Wallet Balance</h2>
-              <p className="text-2xl md:text-3xl font-bold text-primary">₹{totalBalance.toLocaleString()}</p>
+              <p className="text-2xl md:text-3xl font-bold text-primary">
+                {isLoading ? "Loading..." : (getTotalBalance() > 0 ? `₹${getTotalBalance().toLocaleString()}` : "₹ --")}
+              </p>
             </div>
             <div className="text-center md:text-right">
               <p className="text-sm text-muted-foreground">Monthly Savings</p>
-              <p className="text-lg font-semibold text-secondary">₹{walletTypes.reduce((sum, w) => sum + w.monthlyContribution, 0).toLocaleString()}</p>
+              <p className="text-lg font-semibold text-secondary">₹ --</p>
             </div>
           </div>
         </Card>
@@ -248,19 +254,19 @@ const Wallet = () => {
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
                           <span className="text-muted-foreground">Progress</span>
-                          <span className="font-medium">{progress.toFixed(0)}%</span>
+                          <span className="font-medium">--</span>
                         </div>
-                        <Progress value={progress} className="h-2" />
+                        <Progress value={0} className="h-2" />
                         <div className="flex justify-between text-xs md:text-sm">
-                          <span className="font-semibold">₹{wallet.balance.toLocaleString()}</span>
-                          <span className="text-muted-foreground">₹{wallet.target.toLocaleString()}</span>
+                          <span className="font-semibold">₹ --</span>
+                          <span className="text-muted-foreground">₹ --</span>
                         </div>
                       </div>
 
                       <div className="space-y-2">
                         <div className="flex justify-between items-center">
                           <span className="text-sm text-muted-foreground">Monthly Contribution</span>
-                          <span className="text-sm font-medium">₹{wallet.monthlyContribution.toLocaleString()}</span>
+                          <span className="text-sm font-medium">₹ --</span>
                         </div>
                         <Input 
                           type="number" 
@@ -281,11 +287,20 @@ const Wallet = () => {
                   </div>
 
                    <div className="flex gap-2">
-                    <Button className="flex-1" size="sm">
+                    <Button 
+                      className="flex-1" 
+                      size="sm"
+                      onClick={() => wallet.target > 0 ? navigate('/add-money') : navigate('/wallet')}
+                    >
                       {wallet.target > 0 ? 'Add Money' : 'Create Wallet'}
                     </Button>
                     {wallet.target > 0 && (
-                      <Button variant="outline" size="sm" className="px-3">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="px-3"
+                        onClick={() => navigate('/add-money')}
+                      >
                         Withdraw
                       </Button>
                     )}

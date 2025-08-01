@@ -23,9 +23,9 @@ import {
 
 export default function Rewards() {
   const navigate = useNavigate();
-  const [points, setPoints] = useState(2450);
+  const [points, setPoints] = useState(0);
   const [referralCode] = useState("SATI2024");
-  const [referrals] = useState(8);
+  const [referrals] = useState(0);
 
   const rewardTiers = [
     { name: "Bronze", min: 0, max: 1000, color: "bg-amber-600", current: false },
@@ -90,7 +90,7 @@ export default function Rewards() {
             <div className="flex items-center justify-center gap-2">
               <Coins className="h-8 w-8 text-primary" />
               <div>
-                <h2 className="text-3xl font-bold text-primary">{points}</h2>
+                <h2 className="text-3xl font-bold text-primary">{points || '--'}</h2>
                 <p className="text-muted-foreground">Reward Points</p>
               </div>
             </div>
@@ -100,11 +100,11 @@ export default function Rewards() {
                 <div className="flex justify-between text-sm">
                   <Badge variant="secondary">{currentTier.name}</Badge>
                   <span className="text-muted-foreground">
-                    {nextTier.min - points} points to {nextTier.name}
+                    {points > 0 ? `${nextTier.min - points} points to ${nextTier.name}` : '-- points to next tier'}
                   </span>
                 </div>
                 <Progress 
-                  value={((points - currentTier.min) / (nextTier.min - currentTier.min)) * 100} 
+                  value={points > 0 ? ((points - currentTier.min) / (nextTier.min - currentTier.min)) * 100 : 0} 
                   className="h-2"
                 />
               </div>
@@ -154,12 +154,12 @@ export default function Rewards() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Card className="p-6 text-center">
                 <Users className="h-8 w-8 mx-auto mb-2 text-primary" />
-                <h3 className="text-2xl font-bold">{referrals}</h3>
+                <h3 className="text-2xl font-bold">{referrals || '--'}</h3>
                 <p className="text-muted-foreground">Successful Referrals</p>
               </Card>
               <Card className="p-6 text-center">
                 <Gift className="h-8 w-8 mx-auto mb-2 text-success" />
-                <h3 className="text-2xl font-bold">₹{referrals * 50}</h3>
+                <h3 className="text-2xl font-bold">₹{referrals > 0 ? referrals * 50 : '--'}</h3>
                 <p className="text-muted-foreground">Earned from Referrals</p>
               </Card>
             </div>

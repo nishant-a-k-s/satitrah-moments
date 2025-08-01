@@ -4,6 +4,7 @@ import { AdvancedInsights } from "@/components/AdvancedInsights";
 import { BudgetingTools } from "@/components/BudgetingTools";
 import { AIInsights } from "@/components/AIInsights";
 import { GamifiedLearning } from "@/components/GamifiedLearning";
+import { SpendsToStocks } from "@/components/SpendsToStocks";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Index = () => {
@@ -22,11 +23,7 @@ const Index = () => {
 
         {/* Wallet Card */}
         <div className="mb-8">
-          <PremiumWalletCard 
-            balance={245267} 
-            availableBalance={232450}
-            cardNumber="•••• •••• •••• 4829"
-          />
+          <PremiumWalletCard />
         </div>
 
         {/* Main Content Tabs */}
@@ -41,8 +38,9 @@ const Index = () => {
 
           <TabsContent value="home" className="space-y-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2">
+              <div className="lg:col-span-2 space-y-8">
                 <JupiterStyleQuickActions />
+                <SpendsToStocks />
               </div>
               <div className="lg:col-span-1">
                 <AdvancedInsights />
