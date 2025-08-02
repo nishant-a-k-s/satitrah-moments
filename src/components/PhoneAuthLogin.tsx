@@ -64,7 +64,7 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
     setLoading(true);
     try {
       const { error } = await supabase.auth.verifyOtp({
-        phone: +91${phone},
+        phone: `+91${phone}`,
         token: otp,
         type: 'sms',
       });
@@ -75,7 +75,7 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
         title: "Success",
         description: "Phone number verified successfully!",
       });
-      
+
       // User will be automatically redirected by the auth state change
     } catch (error: any) {
       toast({
