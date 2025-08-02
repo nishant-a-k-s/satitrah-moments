@@ -1,25 +1,24 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Smartphone, ArrowLeft } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
 export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
   const [phone, setPhone] = useState("");
-  const [mpin, setMpin] = useState("");
-  const [mpinSent, setMpinSent] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
-  const navigate = useNavigate(); // 👈 Added for redirection
 
-  const handleSendMPIN = async () => {
-    if (!phone || phone.length !== 10) {
+  const handleSendOTP = async () => {
+    if (!phone) {
       toast({
         title: "Error",
-        description: "Please enter a valid 10-digit phone number",
+        description: "Please enter a valid phone number",
         variant: "destructive",
       });
       return;
@@ -27,15 +26,24 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
 
     setLoading(true);
     try {
-      setMpinSent(true);
+      const { error } = await supabase.auth.signInWithOtp({
+        phone: `+91${phone}`,
+        options: {
+          channel: 'sms',
+        },
+      });
+
+      if (error) throw error;
+
+      setOtpSent(true);
       toast({
-        title: "MPIN Required",
-        description: "Please enter your 6-digit MPIN to continue.",
+        title: "OTP Sent",
+        description: "Please check your SMS for the verification code",
       });
     } catch (error: any) {
       toast({
         title: "Error",
-        description: "Something went wrong.",
+        description: error.message || "Failed to send OTP",
         variant: "destructive",
       });
     } finally {
@@ -43,11 +51,11 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
     }
   };
 
-  const handleVerifyMPIN = async () => {
-    if (mpin.length !== 6) {
+  const handleVerifyOTP = async () => {
+    if (!otp) {
       toast({
         title: "Error",
-        description: "Please enter a valid 6-digit MPIN",
+        description: "Please enter the OTP",
         variant: "destructive",
       });
       return;
@@ -55,22 +63,24 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
 
     setLoading(true);
     try {
-      toast({
-        title: "Success",
-        description: `Logged in successfully as +91${phone}`,
+      const { error } = await supabase.auth.verifyOtp({
+        phone: `+91${phone}`,
+        token: otp,
+        type: 'sms',
       });
 
-      // Store user session (optional)
-      localStorage.setItem("user", JSON.stringify({ phone: `+91${phone}` }));
+      if (error) throw error;
 
-      // Redirect to home
-      setTimeout(() => {
-        navigate("/home");
-      }, 1000);
+      toast({
+        title: "Success",
+        description: "Phone number verified successfully!",
+      });
+      
+      // User will be automatically redirected by the auth state change
     } catch (error: any) {
       toast({
         title: "Error",
-        description: "Login failed",
+        description: error.message || "Invalid OTP",
         variant: "destructive",
       });
     } finally {
@@ -92,7 +102,7 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
           </div>
           <div>
             <h1 className="text-4xl font-bold text-foreground">Satitrah</h1>
-            <p className="text-muted-foreground text-lg mt-2">MPIN Login</p>
+            <p className="text-muted-foreground text-lg mt-2">Phone Login</p>
           </div>
         </div>
 
@@ -108,7 +118,7 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
               Back to Login Options
             </Button>
 
-            {!mpinSent ? (
+            {!otpSent ? (
               <>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground">Phone Number</label>
@@ -124,49 +134,49 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
                     />
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    We'll ask for your 6-digit MPIN
+                    We'll send you an OTP to verify your number
                   </p>
                 </div>
 
                 <Button 
-                  onClick={handleSendMPIN}
+                  onClick={handleSendOTP}
                   disabled={phone.length !== 10 || loading}
                   className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
                 >
-                  {loading ? "Processing..." : "Continue"}
+                  {loading ? "Sending..." : "Send OTP"}
                 </Button>
               </>
             ) : (
               <>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Enter MPIN</label>
+                  <label className="text-sm font-medium text-foreground">Enter OTP</label>
                   <Input
-                    type="password"
-                    placeholder="Enter 6-digit MPIN"
-                    value={mpin}
-                    onChange={(e) => setMpin(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    type="text"
+                    placeholder="Enter 6-digit OTP"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
                     className="h-12 text-center text-lg tracking-widest bg-input border-border text-foreground"
                     maxLength={6}
                   />
                   <p className="text-xs text-muted-foreground">
-                    MPIN for +91{phone}
+                    OTP sent to +91{phone}
                   </p>
                 </div>
 
                 <Button 
-                  onClick={handleVerifyMPIN}
-                  disabled={mpin.length !== 6 || loading}
+                  onClick={handleVerifyOTP}
+                  disabled={otp.length !== 6 || loading}
                   className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
                 >
-                  {loading ? "Verifying..." : "Login"}
+                  {loading ? "Verifying..." : "Verify OTP"}
                 </Button>
 
                 <Button
                   variant="link"
-                  onClick={() => setMpinSent(false)}
+                  onClick={() => setOtpSent(false)}
                   className="w-full text-primary"
                 >
-                  Go Back
+                  Resend OTP
                 </Button>
               </>
             )}
