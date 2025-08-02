@@ -2,23 +2,23 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Smartphone, ArrowLeft } from "lucide-react";
+import { Mail, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
-export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
-  const [phone, setPhone] = useState("");
+export const EmailAuthLogin = ({ onBack }: { onBack: () => void }) => {
+  const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
   const handleSendOTP = async () => {
-    if (!phone) {
+    if (!email) {
       toast({
         title: "Error",
-        description: "Please enter a valid phone number",
+        description: "Please enter a valid email address",
         variant: "destructive",
       });
       return;
@@ -27,9 +27,9 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
     setLoading(true);
     try {
       const { error } = await supabase.auth.signInWithOtp({
-        phone: `+91${phone}`,
+        email,
         options: {
-          channel: 'sms',
+          emailRedirectTo: window.location.origin,
         },
       });
 
@@ -38,7 +38,7 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
       setOtpSent(true);
       toast({
         title: "OTP Sent",
-        description: "Please check your SMS for the verification code",
+        description: "Check your email for the login code",
       });
     } catch (error: any) {
       toast({
@@ -64,19 +64,19 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
     setLoading(true);
     try {
       const { error } = await supabase.auth.verifyOtp({
-        phone: `+91${phone}`,
+        email,
         token: otp,
-        type: 'sms',
+        type: 'email',
       });
 
       if (error) throw error;
 
       toast({
         title: "Success",
-        description: "Phone number verified successfully!",
+        description: "Email verified successfully!",
       });
 
-      // User will be automatically redirected by the auth state change
+      // Auth state change will handle redirect
     } catch (error: any) {
       toast({
         title: "Error",
@@ -102,7 +102,7 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
           </div>
           <div>
             <h1 className="text-4xl font-bold text-foreground">Satitrah</h1>
-            <p className="text-muted-foreground text-lg mt-2">Phone Login</p>
+            <p className="text-muted-foreground text-lg mt-2">Email Login</p>
           </div>
         </div>
 
@@ -121,26 +121,25 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
             {!otpSent ? (
               <>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Phone Number</label>
+                  <label className="text-sm font-medium text-foreground">Email</label>
                   <div className="relative">
-                    <Smartphone className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
+                    <Mail className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
                     <Input
-                      type="tel"
-                      placeholder="Enter 10-digit mobile number"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                      type="email"
+                      placeholder="Enter your email address"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       className="pl-10 h-12 bg-input border-border text-foreground"
-                      maxLength={10}
                     />
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    We'll send you an OTP to verify your number
+                    We'll send you a login code via email
                   </p>
                 </div>
 
                 <Button 
                   onClick={handleSendOTP}
-                  disabled={phone.length !== 10 || loading}
+                  disabled={!email || loading}
                   className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
                 >
                   {loading ? "Sending..." : "Send OTP"}
@@ -159,7 +158,7 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
                     maxLength={6}
                   />
                   <p className="text-xs text-muted-foreground">
-                    OTP sent to +91{phone}
+                    OTP sent to {email}
                   </p>
                 </div>
 
