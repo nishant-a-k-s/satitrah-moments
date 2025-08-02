@@ -2,20 +2,89 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Eye, EyeOff, Smartphone, Shield, Baby, Coins } from "lucide-react";
+import { Smartphone, ArrowLeft } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
-export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
-  const [showPassword, setShowPassword] = useState(false);
+export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
   const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
+  const [MPIN, MPIN] = useState("");
+  const [MPIN, MPIN] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
-  const handleLogin = () => {
-    // Check credentials
-    if (phone === "nishant" && password === "nishant") {
-      onLogin();
-    } else {
-      alert("Invalid credentials. Use username: nishant, password: nishant");
+  const handleMPIN = async () => {
+    if (!phone) {
+      toast({
+        title: "Error",
+        description: "Please enter a valid phone number",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.signInWithMPIN({
+        phone: +91${phone},
+        options: {
+          channel: 'sms',
+        },
+      });
+
+      if (error) throw error;
+
+      setOtpSent(true);
+      toast({
+        title: "OTP Sent",
+        description: "Please check your SMS for the verification code",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to send OTP",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyOTP = async () => {
+    if (!otp) {
+      toast({
+        title: "Error",
+        description: "Please enter the OTP",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.verifyOtp({
+        phone: +91${phone},
+        token: otp,
+        type: 'sms',
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Phone number verified successfully!",
+      });
+      
+      // User will be automatically redirected by the auth state change
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Invalid OTP",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,86 +102,86 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
           </div>
           <div>
             <h1 className="text-4xl font-bold text-foreground">Satitrah</h1>
-            <p className="text-muted-foreground text-lg mt-2">Built for Her. Backed by All. </p>
+            <p className="text-muted-foreground text-lg mt-2">Phone Login</p>
           </div>
         </div>
 
         {/* Login Form */}
         <Card className="p-8 bg-card border-0 shadow-premium">
           <div className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Username</label>
-              <div className="relative">
-                <Smartphone className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-                <Input
-                  placeholder="Enter username"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="pl-10 h-12 bg-input border-border text-foreground"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Password</label>
-              <div className="relative">
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="pr-10 h-12 bg-input border-border text-foreground"
-                />
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2 top-2 h-8 w-8 p-0"
-                >
-                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                </Button>
-              </div>
-            </div>
-
-            <Button 
-              onClick={handleLogin}
-              className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
+            <Button
+              variant="ghost"
+              onClick={onBack}
+              className="mb-4 p-0 h-auto text-muted-foreground hover:text-foreground"
             >
-              Login to Satitrah
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Login Options
             </Button>
 
-            <div className="flex justify-between text-center">
-              <Button variant="link" className="text-primary" onClick={() => window.location.href = "/forgot-password"}>
-                Forgot Password?
-              </Button>
-              <Button variant="link" className="text-primary" onClick={() => window.location.href = "/signup"}>
-                Sign Up
-              </Button>
-            </div>
+            {!otpSent ? (
+              <>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">Phone Number</label>
+                  <div className="relative">
+                    <Smartphone className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
+                    <Input
+                      type="tel"
+                      placeholder="Enter 10-digit mobile number"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                      className="pl-10 h-12 bg-input border-border text-foreground"
+                      maxLength={10}
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    We'll send you an OTP to verify your number
+                  </p>
+                </div>
+
+                <Button 
+                  onClick={handleSendOTP}
+                  disabled={phone.length !== 10 || loading}
+                  className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
+                >
+                  {loading ? "Sending..." : "Send OTP"}
+                </Button>
+              </>
+            ) : (
+              <>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">Enter OTP</label>
+                  <Input
+                    type="text"
+                    placeholder="Enter 6-digit OTP"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    className="h-12 text-center text-lg tracking-widest bg-input border-border text-foreground"
+                    maxLength={6}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    OTP sent to +91{phone}
+                  </p>
+                </div>
+
+                <Button 
+                  onClick={handleVerifyOTP}
+                  disabled={otp.length !== 6 || loading}
+                  className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
+                >
+                  {loading ? "Verifying..." : "Verify OTP"}
+                </Button>
+
+                <Button
+                  variant="link"
+                  onClick={() => setOtpSent(false)}
+                  className="w-full text-primary"
+                >
+                  Resend OTP
+                </Button>
+              </>
+            )}
           </div>
         </Card>
-
-        {/* Features Preview */}
-        <div className="grid grid-cols-3 gap-4">
-          <Card className="p-4 text-center bg-card-elevated border-0">
-            <Shield className="h-6 w-6 mx-auto mb-2 text-destructive" />
-            <p className="text-xs text-muted-foreground">SOS Emergency</p>
-          </Card>
-          <Card className="p-4 text-center bg-card-elevated border-0">
-            <Baby className="h-6 w-6 mx-auto mb-2 text-secondary" />
-            <p className="text-xs text-muted-foreground">SatiSafe Wallet</p>
-          </Card>
-          <Card className="p-4 text-center bg-card-elevated border-0">
-            <Coins className="h-6 w-6 mx-auto mb-2 text-accent" />
-            <p className="text-xs text-muted-foreground">Squirrel Lending</p>
-          </Card>
-        </div>
-
-        <div className="text-center">
-          <p className="text-xs text-muted-foreground">
-            Demo Credentials: Username: <strong>Nishant</strong>, Password: <strong>Nishant</strong>
-          </p>
-        </div>
       </div>
     </div>
   );
