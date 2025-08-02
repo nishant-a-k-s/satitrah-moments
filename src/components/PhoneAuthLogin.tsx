@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Smartphone, ArrowLeft } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
@@ -15,28 +14,26 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
   const { toast } = useToast();
 
   const handleSendMPIN = async () => {
-    if (!phone) {
+    if (!phone || phone.length !== 10) {
       toast({
         title: "Error",
-        description: "Please enter a valid phone number",
+        description: "Please enter a valid 10-digit phone number",
         variant: "destructive",
       });
       return;
     }
 
-    // Simulate a server check or MPIN setup prompt
     setLoading(true);
     try {
-      // You can replace this with an actual check: does this phone number exist in your user table?
       setMpinSent(true);
       toast({
         title: "MPIN Required",
-        description: "Please enter your 4-digit MPIN to continue.",
+        description: "Please enter your 6-digit MPIN to continue.",
       });
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message || "Failed to initiate MPIN login",
+        description: "Something went wrong.",
         variant: "destructive",
       });
     } finally {
@@ -45,10 +42,10 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
   };
 
   const handleVerifyMPIN = async () => {
-    if (!mpin || mpin.length !== 4) {
+    if (mpin.length !== 6) {
       toast({
         title: "Error",
-        description: "Please enter a valid 4-digit MPIN",
+        description: "Please enter a valid 6-digit MPIN",
         variant: "destructive",
       });
       return;
@@ -56,26 +53,17 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
 
     setLoading(true);
     try {
-      // Replace this block with your Supabase logic or API call
-      const { data, error } = await supabase
-        .from("users")
-        .select("*")
-        .eq("phone", `+91${phone}`)
-        .eq("mpin", mpin)
-        .single();
-
-      if (error || !data) throw new Error("Invalid MPIN or Phone number");
-
+      // Simulate success
       toast({
         title: "Success",
-        description: "Logged in successfully with MPIN!",
+        description: `Logged in successfully as +91${phone}`,
       });
 
-      // Trigger login session or redirect as needed
+      // Here you would usually trigger redirect/session logic
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message || "Login failed",
+        description: "Login failed",
         variant: "destructive",
       });
     } finally {
@@ -129,7 +117,7 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
                     />
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    We'll ask for your MPIN linked to this number
+                    We'll ask for your 6-digit MPIN
                   </p>
                 </div>
 
@@ -147,11 +135,11 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
                   <label className="text-sm font-medium text-foreground">Enter MPIN</label>
                   <Input
                     type="password"
-                    placeholder="Enter 4-digit MPIN"
+                    placeholder="Enter 6-digit MPIN"
                     value={mpin}
-                    onChange={(e) => setMpin(e.target.value.replace(/\D/g, '').slice(0, 4))}
+                    onChange={(e) => setMpin(e.target.value.replace(/\D/g, '').slice(0, 6))}
                     className="h-12 text-center text-lg tracking-widest bg-input border-border text-foreground"
-                    maxLength={4}
+                    maxLength={6}
                   />
                   <p className="text-xs text-muted-foreground">
                     MPIN for +91{phone}
@@ -160,7 +148,7 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
 
                 <Button 
                   onClick={handleVerifyMPIN}
-                  disabled={mpin.length !== 4 || loading}
+                  disabled={mpin.length !== 6 || loading}
                   className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
                 >
                   {loading ? "Verifying..." : "Login"}
