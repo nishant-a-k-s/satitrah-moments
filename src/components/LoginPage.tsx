@@ -14,7 +14,7 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
   };
 
   if (loginMethod === 'phone') {
-    return <PhoneAuthLogin onBack={() => setLoginMethod('main')} />;
+    return <EmailAuthLogin onBack={() => setLoginMethod('main')} />;
   }
 
   if (loginMethod === 'mpin') {
