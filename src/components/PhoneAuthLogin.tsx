@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -12,6 +13,7 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
   const [mpinSent, setMpinSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate(); // 👈 Added for redirection
 
   const handleSendMPIN = async () => {
     if (!phone || phone.length !== 10) {
@@ -53,13 +55,18 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
 
     setLoading(true);
     try {
-      // Simulate success
       toast({
         title: "Success",
         description: `Logged in successfully as +91${phone}`,
       });
 
-      // Here you would usually trigger redirect/session logic
+      // Store user session (optional)
+      localStorage.setItem("user", JSON.stringify({ phone: `+91${phone}` }));
+
+      // Redirect to home
+      setTimeout(() => {
+        navigate("/home");
+      }, 1000);
     } catch (error: any) {
       toast({
         title: "Error",
