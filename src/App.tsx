@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { AuthWrapper } from "@/components/AuthWrapper";
 import { AppSidebar } from "@/components/AppSidebar";
@@ -31,6 +31,8 @@ import Recharge from "./pages/Recharge";
 import Settings from "./pages/Settings";
 import Rewards from "./pages/Rewards";
 import SplitBills from "./pages/SplitBills";
+import { GetStartedScreen } from "@/components/GetStartedScreen";
+import { LoginOptions } from "@/components/LoginOptions";
 
 const queryClient = new QueryClient();
 
@@ -61,7 +63,9 @@ const App = () => {
                     {/* Page Content */}
                     <div className="flex-1 overflow-auto">
                       <Routes>
-                        <Route path="/" element={<Index />} />
+                        <Route path="/" element={<Navigate to="/get-started" />} />
+                        <Route path="/get-started" element={<GetStartedScreen onGetStarted={() => window.location.href = "/login"} />} />
+                        <Route path="/login" element={<LoginOptions />} />
                         <Route path="/wallet" element={<Wallet />} />
                         <Route path="/transfers" element={<Transfers />} />
                         <Route path="/bills" element={<PayBills />} />
