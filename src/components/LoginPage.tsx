@@ -52,7 +52,7 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
               className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold flex items-center justify-center gap-3"
             >
               <Smartphone className="h-5 w-5" />
-              Login with Phone Number
+              Login with Email
             </Button>
 
             <div className="relative">
