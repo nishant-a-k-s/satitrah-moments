@@ -9,12 +9,12 @@ import squirrelMascot from "@/assets/squirrel-mascot.png";
 
 export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
   const [phone, setPhone] = useState("");
-  const [MPIN, MPIN] = useState("");
-  const [MPIN, MPIN] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleMPIN = async () => {
+  const handleSendOTP = async () => {
     if (!phone) {
       toast({
         title: "Error",
@@ -26,7 +26,7 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
 
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithMPIN({
+      const { error } = await supabase.auth.signInWithOtp({
         phone: +91${phone},
         options: {
           channel: 'sms',
