@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Smartphone, Mail, Shield, Baby, Coins } from "lucide-react";
-import { EmailAuthLogin } from "./PhoneAuthLogin";
+import { EmailAuthLogin } from "./EmailAuthLogin";
 import { MPINSetup } from "./MPINSetup";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
