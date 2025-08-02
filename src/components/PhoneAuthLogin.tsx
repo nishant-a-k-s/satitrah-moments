@@ -27,7 +27,7 @@ export const PhoneAuthLogin = ({ onBack }: { onBack: () => void }) => {
     setLoading(true);
     try {
       const { error } = await supabase.auth.signInWithOtp({
-        phone: +91${phone},
+        phone: `+91${phone}`,
         options: {
           channel: 'sms',
         },
