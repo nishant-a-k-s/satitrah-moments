@@ -1,23 +1,25 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Eye, EyeOff, Smartphone, Shield, Baby, Coins } from "lucide-react";
+import { Smartphone, Mail, Shield, Baby, Coins } from "lucide-react";
+import { PhoneAuthLogin } from "./PhoneAuthLogin";
+import { MPINSetup } from "./MPINSetup";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
 export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
+  const [loginMethod, setLoginMethod] = useState<'main' | 'phone' | 'mpin'>('main');
 
-  const handleLogin = () => {
-    // Check credentials
-    if (phone === "nishant" && password === "nishant") {
-      onLogin();
-    } else {
-      alert("Invalid credentials. Use username: nishant, password: nishant");
-    }
+  const handleMPINComplete = () => {
+    onLogin();
   };
+
+  if (loginMethod === 'phone') {
+    return <PhoneAuthLogin onBack={() => setLoginMethod('main')} />;
+  }
+
+  if (loginMethod === 'mpin') {
+    return <MPINSetup onComplete={handleMPINComplete} />;
+  }
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
@@ -33,62 +35,43 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
           </div>
           <div>
             <h1 className="text-4xl font-bold text-foreground">Satitrah</h1>
-            <p className="text-muted-foreground text-lg mt-2">Built for Her. Backed by All. </p>
+            <p className="text-muted-foreground text-lg mt-2">Built for Her. Backed by All.</p>
           </div>
         </div>
 
-        {/* Login Form */}
+        {/* Login Options */}
         <Card className="p-8 bg-card border-0 shadow-premium">
           <div className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Username</label>
-              <div className="relative">
-                <Smartphone className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-                <Input
-                  placeholder="Enter username"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="pl-10 h-12 bg-input border-border text-foreground"
-                />
-              </div>
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-semibold text-foreground mb-2">Welcome Back</h3>
+              <p className="text-sm text-muted-foreground">Choose your login method</p>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Password</label>
-              <div className="relative">
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="pr-10 h-12 bg-input border-border text-foreground"
-                />
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2 top-2 h-8 w-8 p-0"
-                >
-                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                </Button>
+            <Button 
+              onClick={() => setLoginMethod('phone')}
+              className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold flex items-center justify-center gap-3"
+            >
+              <Smartphone className="h-5 w-5" />
+              Login with Phone Number
+            </Button>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-border" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-card px-2 text-muted-foreground">Or</span>
               </div>
             </div>
 
             <Button 
-              onClick={handleLogin}
-              className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
+              variant="outline"
+              onClick={() => setLoginMethod('mpin')}
+              className="w-full h-12 border-border text-foreground hover:bg-muted flex items-center justify-center gap-3"
             >
-              Login to Satitrah
+              <Shield className="h-5 w-5" />
+              Setup MPIN (New Users)
             </Button>
-
-            <div className="flex justify-between text-center">
-              <Button variant="link" className="text-primary" onClick={() => window.location.href = "/forgot-password"}>
-                Forgot Password?
-              </Button>
-              <Button variant="link" className="text-primary" onClick={() => window.location.href = "/signup"}>
-                Sign Up
-              </Button>
-            </div>
           </div>
         </Card>
 
@@ -110,7 +93,7 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
 
         <div className="text-center">
           <p className="text-xs text-muted-foreground">
-            Demo Credentials: Username: <strong>Nishant</strong>, Password: <strong>Nishant</strong>
+            Secure • Private • Empowering
           </p>
         </div>
       </div>
