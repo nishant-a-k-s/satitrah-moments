@@ -14,6 +14,198 @@ export type Database = {
   }
   public: {
     Tables: {
+      ambulance_requests: {
+        Row: {
+          created_at: string
+          dispatch_details: Json | null
+          id: string
+          location: Json
+          status: string | null
+          time: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          dispatch_details?: Json | null
+          id?: string
+          location: Json
+          status?: string | null
+          time?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          dispatch_details?: Json | null
+          id?: string
+          location?: Json
+          status?: string | null
+          time?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      bill_payments: {
+        Row: {
+          amount: number
+          auto_pay: boolean | null
+          bill_name: string
+          bill_type: string
+          created_at: string
+          due_date: string | null
+          id: string
+          last_paid: string | null
+          provider_name: string
+          status: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          auto_pay?: boolean | null
+          bill_name: string
+          bill_type: string
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          last_paid?: string | null
+          provider_name: string
+          status?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          auto_pay?: boolean | null
+          bill_name?: string
+          bill_type?: string
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          last_paid?: string | null
+          provider_name?: string
+          status?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      broker_accounts: {
+        Row: {
+          access_token: string | null
+          broker_name: string
+          created_at: string
+          id: string
+          is_active: boolean | null
+          linked_on: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          access_token?: string | null
+          broker_name: string
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          linked_on?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          access_token?: string | null
+          broker_name?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          linked_on?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      company_stocks: {
+        Row: {
+          company_name: string
+          created_at: string
+          currency: string | null
+          current_price: number | null
+          exchange: string | null
+          id: string
+          is_active: boolean | null
+          last_updated: string | null
+          logo_url: string | null
+          merchant_keywords: string[] | null
+          sector: string | null
+          stock_symbol: string
+        }
+        Insert: {
+          company_name: string
+          created_at?: string
+          currency?: string | null
+          current_price?: number | null
+          exchange?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_updated?: string | null
+          logo_url?: string | null
+          merchant_keywords?: string[] | null
+          sector?: string | null
+          stock_symbol: string
+        }
+        Update: {
+          company_name?: string
+          created_at?: string
+          currency?: string | null
+          current_price?: number | null
+          exchange?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_updated?: string | null
+          logo_url?: string | null
+          merchant_keywords?: string[] | null
+          sector?: string | null
+          stock_symbol?: string
+        }
+        Relationships: []
+      }
+      goal_wallets: {
+        Row: {
+          created_at: string
+          current_amount: number | null
+          due_date: string | null
+          goal_name: string
+          id: string
+          is_achieved: boolean | null
+          monthly_commitment: number | null
+          target_amount: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          current_amount?: number | null
+          due_date?: string | null
+          goal_name: string
+          id?: string
+          is_achieved?: boolean | null
+          monthly_commitment?: number | null
+          target_amount: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          current_amount?: number | null
+          due_date?: string | null
+          goal_name?: string
+          id?: string
+          is_achieved?: boolean | null
+          monthly_commitment?: number | null
+          target_amount?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       goals: {
         Row: {
           achieved_at: string | null
@@ -72,6 +264,7 @@ export type Database = {
           amount: number
           application_reason: string | null
           approval_notes: string | null
+          borrowed_amount: number | null
           created_at: string
           due_date: string | null
           id: string
@@ -79,6 +272,8 @@ export type Database = {
           issued_at: string | null
           monthly_emi: number | null
           repaid_at: string | null
+          repayment_due_date: string | null
+          squirrel_points_used: number | null
           status: Database["public"]["Enums"]["loan_status"] | null
           tenure_months: number | null
           updated_at: string
@@ -88,6 +283,7 @@ export type Database = {
           amount: number
           application_reason?: string | null
           approval_notes?: string | null
+          borrowed_amount?: number | null
           created_at?: string
           due_date?: string | null
           id?: string
@@ -95,6 +291,8 @@ export type Database = {
           issued_at?: string | null
           monthly_emi?: number | null
           repaid_at?: string | null
+          repayment_due_date?: string | null
+          squirrel_points_used?: number | null
           status?: Database["public"]["Enums"]["loan_status"] | null
           tenure_months?: number | null
           updated_at?: string
@@ -104,6 +302,7 @@ export type Database = {
           amount?: number
           application_reason?: string | null
           approval_notes?: string | null
+          borrowed_amount?: number | null
           created_at?: string
           due_date?: string | null
           id?: string
@@ -111,6 +310,8 @@ export type Database = {
           issued_at?: string | null
           monthly_emi?: number | null
           repaid_at?: string | null
+          repayment_due_date?: string | null
+          squirrel_points_used?: number | null
           status?: Database["public"]["Enums"]["loan_status"] | null
           tenure_months?: number | null
           updated_at?: string
@@ -125,6 +326,165 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      motivational_quotes: {
+        Row: {
+          author: string | null
+          category: string | null
+          created_at: string
+          id: string
+          is_active: boolean | null
+          quote_text: string
+        }
+        Insert: {
+          author?: string | null
+          category?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          quote_text: string
+        }
+        Update: {
+          author?: string | null
+          category?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          quote_text?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          action_url: string | null
+          created_at: string
+          id: string
+          is_read: boolean | null
+          message: string
+          title: string
+          type: string | null
+          user_id: string
+        }
+        Insert: {
+          action_url?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean | null
+          message: string
+          title: string
+          type?: string | null
+          user_id: string
+        }
+        Update: {
+          action_url?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean | null
+          message?: string
+          title?: string
+          type?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      otp_verifications: {
+        Row: {
+          attempts: number | null
+          created_at: string
+          expires_at: string
+          id: string
+          otp_code: string
+          phone: string
+          verified: boolean | null
+        }
+        Insert: {
+          attempts?: number | null
+          created_at?: string
+          expires_at: string
+          id?: string
+          otp_code: string
+          phone: string
+          verified?: boolean | null
+        }
+        Update: {
+          attempts?: number | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          otp_code?: string
+          phone?: string
+          verified?: boolean | null
+        }
+        Relationships: []
+      }
+      reminders: {
+        Row: {
+          created_at: string
+          id: string
+          is_completed: boolean | null
+          note: string | null
+          recurring: boolean | null
+          reminder_time: string
+          title: string
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_completed?: boolean | null
+          note?: string | null
+          recurring?: boolean | null
+          reminder_time: string
+          title: string
+          type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_completed?: boolean | null
+          note?: string | null
+          recurring?: boolean | null
+          reminder_time?: string
+          title?: string
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      sos_events: {
+        Row: {
+          created_at: string
+          emergency_contacts_notified: boolean | null
+          id: string
+          location: Json | null
+          response_status: string | null
+          timestamp: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          emergency_contacts_notified?: boolean | null
+          id?: string
+          location?: Json | null
+          response_status?: string | null
+          timestamp?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          emergency_contacts_notified?: boolean | null
+          id?: string
+          location?: Json | null
+          response_status?: string | null
+          timestamp?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       sos_logs: {
         Row: {
@@ -176,6 +536,69 @@ export type Database = {
           },
         ]
       }
+      spend_categories: {
+        Row: {
+          amount: number
+          category: string
+          created_at: string
+          date: string
+          id: string
+          transaction_id: string | null
+          user_id: string
+          wallet_type: string | null
+        }
+        Insert: {
+          amount: number
+          category: string
+          created_at?: string
+          date?: string
+          id?: string
+          transaction_id?: string | null
+          user_id: string
+          wallet_type?: string | null
+        }
+        Update: {
+          amount?: number
+          category?: string
+          created_at?: string
+          date?: string
+          id?: string
+          transaction_id?: string | null
+          user_id?: string
+          wallet_type?: string | null
+        }
+        Relationships: []
+      }
+      squirrel_rewards: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          points_earned: number
+          points_redeemed: boolean | null
+          reason: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date?: string
+          id?: string
+          points_earned: number
+          points_redeemed?: boolean | null
+          reason: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          points_earned?: number
+          points_redeemed?: boolean | null
+          reason?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       squirrels: {
         Row: {
           created_at: string
@@ -226,6 +649,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      stock_watchlist: {
+        Row: {
+          company_name: string
+          created_at: string
+          id: string
+          is_invested: boolean | null
+          linked_broker_account_id: string | null
+          price_at_addition: number | null
+          symbol: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company_name: string
+          created_at?: string
+          id?: string
+          is_invested?: boolean | null
+          linked_broker_account_id?: string | null
+          price_at_addition?: number | null
+          symbol: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          company_name?: string
+          created_at?: string
+          id?: string
+          is_invested?: boolean | null
+          linked_broker_account_id?: string | null
+          price_at_addition?: number | null
+          symbol?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       subscriptions: {
         Row: {
@@ -281,8 +740,13 @@ export type Database = {
         Row: {
           amount: number
           created_at: string
+          current_stock_price: number | null
           description: string | null
           id: string
+          invest_prompt_shown: boolean | null
+          matched_company_name: string | null
+          matched_stock_symbol: string | null
+          merchant_name: string | null
           metadata: Json | null
           reference_id: string | null
           status: string | null
@@ -294,8 +758,13 @@ export type Database = {
         Insert: {
           amount: number
           created_at?: string
+          current_stock_price?: number | null
           description?: string | null
           id?: string
+          invest_prompt_shown?: boolean | null
+          matched_company_name?: string | null
+          matched_stock_symbol?: string | null
+          merchant_name?: string | null
           metadata?: Json | null
           reference_id?: string | null
           status?: string | null
@@ -307,8 +776,13 @@ export type Database = {
         Update: {
           amount?: number
           created_at?: string
+          current_stock_price?: number | null
           description?: string | null
           id?: string
+          invest_prompt_shown?: boolean | null
+          matched_company_name?: string | null
+          matched_stock_symbol?: string | null
+          merchant_name?: string | null
           metadata?: Json | null
           reference_id?: string | null
           status?: string | null
@@ -340,6 +814,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_security: {
+        Row: {
+          created_at: string
+          id: string
+          last_login: string | null
+          mpin_hash: string | null
+          phone_verified: boolean | null
+          pin_hash: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_login?: string | null
+          mpin_hash?: string | null
+          phone_verified?: boolean | null
+          pin_hash?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_login?: string | null
+          mpin_hash?: string | null
+          phone_verified?: boolean | null
+          pin_hash?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       users: {
         Row: {
@@ -386,6 +893,36 @@ export type Database = {
         }
         Relationships: []
       }
+      walk_sessions: {
+        Row: {
+          created_at: string
+          emergency_triggered: boolean | null
+          end_time: string | null
+          id: string
+          path_coordinates: Json | null
+          start_time: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          emergency_triggered?: boolean | null
+          end_time?: string | null
+          id?: string
+          path_coordinates?: Json | null
+          start_time?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          emergency_triggered?: boolean | null
+          end_time?: string | null
+          id?: string
+          path_coordinates?: Json | null
+          start_time?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       wallets: {
         Row: {
           balance: number
@@ -427,6 +964,39 @@ export type Database = {
           },
         ]
       }
+      withdrawals: {
+        Row: {
+          amount: number
+          bank_details: Json | null
+          created_at: string
+          id: string
+          processed_at: string | null
+          status: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          bank_details?: Json | null
+          created_at?: string
+          id?: string
+          processed_at?: string | null
+          status?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          bank_details?: Json | null
+          created_at?: string
+          id?: string
+          processed_at?: string | null
+          status?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -436,12 +1006,31 @@ export type Database = {
         Args: { user_uuid: string }
         Returns: undefined
       }
+      match_merchant_to_stock: {
+        Args: { merchant_text: string }
+        Returns: {
+          company_name: string
+          stock_symbol: string
+          current_price: number
+          currency: string
+        }[]
+      }
       update_wallet_balance: {
         Args: {
           wallet_uuid: string
           amount_change: number
           trans_type: Database["public"]["Enums"]["transaction_type"]
           description_text?: string
+        }
+        Returns: string
+      }
+      update_wallet_balance_with_stock_matching: {
+        Args: {
+          wallet_uuid: string
+          amount_change: number
+          trans_type: Database["public"]["Enums"]["transaction_type"]
+          description_text?: string
+          merchant_name_text?: string
         }
         Returns: string
       }
