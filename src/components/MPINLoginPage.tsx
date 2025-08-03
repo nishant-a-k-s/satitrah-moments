@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
@@ -13,23 +13,22 @@ interface MPINLoginPageProps {
 }
 
 export const MPINLoginPage = ({ onBack, onLogin }: MPINLoginPageProps) => {
-  const [mpin, setMpin] = useState("");
-  const [mobile, setMobile] = useState("");
+  const [mpin, setMpin] = useState("777777"); // Default MPIN
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showMobileInput, setShowMobileInput] = useState(true);
+  const [showEmailInput, setShowEmailInput] = useState(true);
   const { toast } = useToast();
 
-  const handleMobileSubmit = () => {
-    const isValid = /^\d{10}$/.test(mobile);
-    if (!isValid) {
+  const handleEmailSubmit = () => {
+    if (!email || !email.includes('@')) {
       toast({
-        title: "Invalid Mobile Number",
-        description: "Please enter a valid 10-digit mobile number",
+        title: "Invalid Email",
+        description: "Please enter a valid email address",
         variant: "destructive",
       });
       return;
     }
-    setShowMobileInput(false);
+    setShowEmailInput(false);
   };
 
   const handleMPINLogin = async () => {
@@ -44,13 +43,13 @@ export const MPINLoginPage = ({ onBack, onLogin }: MPINLoginPageProps) => {
 
     setLoading(true);
     try {
-      const { data, error } = await supabase.rpc("verify_mpin", {
-        user_mobile: mobile,
-        mpin_plain: mpin,
+      const { data, error } = await supabase.rpc('verify_mpin', {
+        user_email: email,
+        mpin_plain: mpin
       });
 
       if (error) {
-        console.error("MPIN verification error:", error);
+        console.error('MPIN verification error:', error);
         toast({
           title: "Login Failed",
           description: "Unable to verify MPIN. Please try again.",
@@ -60,10 +59,13 @@ export const MPINLoginPage = ({ onBack, onLogin }: MPINLoginPageProps) => {
       }
 
       if (data && data.length > 0 && data[0].is_valid) {
+        const authUserId = data[0].auth_user_id;
+
         toast({
           title: "Login Successful",
           description: "Welcome back to Satitrah!",
         });
+
         onLogin();
       } else {
         toast({
@@ -73,7 +75,7 @@ export const MPINLoginPage = ({ onBack, onLogin }: MPINLoginPageProps) => {
         });
       }
     } catch (error) {
-      console.error("Login error:", error);
+      console.error('Login error:', error);
       toast({
         title: "Login Failed",
         description: "An unexpected error occurred. Please try again.",
@@ -87,11 +89,11 @@ export const MPINLoginPage = ({ onBack, onLogin }: MPINLoginPageProps) => {
   const handleSignUpRedirect = () => {
     toast({
       title: "Sign Up Required",
-      description: "No account found with this mobile number. Please sign up first.",
+      description: "No account found with this email. Please sign up first.",
       variant: "destructive",
     });
-    setShowMobileInput(true);
-    setMpin("");
+    setShowEmailInput(true);
+    setMpin("777777"); // Reset to default
   };
 
   return (
@@ -99,9 +101,9 @@ export const MPINLoginPage = ({ onBack, onLogin }: MPINLoginPageProps) => {
       <div className="w-full max-w-md space-y-8">
         <div className="text-center space-y-4">
           <div className="flex justify-center">
-            <img
-              src={squirrelMascot}
-              alt="Satitrah"
+            <img 
+              src={squirrelMascot} 
+              alt="Satitrah" 
               className="w-20 h-20 rounded-2xl shadow-premium"
             />
           </div>
@@ -116,31 +118,32 @@ export const MPINLoginPage = ({ onBack, onLogin }: MPINLoginPageProps) => {
             <div className="text-center mb-6">
               <Shield className="h-12 w-12 mx-auto mb-4 text-primary" />
               <h3 className="text-xl font-semibold text-foreground mb-2">
-                {showMobileInput ? "Enter Your Mobile Number" : "Enter Your MPIN"}
+                {showEmailInput ? "Enter Your Email" : "Enter Your MPIN"}
               </h3>
               <p className="text-sm text-muted-foreground">
-                {showMobileInput
+                {showEmailInput 
                   ? "We'll verify your identity using your 6-digit MPIN"
-                  : "Enter the 6-digit MPIN you set during signup"}
+                  : "Enter the 6-digit MPIN you set during signup"
+                }
               </p>
             </div>
 
-            {showMobileInput ? (
+            {showEmailInput ? (
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Mobile Number</label>
+                  <label className="text-sm font-medium text-foreground">Email Address</label>
                   <input
-                    type="tel"
-                    placeholder="Enter your 10-digit mobile number"
-                    value={mobile}
-                    onChange={(e) => setMobile(e.target.value)}
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full h-12 px-4 rounded-lg bg-input border border-border text-foreground"
-                    onKeyPress={(e) => e.key === "Enter" && handleMobileSubmit()}
+                    onKeyPress={(e) => e.key === 'Enter' && handleEmailSubmit()}
                   />
                 </div>
-
-                <Button
-                  onClick={handleMobileSubmit}
+                
+                <Button 
+                  onClick={handleEmailSubmit}
                   className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
                 >
                   Continue
@@ -168,7 +171,7 @@ export const MPINLoginPage = ({ onBack, onLogin }: MPINLoginPageProps) => {
                   </div>
                 </div>
 
-                <Button
+                <Button 
                   onClick={handleMPINLogin}
                   disabled={mpin.length !== 6 || loading}
                   className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
@@ -180,12 +183,12 @@ export const MPINLoginPage = ({ onBack, onLogin }: MPINLoginPageProps) => {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => setShowMobileInput(true)}
+                    onClick={() => setShowEmailInput(true)}
                     className="text-muted-foreground"
                   >
-                    Change Mobile
+                    Change Email
                   </Button>
-
+                  
                   <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                     <AlertCircle className="h-4 w-4" />
                     <span>Don't have an account?</span>
