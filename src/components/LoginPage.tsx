@@ -11,7 +11,7 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
   const [loginMethod, setLoginMethod] = useState<'main' | 'email' | 'mpin' | 'signup'>('main');
 
   if (loginMethod === 'email') {
-    return <EmailAuthLogin onBack={() => setLoginMethod('main')} />;
+    return <EmailAuthLogin onBack={() => setLoginMethod('main')} onLogin={onLogin} />; // ✅ Pass onLogin
   }
 
   if (loginMethod === 'mpin') {
@@ -19,7 +19,10 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
   }
 
   if (loginMethod === 'signup') {
-    return <SignUpPage onBack={() => setLoginMethod('main')} onSignUpComplete={() => setLoginMethod('mpin')} />;
+    return <SignUpPage onBack={() => setLoginMethod('main')} onSignUpComplete={() => {
+      setLoginMethod('mpin');
+      onLogin(); // ✅ Trigger onLogin after sign-up (optional)
+    }} />;
   }
 
   return (
