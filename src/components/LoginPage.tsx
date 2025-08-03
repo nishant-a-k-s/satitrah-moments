@@ -1,21 +1,28 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Mail, Shield, Coins, UserPlus, Baby } from "lucide-react";
-import { EmailAuthLogin } from "./EmailAuthLogin";
-import { SignUpPage } from "./SignUpPage";
+import { Shield, Coins, Baby } from "lucide-react";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
 export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
-  const [loginMethod, setLoginMethod] = useState<'main' | 'email' | 'signup'>('main');
+  const [mobile, setMobile] = useState("");
+  const [mpin, setMpin] = useState("");
+  const [error, setError] = useState("");
 
-  if (loginMethod === 'email') {
-    return <EmailAuthLogin onBack={() => setLoginMethod('main')} />;
-  }
+  const handleLogin = () => {
+    if (!/^\d{10}$/.test(mobile)) {
+      setError("Enter a valid 10-digit mobile number.");
+      return;
+    }
+    if (!/^\d{6}$/.test(mpin)) {
+      setError("Enter a valid 6-digit MPIN.");
+      return;
+    }
 
-  if (loginMethod === 'signup') {
-    return <SignUpPage onBack={() => setLoginMethod('main')} onSignUpComplete={() => setLoginMethod('email')} />;
-  }
+    // Simulate login success
+    setError("");
+    onLogin();
+  };
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
@@ -35,31 +42,39 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
           </div>
         </div>
 
-        {/* Login Options */}
-        <Card className="p-8 bg-card border-0 shadow-premium">
-          <div className="space-y-6">
-            <div className="text-center mb-6">
-              <h3 className="text-xl font-semibold text-foreground mb-2">Welcome Back</h3>
-              <p className="text-sm text-muted-foreground">Choose your login method</p>
-            </div>
-
-            <Button 
-              onClick={() => setLoginMethod('email')}
-              className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold flex items-center justify-center gap-3"
-            >
-              <Mail className="h-5 w-5" />
-              Login with Email
-            </Button>
-
-            <Button 
-              onClick={() => setLoginMethod('signup')}
-              variant="outline"
-              className="w-full h-12 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground font-semibold flex items-center justify-center gap-3"
-            >
-              <UserPlus className="h-5 w-5" />
-              Create New Account
-            </Button>
+        {/* Login Form */}
+        <Card className="p-8 bg-card border-0 shadow-premium space-y-6">
+          <div className="text-center mb-4">
+            <h3 className="text-xl font-semibold text-foreground mb-2">Welcome Back</h3>
+            <p className="text-sm text-muted-foreground">Login with mobile & MPIN</p>
           </div>
+
+          <input
+            type="tel"
+            placeholder="Enter 10-digit Mobile Number"
+            maxLength={10}
+            value={mobile}
+            onChange={(e) => setMobile(e.target.value)}
+            className="w-full h-12 px-4 rounded-md border border-border bg-background text-foreground"
+          />
+
+          <input
+            type="password"
+            placeholder="Enter 6-digit MPIN"
+            maxLength={6}
+            value={mpin}
+            onChange={(e) => setMpin(e.target.value)}
+            className="w-full h-12 px-4 rounded-md border border-border bg-background text-foreground"
+          />
+
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
+          <Button 
+            onClick={handleLogin}
+            className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
+          >
+            Login
+          </Button>
         </Card>
 
         {/* Features Preview */}
