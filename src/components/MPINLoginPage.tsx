@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
@@ -13,7 +13,7 @@ interface MPINLoginPageProps {
 }
 
 export const MPINLoginPage = ({ onBack, onLogin }: MPINLoginPageProps) => {
-  const [mpin, setMpin] = useState("777777"); // Default MPIN
+  const [mpin, setMpin] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [showEmailInput, setShowEmailInput] = useState(true);
@@ -43,6 +43,7 @@ export const MPINLoginPage = ({ onBack, onLogin }: MPINLoginPageProps) => {
 
     setLoading(true);
     try {
+      // Call the verify_mpin function
       const { data, error } = await supabase.rpc('verify_mpin', {
         user_email: email,
         mpin_plain: mpin
@@ -59,13 +60,14 @@ export const MPINLoginPage = ({ onBack, onLogin }: MPINLoginPageProps) => {
       }
 
       if (data && data.length > 0 && data[0].is_valid) {
+        // Success - create session manually
         const authUserId = data[0].auth_user_id;
-
+        
         toast({
           title: "Login Successful",
           description: "Welcome back to Satitrah!",
         });
-
+        
         onLogin();
       } else {
         toast({
@@ -93,12 +95,13 @@ export const MPINLoginPage = ({ onBack, onLogin }: MPINLoginPageProps) => {
       variant: "destructive",
     });
     setShowEmailInput(true);
-    setMpin("777777"); // Reset to default
+    setMpin("");
   };
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
       <div className="w-full max-w-md space-y-8">
+        {/* Header */}
         <div className="text-center space-y-4">
           <div className="flex justify-center">
             <img 
@@ -113,6 +116,7 @@ export const MPINLoginPage = ({ onBack, onLogin }: MPINLoginPageProps) => {
           </div>
         </div>
 
+        {/* Login Form */}
         <Card className="p-8 bg-card border-0 shadow-premium">
           <div className="space-y-6">
             <div className="text-center mb-6">
