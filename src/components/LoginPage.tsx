@@ -1,28 +1,21 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Shield, Coins, Baby } from "lucide-react";
+import { Mail, Shield, Coins, UserPlus, Baby } from "lucide-react";
+import { EmailAuthLogin } from "./EmailAuthLogin";
+import { SignUpPage } from "./SignUpPage";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
 export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
-  const [mobile, setMobile] = useState("");
-  const [mpin, setMpin] = useState("");
-  const [error, setError] = useState("");
+  const [loginMethod, setLoginMethod] = useState<'main' | 'email' | 'signup'>('main');
 
-  const handleLogin = () => {
-    if (!/^\d{10}$/.test(mobile)) {
-      setError("Enter a valid 10-digit mobile number.");
-      return;
-    }
-    if (!/^\d{6}$/.test(mpin)) {
-      setError("Enter a valid 6-digit MPIN.");
-      return;
-    }
+  if (loginMethod === 'email') {
+    return <EmailAuthLogin onBack={() => setLoginMethod('main')} />;
+  }
 
-    // Simulate login success
-    setError("");
-    onLogin();
-  };
+  if (loginMethod === 'signup') {
+    return <SignUpPage onBack={() => setLoginMethod('main')} onSignUpComplete={() => setLoginMethod('email')} />;
+  }
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
@@ -42,39 +35,119 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
           </div>
         </div>
 
-        {/* Login Form */}
-        <Card className="p-8 bg-card border-0 shadow-premium space-y-6">
-          <div className="text-center mb-4">
-            <h3 className="text-xl font-semibold text-foreground mb-2">Welcome Back</h3>
-            <p className="text-sm text-muted-foreground">Login with mobile & MPIN</p>
+        {/* Login Options */}
+        <Card className="p-8 bg-card border-0 shadow-premium">
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-semibold text-foreground mb-2">Welcome Back</h3>
+              <p className="text-sm text-muted-foreground">Choose your login method</p>
+            </div>
+
+            <Button 
+              onClick={() => setLoginMethod('email')}
+              className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold flex items-center justify-center gap-3"
+            >
+              <Mail className="h-5 w-5" />
+              Login with Email
+            </Button>
+
+            <Button 
+              onClick={() => setLoginMethod('signup')}
+              variant="outline"
+              className="w-full h-12 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground font-semibold flex items-center justify-center gap-3"
+            >
+              <UserPlus className="h-5 w-5" />
+              Create New Account
+            </Button>
           </div>
+        </Card>
 
-          <input
-            type="tel"
-            placeholder="Enter 10-digit Mobile Number"
-            maxLength={10}
-            value={mobile}
-            onChange={(e) => setMobile(e.target.value)}
-            className="w-full h-12 px-4 rounded-md border border-border bg-background text-foreground"
-          />
+        {/* Features Preview */}
+        <div className="grid grid-cols-3 gap-4">
+          <Card className="p-4 text-center bg-card-elevated border-0">
+            <Shield className="h-6 w-6 mx-auto mb-2 text-destructive" />
+            <p className="text-xs text-muted-foreground">SOS Emergency</p>
+          </Card>
+          <Card className="p-4 text-center bg-card-elevated border-0">
+            <Baby className="h-6 w-6 mx-auto mb-2 text-secondary" />
+            <p className="text-xs text-muted-foreground">SatiSafe Wallet</p>
+          </Card>
+          <Card className="p-4 text-center bg-card-elevated border-0">
+            <Coins className="h-6 w-6 mx-auto mb-2 text-accent" />
+            <p className="text-xs text-muted-foreground">Squirrel Lending</p>
+          </Card>
+        </div>
 
-          <input
-            type="password"
-            placeholder="Enter 6-digit MPIN"
-            maxLength={6}
-            value={mpin}
-            onChange={(e) => setMpin(e.target.value)}
-            className="w-full h-12 px-4 rounded-md border border-border bg-background text-foreground"
-          />
+        <div className="text-center">
+          <p className="text-xs text-muted-foreground">
+            Secure • Private • Empowering
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Mail, Shield, Coins, UserPlus, Baby } from "lucide-react";
+import { EmailAuthLogin } from "./EmailAuthLogin";
+import { SignUpPage } from "./SignUpPage";
+import squirrelMascot from "@/assets/squirrel-mascot.png";
 
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
+  const [loginMethod, setLoginMethod] = useState<'main' | 'email' | 'signup'>('main');
 
-          <Button 
-            onClick={handleLogin}
-            className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
-          >
-            Login
-          </Button>
+  if (loginMethod === 'email') {
+    return <EmailAuthLogin onBack={() => setLoginMethod('main')} />;
+  }
+
+  if (loginMethod === 'signup') {
+    return <SignUpPage onBack={() => setLoginMethod('main')} onSignUpComplete={() => setLoginMethod('email')} />;
+  }
+
+  return (
+    <div className="min-h-screen bg-background flex items-center justify-center p-6">
+      <div className="w-full max-w-md space-y-8">
+        {/* Header */}
+        <div className="text-center space-y-4">
+          <div className="flex justify-center">
+            <img 
+              src={squirrelMascot} 
+              alt="Satitrah" 
+              className="w-20 h-20 rounded-2xl shadow-premium"
+            />
+          </div>
+          <div>
+            <h1 className="text-4xl font-bold text-foreground">Satitrah</h1>
+            <p className="text-muted-foreground text-lg mt-2">Built for Her. Backed by All.</p>
+          </div>
+        </div>
+
+        {/* Login Options */}
+        <Card className="p-8 bg-card border-0 shadow-premium">
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-semibold text-foreground mb-2">Welcome Back</h3>
+              <p className="text-sm text-muted-foreground">Choose your login method</p>
+            </div>
+
+            <Button 
+              onClick={() => setLoginMethod('email')}
+              className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold flex items-center justify-center gap-3"
+            >
+              <Mail className="h-5 w-5" />
+              Login with Email
+            </Button>
+
+            <Button 
+              onClick={() => setLoginMethod('signup')}
+              variant="outline"
+              className="w-full h-12 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground font-semibold flex items-center justify-center gap-3"
+            >
+              <UserPlus className="h-5 w-5" />
+              Create New Account
+            </Button>
+          </div>
         </Card>
 
         {/* Features Preview */}
