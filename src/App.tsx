@@ -7,7 +7,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { AuthWrapper } from "@/components/AuthWrapper";
-import PhoneLoginPage from "@/components/PhoneLoginPage";
 import { GetStartedScreen } from "@/components/GetStartedScreen";
 import { LoginPage } from "@/components/LoginPage";
 import { AppSidebar } from "@/components/AppSidebar";
@@ -52,9 +51,7 @@ const App = () => {
     setShowLogin(false);
   };
 
- if (!user) {
-    return <PhoneLoginPage onSuccess={() => window.location.reload()} />;
- }
+  if (showGetStarted) {
     return (
       <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
         <QueryClientProvider client={queryClient}>
