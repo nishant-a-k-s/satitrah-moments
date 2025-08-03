@@ -63,4 +63,4 @@ const MpinLoginPage = () => {
   );
 };
 
-export default Mainpage;
+export default MPINLoginPage;
