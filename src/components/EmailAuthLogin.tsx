@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Mail, ArrowLeft } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { Mail, ArrowLeft, Lock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
@@ -15,82 +14,32 @@ export const EmailAuthLogin = ({
   onLogin: () => void;
 }) => {
   const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState("");
   const { toast } = useToast();
 
-  const handleSendOTP = async () => {
-    if (!email) {
+  const handleLogin = async () => {
+    if (!email || !password) {
       toast({
         title: "Error",
-        description: "Please enter a valid email address",
+        description: "Please enter email and password",
         variant: "destructive",
       });
       return;
     }
 
-    setLoading(true);
-    try {
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          emailRedirectTo: window.location.origin,
-        },
-      });
-
-      if (error) throw error;
-
-      setOtpSent(true);
+    // Fake login logic for now
+    if (email === "demo@satitrah.in" && password === "password123") {
       toast({
-        title: "OTP Sent",
-        description: "Check your email for the login code",
+        title: "Welcome",
+        description: "Login successful!",
       });
-    } catch (error: any) {
+      onLogin();
+    } else {
       toast({
-        title: "Error",
-        description: error.message || "Failed to send OTP",
+        title: "Login Failed",
+        description: "Invalid email or password",
         variant: "destructive",
       });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleVerifyOTP = async () => {
-    if (!otp) {
-      toast({
-        title: "Error",
-        description: "Please enter the OTP",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const { error } = await supabase.auth.verifyOtp({
-        email,
-        token: otp,
-        type: "email",
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: "Success",
-        description: "Email verified successfully!",
-      });
-
-      onLogin(); // ✅ trigger after successful login
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message || "Invalid OTP",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -124,73 +73,40 @@ export const EmailAuthLogin = ({
               Back to Login Options
             </Button>
 
-            {!otpSent ? (
-              <>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">
-                    Email
-                  </label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-                    <Input
-                      type="email"
-                      placeholder="Enter your email address"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="pl-10 h-12 bg-input border-border text-foreground"
-                    />
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    We'll send you a login code via email
-                  </p>
-                </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Email</label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
+                <Input
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="pl-10 h-12 bg-input border-border text-foreground"
+                />
+              </div>
+            </div>
 
-                <Button
-                  onClick={handleSendOTP}
-                  disabled={!email || loading}
-                  className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
-                >
-                  {loading ? "Sending..." : "Send OTP"}
-                </Button>
-              </>
-            ) : (
-              <>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">
-                    Enter OTP
-                  </label>
-                  <Input
-                    type="text"
-                    placeholder="Enter 6-digit OTP"
-                    value={otp}
-                    onChange={(e) =>
-                      setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
-                    }
-                    className="h-12 text-center text-lg tracking-widest bg-input border-border text-foreground"
-                    maxLength={6}
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    OTP sent to {email}
-                  </p>
-                </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Password</label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
+                <Input
+                  type="password"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="pl-10 h-12 bg-input border-border text-foreground"
+                />
+              </div>
+            </div>
 
-                <Button
-                  onClick={handleVerifyOTP}
-                  disabled={otp.length !== 6 || loading}
-                  className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
-                >
-                  {loading ? "Verifying..." : "Verify OTP"}
-                </Button>
-
-                <Button
-                  variant="link"
-                  onClick={() => setOtpSent(false)}
-                  className="w-full text-primary"
-                >
-                  Resend OTP
-                </Button>
-              </>
-            )}
+            <Button
+              onClick={handleLogin}
+              className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
+            >
+              Login
+            </Button>
           </div>
         </Card>
       </div>
