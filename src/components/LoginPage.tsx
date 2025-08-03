@@ -2,15 +2,15 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Mail, UserPlus, Shield, Baby, Coins } from "lucide-react";
-import { EmailAuthLogin } from "./EmailAuthLogin";
+import { PhoneLoginPage } from "./PhoneLoginPage";
 import { SignUpPage } from "./SignUpPage";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
 export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
-  const [loginMethod, setLoginMethod] = useState<'main' | 'email' | 'signup'>('main');
+  const [loginMethod, setLoginMethod] = useState<'main' | 'phone' | 'signup'>('main');
 
-  if (loginMethod === 'email') {
-    return <EmailAuthLogin onBack={() => setLoginMethod('main')} onLogin={onLogin} />;
+  if (loginMethod === 'phone number') {
+    return <PhoneLoginPage onBack={() => setLoginMethod('main')} onLogin={onLogin} />;
   }
 
   if (loginMethod === 'signup') {
@@ -18,7 +18,7 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
       <SignUpPage
         onBack={() => setLoginMethod('main')}
         onSignUpComplete={() => {
-          setLoginMethod('email');
+          setLoginMethod('phone');
           onLogin(); // optional: auto-login after signup
         }}
       />
@@ -52,12 +52,12 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
             </div>
 
             <Button
-              onClick={() => setLoginMethod('email')}
+              onClick={() => setLoginMethod('phone')}
               variant="outline"
               className="w-full h-12 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold flex items-center justify-center gap-3"
             >
               <Mail className="h-5 w-5" />
-              Login with Email
+              Login with phone
             </Button>
 
             <Button
