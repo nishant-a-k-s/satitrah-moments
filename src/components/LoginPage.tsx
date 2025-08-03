@@ -1,28 +1,28 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Mail, Smartphone, Shield, Heart, Coins, Zap, UserPlus, Baby } from "lucide-react";
+import { Mail, UserPlus, Shield, Baby, Coins } from "lucide-react";
 import { EmailAuthLogin } from "./EmailAuthLogin";
-import { MPINLoginPage } from "./MPINLoginPage";
 import { SignUpPage } from "./SignUpPage";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
 export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
-  const [loginMethod, setLoginMethod] = useState<'main' | 'email' | 'mpin' | 'signup'>('main');
+  const [loginMethod, setLoginMethod] = useState<'main' | 'email' | 'signup'>('main');
 
   if (loginMethod === 'email') {
-    return <EmailAuthLogin onBack={() => setLoginMethod('main')} onLogin={onLogin} />; // ✅ Pass onLogin
-  }
-
-  if (loginMethod === 'mpin') {
-    return <MPINLoginPage onBack={() => setLoginMethod('main')} onLogin={onLogin} />;
+    return <EmailAuthLogin onBack={() => setLoginMethod('main')} onLogin={onLogin} />;
   }
 
   if (loginMethod === 'signup') {
-    return <SignUpPage onBack={() => setLoginMethod('main')} onSignUpComplete={() => {
-      setLoginMethod('mpin');
-      onLogin(); // ✅ Trigger onLogin after sign-up (optional)
-    }} />;
+    return (
+      <SignUpPage
+        onBack={() => setLoginMethod('main')}
+        onSignUpComplete={() => {
+          setLoginMethod('email');
+          onLogin(); // optional: auto-login after signup
+        }}
+      />
+    );
   }
 
   return (
@@ -31,9 +31,9 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
         {/* Header */}
         <div className="text-center space-y-4">
           <div className="flex justify-center">
-            <img 
-              src={squirrelMascot} 
-              alt="Satitrah" 
+            <img
+              src={squirrelMascot}
+              alt="Satitrah"
               className="w-20 h-20 rounded-2xl shadow-premium"
             />
           </div>
@@ -48,27 +48,10 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
           <div className="space-y-6">
             <div className="text-center mb-6">
               <h3 className="text-xl font-semibold text-foreground mb-2">Welcome Back</h3>
-              <p className="text-sm text-muted-foreground">Choose your login method</p>
+              <p className="text-sm text-muted-foreground">Login securely to continue</p>
             </div>
 
-            <Button 
-              onClick={() => setLoginMethod('mpin')}
-              className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold flex items-center justify-center gap-3"
-            >
-              <Shield className="h-5 w-5" />
-              Login with MPIN
-            </Button>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-border" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-card px-2 text-muted-foreground">Or</span>
-              </div>
-            </div>
-
-            <Button 
+            <Button
               onClick={() => setLoginMethod('email')}
               variant="outline"
               className="w-full h-12 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold flex items-center justify-center gap-3"
@@ -77,7 +60,7 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
               Login with Email
             </Button>
 
-            <Button 
+            <Button
               onClick={() => setLoginMethod('signup')}
               variant="outline"
               className="w-full h-12 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground font-semibold flex items-center justify-center gap-3"
@@ -88,7 +71,7 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
           </div>
         </Card>
 
-        {/* Features Preview */}
+        {/* Feature Preview */}
         <div className="grid grid-cols-3 gap-4">
           <Card className="p-4 text-center bg-card-elevated border-0">
             <Shield className="h-6 w-6 mx-auto mb-2 text-destructive" />
@@ -105,9 +88,7 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
         </div>
 
         <div className="text-center">
-          <p className="text-xs text-muted-foreground">
-            Secure • Private • Empowering
-          </p>
+          <p className="text-xs text-muted-foreground">Secure • Private • Empowering</p>
         </div>
       </div>
     </div>
