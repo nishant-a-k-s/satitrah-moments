@@ -7,7 +7,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
-export const EmailAuthLogin = ({ onBack }: { onBack: () => void }) => {
+export const EmailAuthLogin = ({
+  onBack,
+  onLogin,
+}: {
+  onBack: () => void;
+  onLogin: () => void;
+}) => {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
@@ -66,7 +72,7 @@ export const EmailAuthLogin = ({ onBack }: { onBack: () => void }) => {
       const { error } = await supabase.auth.verifyOtp({
         email,
         token: otp,
-        type: 'email',
+        type: "email",
       });
 
       if (error) throw error;
@@ -76,7 +82,7 @@ export const EmailAuthLogin = ({ onBack }: { onBack: () => void }) => {
         description: "Email verified successfully!",
       });
 
-      // Auth state change will handle redirect
+      onLogin(); // ✅ trigger after successful login
     } catch (error: any) {
       toast({
         title: "Error",
@@ -94,9 +100,9 @@ export const EmailAuthLogin = ({ onBack }: { onBack: () => void }) => {
         {/* Header */}
         <div className="text-center space-y-4">
           <div className="flex justify-center">
-            <img 
-              src={squirrelMascot} 
-              alt="Satitrah" 
+            <img
+              src={squirrelMascot}
+              alt="Satitrah"
               className="w-20 h-20 rounded-2xl shadow-premium"
             />
           </div>
@@ -121,7 +127,9 @@ export const EmailAuthLogin = ({ onBack }: { onBack: () => void }) => {
             {!otpSent ? (
               <>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Email</label>
+                  <label className="text-sm font-medium text-foreground">
+                    Email
+                  </label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
                     <Input
@@ -137,7 +145,7 @@ export const EmailAuthLogin = ({ onBack }: { onBack: () => void }) => {
                   </p>
                 </div>
 
-                <Button 
+                <Button
                   onClick={handleSendOTP}
                   disabled={!email || loading}
                   className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
@@ -148,12 +156,16 @@ export const EmailAuthLogin = ({ onBack }: { onBack: () => void }) => {
             ) : (
               <>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Enter OTP</label>
+                  <label className="text-sm font-medium text-foreground">
+                    Enter OTP
+                  </label>
                   <Input
                     type="text"
                     placeholder="Enter 6-digit OTP"
                     value={otp}
-                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    onChange={(e) =>
+                      setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
+                    }
                     className="h-12 text-center text-lg tracking-widest bg-input border-border text-foreground"
                     maxLength={6}
                   />
@@ -162,7 +174,7 @@ export const EmailAuthLogin = ({ onBack }: { onBack: () => void }) => {
                   </p>
                 </div>
 
-                <Button 
+                <Button
                   onClick={handleVerifyOTP}
                   disabled={otp.length !== 6 || loading}
                   className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold"
