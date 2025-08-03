@@ -35,66 +35,50 @@ import Settings from "./pages/Settings";
 import Rewards from "./pages/Rewards";
 import SplitBills from "./pages/SplitBills";
 import { SpendsToStocks } from "./pages/SpendsToStocks";
-import { supabase } from "@/integrations/supabase/client"; // ✅ IMPORT this
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const [showGetStarted, setShowGetStarted] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // ✅ Detect Supabase session and auth state changes
-  useEffect(() => {
-    const checkSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      if (data.session) setIsLoggedIn(true);
-    };
-
-    checkSession();
-
-    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsLoggedIn(!!session);
-    });
-
-    return () => {
-      authListener.subscription.unsubscribe();
-    };
-  }, []);
+  const [showLogin, setShowLogin] = useState(false);
 
   const handleGetStarted = () => {
     setShowGetStarted(false);
+    setShowLogin(true);
   };
 
-  // ✅ If not logged in
-  if (!isLoggedIn) {
-    if (showGetStarted) {
-      return (
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <QueryClientProvider client={queryClient}>
-            <TooltipProvider>
-              <Toaster />
-              <Sonner />
-              <GetStartedScreen onGetStarted={handleGetStarted} />
-            </TooltipProvider>
-          </QueryClientProvider>
-        </ThemeProvider>
-      );
-    }
+  const handleLogin = () => {
+    setShowLogin(false);
+  };
 
+  if (showGetStarted) {
     return (
       <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <Toaster />
             <Sonner />
-            <LoginPage onLogin={() => setIsLoggedIn(true)} />
+            <GetStartedScreen onGetStarted={handleGetStarted} />
           </TooltipProvider>
         </QueryClientProvider>
       </ThemeProvider>
     );
   }
 
-  // ✅ If logged in — full app
+  if (showLogin) {
+    return (
+      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <LoginPage onLogin={handleLogin} />
+          </TooltipProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
+    );
+  }
+
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
       <QueryClientProvider client={queryClient}>
@@ -107,6 +91,7 @@ const App = () => {
                 <div className="min-h-screen flex w-full bg-background">
                   <AppSidebar />
                   <main className="flex-1 flex flex-col pb-16 md:pb-0">
+                    {/* Global Header with Sidebar Trigger */}
                     <header className="h-14 flex items-center border-b border-border bg-card px-4">
                       <SidebarTrigger className="mr-4" />
                       <div className="flex-1">
@@ -116,7 +101,8 @@ const App = () => {
                       </div>
                       <ThemeToggle />
                     </header>
-
+                    
+                    {/* Page Content */}
                     <div className="flex-1 overflow-auto">
                       <Routes>
                         <Route path="/" element={<Index />} />
@@ -145,7 +131,8 @@ const App = () => {
                       </Routes>
                     </div>
                   </main>
-
+                  
+                  {/* Mobile Bottom Navigation */}
                   <div className="md:hidden">
                     <BottomNavigation />
                   </div>
