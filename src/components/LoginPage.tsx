@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Mail, Smartphone, Shield, Heart, Coins, Zap, UserPlus, Baby } from "lucide-react";
 import { EmailAuthLogin } from "./EmailAuthLogin";
+import { MPINLoginPage } from "./MPINLoginPage";
 import { SignUpPage } from "./SignUpPage";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
