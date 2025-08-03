@@ -9,7 +9,7 @@ import squirrelMascot from "@/assets/squirrel-mascot.png";
 export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
   const [loginMethod, setLoginMethod] = useState<'main' | 'phone' | 'signup'>('main');
 
-  if (loginMethod === 'phone number') {
+  if (loginMethod === 'phone') {
     return <PhoneLoginPage onBack={() => setLoginMethod('main')} onLogin={onLogin} />;
   }
 
