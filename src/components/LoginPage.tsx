@@ -11,7 +11,8 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
   const [loginMethod, setLoginMethod] = useState<'main' | 'email' | 'mpin' | 'signup'>('main');
 
   if (loginMethod === 'email') {
-    return <EmailAuthLogin onBack={() => setLoginMethod('main')} />;
+    return <EmailAuthLogin onBack={() => setLoginMethod('main')} onLogin={onLogin} />;
+
   }
 
   if (loginMethod === 'mpin') {
