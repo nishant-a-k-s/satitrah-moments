@@ -19,7 +19,7 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
         onBack={() => setLoginMethod('main')}
         onSignUpComplete={() => {
           setLoginMethod('email');
-          // Don't auto-login for now
+          onLogin(); // optional: auto-login after signup
         }}
       />
     );
