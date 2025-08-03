@@ -91,22 +91,15 @@ export const GetStartedScreen = ({ onGetStarted }: { onGetStarted: () => void })
           ))}
         </div>
 
-        {/* Swipe to Get Started */}
+        {/* Tap Button to Get Started */}
         <div className="space-y-4 animate-fade-in" style={{ animationDelay: "0.4s" }}>
-          <div className="relative">
-            <div className="w-full h-16 bg-card border border-border rounded-2xl flex items-center px-4 overflow-hidden">
-              <div className="flex-1 text-center">
-                <p className="text-sm text-muted-foreground">Swipe to get started</p>
-              </div>
-              <div 
-                className="absolute right-2 w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center cursor-pointer transition-transform hover:scale-105 active:scale-95"
-                onClick={onGetStarted}
-              >
-                <ArrowRight className="h-6 w-6 text-primary-foreground" />
-              </div>
-            </div>
-          </div>
-          
+          <Button 
+            onClick={onGetStarted} 
+            className="w-full h-14 rounded-2xl text-base flex items-center justify-center gap-2"
+          >
+            Get Started <ArrowRight className="h-5 w-5" />
+          </Button>
+
           <p className="text-xs text-muted-foreground">
             By continuing, you agree to our Terms of Service and Privacy Policy
           </p>
