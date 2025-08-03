@@ -820,7 +820,10 @@ export type Database = {
           created_at: string
           id: string
           last_login: string | null
+          last_mpin_attempt: string | null
+          mpin_attempts: number | null
           mpin_hash: string | null
+          mpin_locked_until: string | null
           phone_verified: boolean | null
           pin_hash: string | null
           updated_at: string
@@ -830,7 +833,10 @@ export type Database = {
           created_at?: string
           id?: string
           last_login?: string | null
+          last_mpin_attempt?: string | null
+          mpin_attempts?: number | null
           mpin_hash?: string | null
+          mpin_locked_until?: string | null
           phone_verified?: boolean | null
           pin_hash?: string | null
           updated_at?: string
@@ -840,7 +846,10 @@ export type Database = {
           created_at?: string
           id?: string
           last_login?: string | null
+          last_mpin_attempt?: string | null
+          mpin_attempts?: number | null
           mpin_hash?: string | null
+          mpin_locked_until?: string | null
           phone_verified?: boolean | null
           pin_hash?: string | null
           updated_at?: string
@@ -858,6 +867,7 @@ export type Database = {
           emergency_contact_name: string | null
           emergency_contact_phone: string | null
           id: string
+          is_mpin_setup: boolean | null
           name: string
           phone: string | null
           updated_at: string
@@ -872,6 +882,7 @@ export type Database = {
           emergency_contact_name?: string | null
           emergency_contact_phone?: string | null
           id?: string
+          is_mpin_setup?: boolean | null
           name: string
           phone?: string | null
           updated_at?: string
@@ -886,6 +897,7 @@ export type Database = {
           emergency_contact_name?: string | null
           emergency_contact_phone?: string | null
           id?: string
+          is_mpin_setup?: boolean | null
           name?: string
           phone?: string | null
           updated_at?: string
@@ -1002,6 +1014,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      hash_mpin: {
+        Args: { mpin_plain: string }
+        Returns: string
+      }
       initialize_user_wallets: {
         Args: { user_uuid: string }
         Returns: undefined
@@ -1033,6 +1049,14 @@ export type Database = {
           merchant_name_text?: string
         }
         Returns: string
+      }
+      verify_mpin: {
+        Args: { user_email: string; mpin_plain: string }
+        Returns: {
+          user_id: string
+          is_valid: boolean
+          auth_user_id: string
+        }[]
       }
     }
     Enums: {
