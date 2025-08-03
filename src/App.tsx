@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,6 +7,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { AuthWrapper } from "@/components/AuthWrapper";
+import { GetStartedScreen } from "@/components/GetStartedScreen";
+import { LoginPage } from "@/components/LoginPage";
 import { AppSidebar } from "@/components/AppSidebar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { BottomNavigation } from "@/components/BottomNavigation";
@@ -31,10 +34,51 @@ import Recharge from "./pages/Recharge";
 import Settings from "./pages/Settings";
 import Rewards from "./pages/Rewards";
 import SplitBills from "./pages/SplitBills";
+import { SpendsToStocks } from "./pages/SpendsToStocks";
 
 const queryClient = new QueryClient();
 
 const App = () => {
+  const [showGetStarted, setShowGetStarted] = useState(true);
+  const [showLogin, setShowLogin] = useState(false);
+
+  const handleGetStarted = () => {
+    setShowGetStarted(false);
+    setShowLogin(true);
+  };
+
+  const handleLogin = () => {
+    setShowLogin(false);
+  };
+
+  if (showGetStarted) {
+    return (
+      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <GetStartedScreen onGetStarted={handleGetStarted} />
+          </TooltipProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
+    );
+  }
+
+  if (showLogin) {
+    return (
+      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <LoginPage onLogin={handleLogin} />
+          </TooltipProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
+    );
+  }
+
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
       <QueryClientProvider client={queryClient}>
@@ -81,6 +125,7 @@ const App = () => {
                         <Route path="/settings" element={<Settings />} />
                         <Route path="/rewards" element={<Rewards />} />
                         <Route path="/split-bills" element={<SplitBills />} />
+                        <Route path="/spends-to-stocks" element={<SpendsToStocks />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="*" element={<NotFound />} />
                       </Routes>

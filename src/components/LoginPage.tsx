@@ -1,24 +1,25 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Smartphone, Mail, Shield, Baby, Coins } from "lucide-react";
+import { Mail, Smartphone, Shield, Heart, Coins, Zap, UserPlus, Baby } from "lucide-react";
 import { EmailAuthLogin } from "./EmailAuthLogin";
-import { MPINSetup } from "./MPINSetup";
+import { MPINLoginPage } from "./MPINLoginPage";
+import { SignUpPage } from "./SignUpPage";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
 export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
-  const [loginMethod, setLoginMethod] = useState<'main' | 'phone' | 'mpin'>('main');
+  const [loginMethod, setLoginMethod] = useState<'main' | 'email' | 'mpin' | 'signup'>('main');
 
-  const handleMPINComplete = () => {
-    onLogin();
-  };
-
-  if (loginMethod === 'phone') {
+  if (loginMethod === 'email') {
     return <EmailAuthLogin onBack={() => setLoginMethod('main')} />;
   }
 
   if (loginMethod === 'mpin') {
-    return <MPINSetup onComplete={handleMPINComplete} />;
+    return <MPINLoginPage onBack={() => setLoginMethod('main')} onLogin={onLogin} />;
+  }
+
+  if (loginMethod === 'signup') {
+    return <SignUpPage onBack={() => setLoginMethod('main')} onSignUpComplete={() => setLoginMethod('mpin')} />;
   }
 
   return (
@@ -48,11 +49,11 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
             </div>
 
             <Button 
-              onClick={() => setLoginMethod('phone')}
+              onClick={() => setLoginMethod('mpin')}
               className="w-full h-12 bg-gradient-primary text-primary-foreground font-semibold flex items-center justify-center gap-3"
             >
-              <Smartphone className="h-5 w-5" />
-              Login with Email
+              <Shield className="h-5 w-5" />
+              Login with MPIN
             </Button>
 
             <div className="relative">
@@ -65,12 +66,21 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
             </div>
 
             <Button 
+              onClick={() => setLoginMethod('email')}
               variant="outline"
-              onClick={() => setLoginMethod('mpin')}
-              className="w-full h-12 border-border text-foreground hover:bg-muted flex items-center justify-center gap-3"
+              className="w-full h-12 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold flex items-center justify-center gap-3"
             >
-              <Shield className="h-5 w-5" />
-              Setup MPIN (New Users)
+              <Mail className="h-5 w-5" />
+              Login with Email
+            </Button>
+
+            <Button 
+              onClick={() => setLoginMethod('signup')}
+              variant="outline"
+              className="w-full h-12 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground font-semibold flex items-center justify-center gap-3"
+            >
+              <UserPlus className="h-5 w-5" />
+              Create New Account
             </Button>
           </div>
         </Card>
