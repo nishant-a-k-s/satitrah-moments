@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { User, Session } from '@supabase/supabase-js';
 import { LoginPage } from "./LoginPage";
 
 interface AuthWrapperProps {
@@ -6,18 +8,33 @@ interface AuthWrapperProps {
 }
 
 export const AuthWrapper = ({ children }: AuthWrapperProps) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
-    setIsLoggedIn(loggedIn);
-    setLoading(false);
+    // Set up auth state listener FIRST
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+        setLoading(false);
+      }
+    );
+
+    // THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const handleLogin = () => {
-    localStorage.setItem("isLoggedIn", "true");
-    setIsLoggedIn(true);
+    // Auth state will be handled by the listener
+    setLoading(false);
   };
 
   if (loading) {
@@ -28,7 +45,7 @@ export const AuthWrapper = ({ children }: AuthWrapperProps) => {
     );
   }
 
-  if (!isLoggedIn) {
+  if (!user || !session) {
     return <LoginPage onLogin={handleLogin} />;
   }
 
