@@ -67,9 +67,9 @@ export const SpendsToStocks = () => {
         .from('transactions')
         .select(`
           *,
-          wallets!inner(user_id)
+          safebox!inner(user_id)
         `)
-        .eq('wallets.user_id', user.user.id)
+        .eq('safebox.user_id', user.user.id)
         .not('matched_stock_symbol', 'is', null)
         .order('created_at', { ascending: false })
         .limit(10);
