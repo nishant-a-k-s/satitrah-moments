@@ -32,7 +32,7 @@ export const SpendsToStocks = () => {
     processOCRText,
     getInvestmentOpportunities,
     getTotalSpendingByStock
-  } = SpendsToStocks();
+  }
   
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
