@@ -32,7 +32,7 @@ export const Header = () => {
             />
             <div>
               <h1 className="text-lg font-bold text-foreground">Satitrah</h1>
-              <p className="text-xs text-muted-foreground">Good morning, Sati!</p>
+              <p className="text-xs text-muted-foreground">Good morning, @username </p>
             </div>
           </div>
         </div>
