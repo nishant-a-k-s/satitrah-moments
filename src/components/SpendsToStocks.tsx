@@ -41,6 +41,12 @@ const investmentOpportunities = Array.isArray(spendLogs)
       currentPrice: null,
     }))
   : [];
+
+  const spendingByStock = investmentOpportunities.reduce((acc, curr) => {
+  const { stock, amountSpent } = curr;
+  acc[stock] = (acc[stock] || 0) + amountSpent;
+  return acc;
+}, {});
   
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
