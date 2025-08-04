@@ -3,7 +3,8 @@ import { Home, CreditCard, ArrowRightLeft, Shield, User } from "lucide-react";
 
 const bottomNavItems = [
   { title: "Home", url: "/", icon: Home },
-  { title: "Wallet", url: "/wallet", icon: CreditCard },
+  { title: "Safebox", url: "/Safebox", icon: CreditCard },
+  { title: "S2S", url: "/spends-to-stocks", icon: TrendingUp },
   { title: "Transfer", url: "/transfers", icon: ArrowRightLeft },
   { title: "SOS", url: "/sos", icon: Shield },
   { title: "Profile", url: "/profile", icon: User },
