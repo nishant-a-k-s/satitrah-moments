@@ -31,7 +31,7 @@ import squirrelMascot from "@/assets/squirrel-mascot.png";
 const mainItems = [
   { title: "Home", url: "/", icon: Home },
   { title: "Safebox", url: "/Safebox", icon: CreditCard },
-  { title: "Spends to Stocks", url: "/spends-to-stocks", icon: TrendingUp }
+  { title: "Spends to Stocks", url: "/spends-to-stocks", icon: TrendingUp },
   { title: "Transfers", url: "/transfers", icon: ArrowRightLeft },
   { title: "Pay Bills", url: "/bills", icon: Smartphone },
   { title: "Statements", url: "/statements", icon: FileText },
