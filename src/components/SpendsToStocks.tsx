@@ -31,8 +31,10 @@ export const SpendsToStocks = () => {
     logSpend,
     markInvestmentMade,
     processOCRText,
+    getInvestmentOpportunities,
   } = useSafeboxData(); // ✅ call the hook here
-  
+
+  const investmentOpportunities = getInvestmentOpportunities();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   
