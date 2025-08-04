@@ -26,15 +26,15 @@ const HelpSupport = () => {
   const chatMessages = [
     { type: 'ai', message: 'Hi! I\'m Sati AI. How can I help you today?', time: '10:30 AM' },
     { type: 'user', message: 'I want to know about squirrel lending', time: '10:31 AM' },
-    { type: 'ai', message: 'Squirrel lending allows you to borrow money for free for 45 days. You can borrow up to 80% of your wallet and squirrel balance. Would you like to know more about eligibility?', time: '10:31 AM' }
+    { type: 'ai', message: 'Squirrel lending allows you to borrow money for free for 45 days. You can borrow up to 80% of your  and squirrel balance. Would you like to know more about eligibility?', time: '10:31 AM' }
   ];
 
   const faqs = [
     {
-      category: 'Wallets',
+      category: 'safeboxs',
       questions: [
-        { q: 'How do I create a maternal wallet?', a: 'Go to Wallets section and select Maternal Wallet. You can start with as little as ₹10/day.' },
-        { q: 'Can I add a partner to my maternal wallet?', a: 'Yes, you can add your partner as a joint account holder from the wallet settings.' },
+        { q: 'How do I create a maternal safebox?', a: 'Go to safeboxs section and select Maternal safebox. You can start with as little as ₹10/day.' },
+        { q: 'Can I add a partner to my maternal safebox?', a: 'Yes, you can add your partner as a joint account holder from the safebox settings.' },
         { q: 'What is pregnancy mode?', a: 'Pregnancy mode unlocks special features like ambulance benefits and increased auto-invest options.' }
       ]
     },
