@@ -6,10 +6,10 @@ import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useWalletData } from "@/hooks/useWalletData";
+import { usesafeboxData } from "@/hooks/usesafeboxData";
 import { useNavigate } from "react-router-dom";
 import { 
-  Wallet as WalletIcon, 
+  safebox as safeboxIcon, 
   Baby, 
   Shield, 
   Briefcase, 
@@ -28,11 +28,11 @@ import {
   IndianRupee
 } from "lucide-react";
 
-const Wallet = () => {
+const safebox = () => {
   const [isPregnancyMode, setIsPregnancyMode] = useState(false);
   const [ambulanceBenefit, setAmbulanceBenefit] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('INR');
-  const { wallets, isLoading, getTotalBalance } = useWalletData();
+  const { safebox, isLoading, getTotalBalance } = usesafeboxData();
   const navigate = useNavigate();
 
   const currencies = [
@@ -42,10 +42,10 @@ const Wallet = () => {
     { code: 'AED', symbol: 'د.إ', name: 'UAE Dirham', rate: 0.044, icon: DollarSign }
   ];
 
-  const walletTypes = [
+  const safeboxTypes = [
     {
       id: 'satisafe',
-      name: 'SatiSafe Wallet',
+      name: 'SatiSafe safebox',
       icon: ShieldCheck,
       description: 'Emergency, trauma, safety, and dignity coverage - your primary protection',
       balance: 89000,
@@ -58,7 +58,7 @@ const Wallet = () => {
     },
     {
       id: 'maternal',
-      name: 'Maternal Wallet',
+      name: 'Maternal safebox',
       icon: Baby,
       description: 'Save for childbirth, prenatal care, maternity break',
       balance: 45000,
@@ -71,7 +71,7 @@ const Wallet = () => {
     },
     {
       id: 'emergency',
-      name: 'Emergency Wallet',
+      name: 'Emergency safebox',
       icon: Shield,
       description: 'For health, accident, or family crises',
       balance: 12000,
@@ -84,7 +84,7 @@ const Wallet = () => {
     },
     {
       id: 'layoff',
-      name: 'Layoff Wallet',
+      name: 'Layoff safebox',
       icon: Briefcase,
       description: 'Small monthly savings for job loss cushion',
       balance: 8500,
@@ -97,7 +97,7 @@ const Wallet = () => {
     },
     {
       id: 'gadget',
-      name: 'Gadget Wallet',
+      name: 'Gadget safebox',
       icon: Smartphone,
       description: 'Buy phones/laptops without loans',
       balance: 25000,
@@ -110,7 +110,7 @@ const Wallet = () => {
     },
     {
       id: 'needs',
-      name: 'Needs Wallet',
+      name: 'Needs safebox',
       icon: ShoppingBag,
       description: 'Clothing, education, exam fees, rent',
       balance: 15000,
@@ -123,7 +123,7 @@ const Wallet = () => {
     },
     {
       id: 'custom',
-      name: 'Custom Wallets',
+      name: 'Custom safebox',
       icon: Target,
       description: 'Based on user goals, like marriage or side hustle',
       balance: 0,
@@ -136,7 +136,7 @@ const Wallet = () => {
     }
   ];
 
-  const totalBalance = walletTypes.reduce((sum, wallet) => sum + wallet.balance, 0);
+  const totalBalance = safeboxTypes.reduce((sum, safebox) => sum + safebox.balance, 0);
 
   return (
     <div className="min-h-screen bg-background">
@@ -145,10 +145,10 @@ const Wallet = () => {
         <div className="text-center space-y-4">
           <div className="flex justify-center">
             <div className="p-4 bg-primary/10 rounded-full">
-              <WalletIcon className="h-12 w-12 text-primary" />
+              <safeboxIcon className="h-12 w-12 text-primary" />
             </div>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground">Wallets</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground">safebox</h1>
           <p className="text-sm md:text-base text-muted-foreground px-4">
             "She may skip the insurance pitch, but give her ₹50 and a purpose—she'll squirrel it away without a second thought. Saving isn't taught, it's in her DNA."
           </p>
@@ -158,7 +158,7 @@ const Wallet = () => {
         <Card className="p-4 md:p-6 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h2 className="text-lg md:text-xl font-semibold text-foreground">Total Wallet Balance</h2>
+              <h2 className="text-lg md:text-xl font-semibold text-foreground">Total safebox Balance</h2>
               <p className="text-2xl md:text-3xl font-bold text-primary">
                 {isLoading ? "Loading..." : (getTotalBalance() > 0 ? `₹${getTotalBalance().toLocaleString()}` : "₹ --")}
               </p>
@@ -170,7 +170,7 @@ const Wallet = () => {
           </div>
         </Card>
 
-        {/* Multi-Currency Wallet */}
+        {/* Multi-Currency safebox */}
         <Card className="p-4 md:p-6 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 border-blue-200 dark:border-blue-800">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -179,7 +179,7 @@ const Wallet = () => {
                   <ArrowUpDown className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-foreground">Multi-Currency Wallet</h3>
+                  <h3 className="text-lg font-semibold text-foreground">Multi-Currency safebox</h3>
                   <p className="text-sm text-muted-foreground">Transparent rates • Easy conversion</p>
                 </div>
               </div>
@@ -223,33 +223,33 @@ const Wallet = () => {
           </div>
         </Card>
 
-        {/* Wallets Grid */}
+        {/* safebox Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {walletTypes.map((wallet) => {
-            const IconComponent = wallet.icon;
-            const progress = wallet.target > 0 ? (wallet.balance / wallet.target) * 100 : 0;
+          {safeboxTypes.map((safebox) => {
+            const IconComponent = safebox.icon;
+            const progress = safebox.target > 0 ? (safebox.balance / safebox.target) * 100 : 0;
             
             return (
-              <Card key={wallet.id} className={`p-4 md:p-6 ${wallet.bgColor} ${wallet.borderColor} border-2`}>
+              <Card key={safebox.id} className={`p-4 md:p-6 ${safebox.bgColor} ${safebox.borderColor} border-2`}>
                 <div className="space-y-4">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-lg bg-white dark:bg-gray-800 ${wallet.color}`}>
+                      <div className={`p-2 rounded-lg bg-white dark:bg-gray-800 ${safebox.color}`}>
                         <IconComponent className="h-5 w-5 md:h-6 md:w-6" />
                       </div>
                       <div className="min-w-0">
-                        <h3 className="font-semibold text-sm md:text-base text-foreground truncate">{wallet.name}</h3>
-                        <p className="text-xs md:text-sm text-muted-foreground line-clamp-2">{wallet.description}</p>
+                        <h3 className="font-semibold text-sm md:text-base text-foreground truncate">{safebox.name}</h3>
+                        <p className="text-xs md:text-sm text-muted-foreground line-clamp-2">{safebox.description}</p>
                       </div>
                     </div>
-                    {wallet.id === 'custom' && (
+                    {safebox.id === 'custom' && (
                       <Button size="sm" variant="outline" className="shrink-0">
                         <Plus className="h-4 w-4" />
                       </Button>
                     )}
                   </div>
 
-                  {wallet.target > 0 && (
+                  {safebox.target > 0 && (
                     <>
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
@@ -278,7 +278,7 @@ const Wallet = () => {
                   )}
 
                   <div className="space-y-1">
-                    {wallet.features.map((feature, index) => (
+                    {safebox.features.map((feature, index) => (
                       <div key={index} className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 bg-current rounded-full opacity-60" />
                         <span className="text-xs text-muted-foreground">{feature}</span>
@@ -290,11 +290,11 @@ const Wallet = () => {
                     <Button 
                       className="flex-1" 
                       size="sm"
-                      onClick={() => wallet.target > 0 ? navigate('/add-money') : navigate('/wallet')}
+                      onClick={() => safebox.target > 0 ? navigate('/add-money') : navigate('/safebox')}
                     >
-                      {wallet.target > 0 ? 'Add Money' : 'Create Wallet'}
+                      {safebox.target > 0 ? 'Add Money' : 'Create safebox'}
                     </Button>
-                    {wallet.target > 0 && (
+                    {safebox.target > 0 && (
                       <Button 
                         variant="outline" 
                         size="sm" 
@@ -311,12 +311,12 @@ const Wallet = () => {
           })}
         </div>
 
-        {/* Maternal Wallet Special Features */}
+        {/* Maternal safebox Special Features */}
         <Card className="p-4 md:p-6">
           <div className="space-y-6">
             <h3 className="text-lg md:text-xl font-semibold text-foreground flex items-center gap-2">
               <Baby className="h-5 w-5 md:h-6 md:w-6 text-pink-500" />
-              Maternal Wallet Special Features
+              Maternal safebox Special Features
             </h3>
 
             <Tabs defaultValue="pregnancy" className="w-full">
@@ -403,7 +403,7 @@ const Wallet = () => {
                     <div className="space-y-2">
                       <h4 className="font-semibold text-green-700 dark:text-green-300">Subscribers</h4>
                       <p className="text-sm text-muted-foreground">
-                        Get 80% of Wallet + Squirrel balance as free micro-loan for 60 days
+                        Get 80% of safebox + Squirrel balance as free micro-loan for 60 days
                       </p>
                       <Badge variant="secondary" className="text-xs">Premium Feature</Badge>
                     </div>
@@ -429,7 +429,7 @@ const Wallet = () => {
           <div className="text-center space-y-2">
             <h4 className="font-semibold text-accent">Accessible Savings</h4>
             <p className="text-sm text-muted-foreground">
-              Each wallet accepts investments as small as ₹10-₹100/day — built for accessibility, not complexity.
+              Each safebox accepts investments as small as ₹10-₹100/day — built for accessibility, not complexity.
             </p>
           </div>
         </Card>
@@ -438,4 +438,4 @@ const Wallet = () => {
   );
 };
 
-export default Wallet;
+export default safebox;
