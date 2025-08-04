@@ -6,7 +6,7 @@ import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { usesafeboxData } from "@/hooks/usesafeboxData";
+import { useSafeboxData } from "@/hooks/useSafeboxData";
 import { useNavigate } from "react-router-dom";
 import { 
   safebox as safeboxIcon, 
