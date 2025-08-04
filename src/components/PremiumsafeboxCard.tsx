@@ -11,11 +11,11 @@ interface PremiumsafeboxCardProps {
 
 export const PremiumsafeboxCard = ({ className }: PremiumsafeboxCardProps) => {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
-  const { Safebox: safeboxList, isLoading, getTotalBalance } = useSafeboxData();
+  const { Safebox: safeboxList = [], isLoading, getTotalBalance } = useSafeboxData();
   const navigate = useNavigate();
   
   const totalBalance = getTotalBalance();
-  const safebox = safeboxList.find(w => w.safebox_type === 'Safebox');
+  const safebox = safeboxList.find(w => w?.safebox_type === 'Safebox');
   const availableBalance = safebox?.balance || 0;
 
   const formatCurrency = (amount: number) => {
@@ -52,7 +52,7 @@ export const PremiumsafeboxCard = ({ className }: PremiumsafeboxCardProps) => {
         <div className="relative flex items-start justify-between mb-8">
           <div>
             <p className="text-sm opacity-80 font-medium">Satitrah Safebox</p>
-            <p className="text-xs opacity-60 font-mono mt-1">•••• •••• •••• {safebox?.id.slice(-4) || '0000'}</p>
+            <p className="text-xs opacity-60 font-mono mt-1">•••• •••• •••• {safebox?.id?.slice(-4) || '0000'}</p>
           </div>
           <Button
             variant="ghost"
