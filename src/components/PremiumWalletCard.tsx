@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Plus, ArrowUpRight, MoreHorizontal, Zap } from "lucide-react";
 import { useState } from "react";
-import { useWalletData } from "@/hooks/useWalletData";
+import { useSafeboxData } from "@/hooks/useSafeboxData";
 import { useNavigate } from "react-router-dom";
 
 interface PremiumWalletCardProps {
@@ -11,12 +11,12 @@ interface PremiumWalletCardProps {
 
 export const PremiumWalletCard = ({ className }: PremiumWalletCardProps) => {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
-  const { wallets, isLoading, getTotalBalance } = useWalletData();
+  const { Safebox, isLoading, getTotalBalance } = useSafeboxData();
   const navigate = useNavigate();
   
   const totalBalance = getTotalBalance();
-  const satiWallet = wallets.find(w => w.wallet_type === 'sati');
-  const availableBalance = satiWallet?.balance || 0;
+  const Safebox = Safebox.find(w => w.safebox_type === 'Safebox');
+  const availableBalance = Safebox?.balance || 0;
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-IN', {
@@ -40,7 +40,7 @@ export const PremiumWalletCard = ({ className }: PremiumWalletCardProps) => {
 
   return (
     <div className={`space-y-4 animate-fade-in ${className}`}>
-      {/* Main Wallet Card */}
+      {/* Main Safebox Card */}
       <Card className="relative overflow-hidden bg-gradient-primary p-8 text-primary-foreground border-0 shadow-premium">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
@@ -51,8 +51,8 @@ export const PremiumWalletCard = ({ className }: PremiumWalletCardProps) => {
         {/* Card Header */}
         <div className="relative flex items-start justify-between mb-8">
           <div>
-            <p className="text-sm opacity-80 font-medium">Satitrah Wallet</p>
-            <p className="text-xs opacity-60 font-mono mt-1">•••• •••• •••• {satiWallet?.id.slice(-4) || '0000'}</p>
+            <p className="text-sm opacity-80 font-medium">Satitrah Safebox</p>
+            <p className="text-xs opacity-60 font-mono mt-1">•••• •••• •••• {safebox?.id.slice(-4) || '0000'}</p>
           </div>
           <Button
             variant="ghost"
@@ -78,7 +78,7 @@ export const PremiumWalletCard = ({ className }: PremiumWalletCardProps) => {
         {/* SatiSafe Savings Goal */}
         <div className="relative mb-6 p-4 bg-white/10 rounded-lg backdrop-blur-sm">
           <h2 className="text-lg font-semibold text-primary-foreground mb-2">
-            SatiSafe Savings Goal
+            Safebox Savings Goal
           </h2>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
@@ -116,7 +116,7 @@ export const PremiumWalletCard = ({ className }: PremiumWalletCardProps) => {
           <Button 
             size="sm" 
             className="bg-white/10 hover:bg-white/20 text-primary-foreground border-0 backdrop-blur-sm px-2"
-            onClick={() => navigate('/wallet')}
+            onClick={() => navigate('/safebox')}
           >
             <MoreHorizontal size={14} />
           </Button>
