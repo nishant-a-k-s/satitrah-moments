@@ -37,13 +37,13 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   const userProfile = {
-    name: "Sati",
+    name: "@username",
     email: "sati@example.com",
     phone: "+91 98765 43210",
     gender: "female",
     address: "Mumbai, Maharashtra",
     kycStatus: "Verified",
-    walletBalance: "₹2,45,267",
+    safeboxBalance: "₹2,45,267",
     squirrelBalance: "145 🐿️"
   };
 
@@ -87,8 +87,8 @@ const Profile = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="p-4 bg-primary/5 rounded-lg text-center">
-              <p className="text-2xl font-bold text-primary">{userProfile.walletBalance}</p>
-              <p className="text-sm text-muted-foreground">Wallet Balance</p>
+              <p className="text-2xl font-bold text-primary">{userProfile.safeboxBalance}</p>
+              <p className="text-sm text-muted-foreground">safebox Balance</p>
             </div>
             <div className="p-4 bg-accent/5 rounded-lg text-center">
               <p className="text-2xl font-bold text-accent">{userProfile.squirrelBalance}</p>
@@ -189,7 +189,7 @@ const Profile = () => {
                 <Eye className="h-5 w-5" />
                 <div>
                   <p className="font-medium">Show Balance</p>
-                  <p className="text-sm text-muted-foreground">Display wallet balance on home screen</p>
+                  <p className="text-sm text-muted-foreground">Display safebox balance on home screen</p>
                 </div>
               </div>
               <Switch checked={showBalance} onCheckedChange={setShowBalance} />
