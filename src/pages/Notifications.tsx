@@ -22,7 +22,7 @@ const Notifications = () => {
     payments: true,
     bills: true,
     squirrel: true,
-    wallet: true,
+    safebox: true,
     security: true,
     promotional: false
   });
@@ -60,9 +60,9 @@ const Notifications = () => {
     },
     {
       id: 4,
-      type: 'wallet_saving',
-      title: 'Maternal Wallet Goal Achieved',
-      message: 'Congratulations! You\'ve reached 30% of your maternal wallet target',
+      type: 'safebox_saving',
+      title: 'Maternal safebox Goal Achieved',
+      message: 'Congratulations! You\'ve reached 30% of your maternal safebox target',
       time: '1 day ago',
       read: true,
       icon: PiggyBank,
@@ -254,12 +254,12 @@ const Notifications = () => {
 
                   <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                     <div>
-                      <h4 className="font-medium text-sm">Wallet Savings</h4>
+                      <h4 className="font-medium text-sm">safebox Savings</h4>
                       <p className="text-xs text-muted-foreground">Goal achievements and saving milestones</p>
                     </div>
                     <Switch 
-                      checked={settings.wallet} 
-                      onCheckedChange={(value) => updateSetting('wallet', value)}
+                      checked={settings.safebox} 
+                      onCheckedChange={(value) => updateSetting('safebox', value)}
                     />
                   </div>
 
