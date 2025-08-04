@@ -183,14 +183,13 @@ export const EnhancedSpendsToStocks = () => {
                     <Upload className="h-4 w-4" />
                     Upload Image
                   </Button>
-                  
+
                   <Button
                     variant="outline"
                     onClick={() => {
-                      // In a real app, this would open camera
                       toast({
                         title: "Camera",
-                        description: "Camera functionality would open here"
+                        description: "Camera functionality would open here",
                       });
                     }}
                     disabled={isProcessing}
