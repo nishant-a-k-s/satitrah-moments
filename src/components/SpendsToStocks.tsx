@@ -34,7 +34,12 @@ export const SpendsToStocks = () => {
     getInvestmentOpportunities,
   } = useSafeboxData(); // ✅ call the hook here
 
-  const investmentOpportunities = getInvestmentOpportunities();
+const investmentOpportunities = spendLogs.map((log) => ({
+  stock: log.companyName || 'Unknown',
+  amountSpent: log.amount || 0,
+  currentPrice: null, // Replace with actual stock data from API later
+}));
+  
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   
