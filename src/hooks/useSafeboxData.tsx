@@ -49,7 +49,6 @@ export const useSafeboxData = () => {
         return;
       }
 
-      // First get user profile
       const { data: profile, error: profileError } = await supabase
         .from('users')
         .select('id')
@@ -62,7 +61,6 @@ export const useSafeboxData = () => {
         return;
       }
 
-      // Then get Safebox
       const { data: safeboxData, error: safeboxError } = await supabase
         .from('safebox')
         .select('*')
@@ -76,7 +74,7 @@ export const useSafeboxData = () => {
           variant: "destructive",
         });
       } else {
-        setSafebox(safeboxData || []);
+        setsafebox(safeboxData || []);
       }
     } catch (error) {
       console.error('Unexpected error:', error);
@@ -93,7 +91,6 @@ export const useSafeboxData = () => {
         return;
       }
 
-      // First get user profile
       const { data: profile, error: profileError } = await supabase
         .from('users')
         .select('id')
@@ -105,7 +102,6 @@ export const useSafeboxData = () => {
         return;
       }
 
-      // Then get transactions
       const { data: transactionsData, error: transactionsError } = await supabase
         .from('transactions')
         .select('*')
@@ -136,9 +132,9 @@ export const useSafeboxData = () => {
     transactions,
     isLoading,
     getTotalBalance,
-    getsafeboxByType,
+    getSafeboxByType, // ✅ fixed the typo here
     refetch: () => {
-      fetchsafeboxData();
+      fetchSafeboxData();
       fetchTransactions();
     }
   };
