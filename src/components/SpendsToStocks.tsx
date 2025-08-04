@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { usesafeboxData } from "@/hooks/usesafeboxData"; // ✅ add this
+import { useSafeboxData } from "@/hooks/useSafeboxData"; // ✅ add this
 import { 
   TrendingUp, 
   ArrowUpRight, 
@@ -33,7 +33,7 @@ export const SpendsToStocks = () => {
     processOCRText,
     getInvestmentOpportunities,
     getTotalSpendingByStock
-  } = usesafeboxData(); // ✅ call the hook here
+  } = useSafeboxData(); // ✅ call the hook here
   
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
