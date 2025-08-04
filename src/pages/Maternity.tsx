@@ -67,7 +67,7 @@ const Maternity = () => {
               <Baby className="h-12 w-12 text-pink-500" />
             </div>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground">Maternal Wallet</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground">Maternal </h1>
           <p className="text-sm md:text-base text-muted-foreground px-4">
             Your journey to motherhood, financially supported every step of the way
           </p>
@@ -79,7 +79,7 @@ const Maternity = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold text-foreground">Wallet Balance</h3>
+                  <h3 className="text-lg font-semibold text-foreground">safebox Balance</h3>
                   <p className="text-2xl font-bold text-pink-600">₹{maternalStats.currentBalance.toLocaleString()}</p>
                 </div>
                 <Heart className="h-8 w-8 text-pink-500" />
@@ -293,7 +293,7 @@ const Maternity = () => {
                 <div className="space-y-2">
                   <h4 className="font-semibold text-green-700 dark:text-green-300">Subscribers</h4>
                   <p className="text-sm text-muted-foreground">
-                    Get 80% of Wallet + Squirrel balance as free micro-loan for 60 days
+                    Get 80% of safebox + Squirrel balance as free micro-loan for 60 days
                   </p>
                   <Badge variant="secondary" className="text-xs">Premium Feature</Badge>
                 </div>
