@@ -22,7 +22,7 @@ import {
   Lightbulb
 } from 'lucide-react';
 
-export const SpendsToStocks = () => {
+export const SpendToStocks = () => {
   const { 
     spendLogs,
     investmentStatus,
