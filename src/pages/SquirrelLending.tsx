@@ -20,7 +20,7 @@ import {
 const SquirrelLending = () => {
   const [userType, setUserType] = useState<'student' | 'professional'>('professional');
   const [squirrelBalance, setSquirrelBalance] = useState(2450);
-  const [walletBalance, setWalletBalance] = useState(45000);
+  const [safeboxBalance, setsafeboxBalance] = useState(45000);
   const [monthlySpending, setMonthlySpending] = useState(15000);
 
   const squirrelEarningRate = userType === 'student' ? 10 : 100; // per ₹1000 spent
@@ -28,7 +28,7 @@ const SquirrelLending = () => {
   
   const lendableAmount = userType === 'student' 
     ? Math.floor(squirrelBalance * 0.8)
-    : Math.floor((walletBalance + squirrelBalance) * 0.8);
+    : Math.floor((safeboxBalance + squirrelBalance) * 0.8);
 
   const roundOffSavings = Math.floor(monthlySpending * 0.02); // Assuming 2% average round-off
 
@@ -113,7 +113,7 @@ const SquirrelLending = () => {
               <div>
                 <p className="text-2xl md:text-3xl font-bold text-green-600">₹{lendableAmount.toLocaleString()}</p>
                 <p className="text-sm text-muted-foreground">
-                  {userType === 'student' ? '80% of Squirrels' : '80% of Wallet + Squirrels'}
+                  {userType === 'student' ? '80% of Squirrels' : '80% of safebox + Squirrels'}
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-2">
@@ -191,7 +191,7 @@ const SquirrelLending = () => {
                     <h4 className="font-semibold text-amber-700 dark:text-amber-300">Automatic Round-off Savings</h4>
                     <div className="space-y-3">
                       <p className="text-sm text-muted-foreground">
-                        Every transaction is automatically rounded up to the nearest ₹10, and the round-off amount is saved to your Emergency or Needs Wallet.
+                        Every transaction is automatically rounded up to the nearest ₹10, and the round-off amount is saved to your Emergency or Needs safebox.
                       </p>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="p-3 bg-white dark:bg-gray-800 rounded-lg border">
