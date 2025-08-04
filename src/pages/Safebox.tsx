@@ -70,19 +70,6 @@ const safebox = () => {
       features: ['Joint account option', 'Pregnancy mode', 'Ambulance benefits']
     },
     {
-      id: 'emergency',
-      name: 'Emergency safebox',
-      icon: Shield,
-      description: 'For health, accident, or family crises',
-      balance: 12000,
-      target: 50000,
-      monthlyContribution: 1000,
-      color: 'text-red-500',
-      bgColor: 'bg-red-50 dark:bg-red-950/20',
-      borderColor: 'border-red-200 dark:border-red-800',
-      features: ['Instant access', 'Health emergencies', 'Family crises']
-    },
-    {
       id: 'layoff',
       name: 'Layoff safebox',
       icon: Briefcase,
@@ -94,32 +81,6 @@ const safebox = () => {
       bgColor: 'bg-orange-50 dark:bg-orange-950/20',
       borderColor: 'border-orange-200 dark:border-orange-800',
       features: ['Job security', '6-month cushion', 'Skill development']
-    },
-    {
-      id: 'gadget',
-      name: 'Gadget safebox',
-      icon: Smartphone,
-      description: 'Buy phones/laptops without loans',
-      balance: 25000,
-      target: 80000,
-      monthlyContribution: 3000,
-      color: 'text-blue-500',
-      bgColor: 'bg-blue-50 dark:bg-blue-950/20',
-      borderColor: 'border-blue-200 dark:border-blue-800',
-      features: ['No EMI', 'Latest gadgets', 'Tech upgrades']
-    },
-    {
-      id: 'needs',
-      name: 'Needs safebox',
-      icon: ShoppingBag,
-      description: 'Clothing, education, exam fees, rent',
-      balance: 15000,
-      target: 40000,
-      monthlyContribution: 2500,
-      color: 'text-green-500',
-      bgColor: 'bg-green-50 dark:bg-green-950/20',
-      borderColor: 'border-green-200 dark:border-green-800',
-      features: ['Daily needs', 'Education', 'Rent backup']
     },
     {
       id: 'custom',
@@ -148,7 +109,7 @@ const safebox = () => {
               <safeboxIcon className="h-12 w-12 text-primary" />
             </div>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground">safebox</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground">Safebox</h1>
           <p className="text-sm md:text-base text-muted-foreground px-4">
             "She may skip the insurance pitch, but give her ₹50 and a purpose—she'll squirrel it away without a second thought. Saving isn't taught, it's in her DNA."
           </p>
