@@ -815,6 +815,33 @@ export type Database = {
           },
         ]
       }
+      user_otps: {
+        Row: {
+          attempts: number | null
+          created_at: string | null
+          email: string
+          expires_at: string | null
+          is_verified: boolean | null
+          otp: string
+        }
+        Insert: {
+          attempts?: number | null
+          created_at?: string | null
+          email: string
+          expires_at?: string | null
+          is_verified?: boolean | null
+          otp: string
+        }
+        Update: {
+          attempts?: number | null
+          created_at?: string | null
+          email?: string
+          expires_at?: string | null
+          is_verified?: boolean | null
+          otp?: string
+        }
+        Relationships: []
+      }
       user_security: {
         Row: {
           created_at: string
@@ -1014,6 +1041,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_otp: {
+        Args: { p_email: string; p_otp_length?: number }
+        Returns: string
+      }
       hash_mpin: {
         Args: { mpin_plain: string }
         Returns: string
@@ -1021,6 +1052,10 @@ export type Database = {
       initialize_user_wallets: {
         Args: { user_uuid: string }
         Returns: undefined
+      }
+      is_otp_verified: {
+        Args: { p_email: string }
+        Returns: boolean
       }
       match_merchant_to_stock: {
         Args: { merchant_text: string }
@@ -1057,6 +1092,10 @@ export type Database = {
           is_valid: boolean
           auth_user_id: string
         }[]
+      }
+      verify_otp: {
+        Args: { p_email: string; p_otp: string }
+        Returns: boolean
       }
     }
     Enums: {
