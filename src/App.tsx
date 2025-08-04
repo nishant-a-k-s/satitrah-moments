@@ -24,6 +24,7 @@ import HelpSupport from "./pages/HelpSupport";
 import safebox from "./pages/safebox";
 import Investments from "./pages/Investments";
 import SquirrelLending from "./pages/SquirrelLending";
+import SpendsToStocks from "./pages/SpendsToStocks";
 import Maternity from "./pages/Maternity";
 import NotFound from "./pages/NotFound";
 import AddMoney from "./pages/AddMoney";
