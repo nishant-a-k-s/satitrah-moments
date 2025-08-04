@@ -4,11 +4,11 @@ import { Eye, EyeOff, Plus, Send, Smartphone } from "lucide-react";
 import { useState } from "react";
 
 interface safeboxCardProps {
-  balance: number;
+  balance?: number;
   currency?: string;
 }
 
-export const safeboxCard = ({ balance, currency = "INR" }: safeboxCardProps) => {
+export const safeboxCard = ({ balance = 0, currency = "INR" }: safeboxCardProps) => {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
 
   const formatCurrency = (amount: number) => {
