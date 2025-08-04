@@ -128,14 +128,14 @@ export const useSafeboxData = () => {
   };
 
   return {
-    safebox,
-    transactions,
-    isLoading,
-    getTotalBalance,
-    getSafeboxByType, // ✅ fixed the typo here
-    refetch: () => {
-      fetchSafeboxData();
-      fetchTransactions();
-    }
-  };
+  safebox,
+  transactions,
+  isLoading,
+  getTotalBalance,
+  getSafeboxByType, // ✅ Correct spelling
+  refetch: () => {
+    fetchSafeboxData(); // ✅ Also fixed typo here
+    fetchTransactions();
+  }
 };
+  
