@@ -16,7 +16,8 @@ import Index from "./pages/Index";
 import SOS from "./pages/SOS";
 import Transfers from "./pages/Transfers";
 import Profile from "./pages/Profile";
-import safebox from "./pages/safebox";
+import Safebox from "./pages/Safebox";
+import SatiSafebox from "./pages/SatiSafebox";
 import PayBills from "./pages/PayBills";
 import Statements from "./pages/Statements";
 import Notifications from "./pages/Notifications";
@@ -78,14 +79,14 @@ const AuthenticatedApp = () => {
             <div className="flex-1 overflow-auto">
               <Routes>
                 <Route path="/" element={<Index />} />
-                <Route path="/safebox" element={<safebox />} />
+                <Route path="/Safebox" element={<Safebox />} />
                 <Route path="/transfers" element={<Transfers />} />
                 <Route path="/bills" element={<PayBills />} />
                 <Route path="/statements" element={<Statements />} />
                 <Route path="/sos" element={<SOS />} />
                 <Route path="/notifications" element={<Notifications />} />
                 <Route path="/help" element={<HelpSupport />} />
-                <Route path="/safebox" element={<safebox />} />
+                <Route path="/SatiSafebox" element={<SatiSafebox />} />
                 <Route path="/investments" element={<Investments />} />
                 <Route path="/lending" element={<SquirrelLending />} />
                 <Route path="/maternity" element={<Maternity />} />
