@@ -11,7 +11,7 @@ interface PremiumsafeboxCardProps {
 
 export const PremiumsafeboxCard = ({ className }: PremiumsafeboxCardProps) => {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
-  const { Safebox: safeboxList = [], isLoading, getTotalBalance } = useSafeboxData();
+  const safebox = safeboxList?.find(w => w.safebox_type === 'Safebox');
   const navigate = useNavigate();
   
   const totalBalance = getTotalBalance();
