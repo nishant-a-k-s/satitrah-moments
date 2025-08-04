@@ -1,4 +1,4 @@
-import { PremiumWalletCard } from "@/components/PremiumWalletCard";
+import { PremiumsafeboxCard } from "@/components/PremiumsafeboxCard";
 import { JupiterStyleQuickActions } from "@/components/JupiterStyleQuickActions";
 import { AdvancedInsights } from "@/components/AdvancedInsights";
 import { BudgetingTools } from "@/components/BudgetingTools";
@@ -17,13 +17,13 @@ const Index = () => {
             Good morning, Sati 👋
           </h1>
           <p className="text-sm md:text-base text-muted-foreground">
-            Your SatiSafe digital banking companion for security, stability, and financial growth
+            Your Safe digital banking companion for security, stability, and financial growth
           </p>
         </div>
 
-        {/* Wallet Card */}
+        {/* safebox Card */}
         <div className="mb-8">
-          <PremiumWalletCard />
+          <PremiumsafeboxCard />
         </div>
 
         {/* Main Content Tabs */}
