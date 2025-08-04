@@ -29,7 +29,7 @@ export interface TransactionData {
 }
 
 export const useSafeboxData = () => {
-  const [safebox, setsafebox] = useState<SafeboxData[]>([]);
+  const [safebox, setSafebox] = useState<SafeboxData[]>([]);
   const [transactions, setTransactions] = useState<TransactionData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
@@ -42,7 +42,7 @@ export const useSafeboxData = () => {
   const fetchSafeboxData = async () => {
     try {
       const { data: { user }, error: authError } = await supabase.auth.getUser();
-      
+
       if (authError || !user) {
         console.log('No authenticated user');
         setIsLoading(false);
@@ -74,7 +74,7 @@ export const useSafeboxData = () => {
           variant: "destructive",
         });
       } else {
-        setsafebox(safeboxData || []);
+        setSafebox(safeboxData || []);
       }
     } catch (error) {
       console.error('Unexpected error:', error);
@@ -86,7 +86,7 @@ export const useSafeboxData = () => {
   const fetchTransactions = async () => {
     try {
       const { data: { user }, error: authError } = await supabase.auth.getUser();
-      
+
       if (authError || !user) {
         return;
       }
@@ -120,22 +120,22 @@ export const useSafeboxData = () => {
   };
 
   const getTotalBalance = () => {
-    return safebox.reduce((total, safebox) => total + parseFloat(safebox.balance.toString()), 0);
+    return safebox.reduce((total, s) => total + parseFloat(s.balance.toString()), 0);
   };
 
   const getSafeboxByType = (type: string) => {
-    return safebox.find(safebox => safebox.safebox_type === type);
+    return safebox.find(s => s.safeboxsafebox_type === type);
   };
 
   return {
-  safebox,
-  transactions,
-  isLoading,
-  getTotalBalance,
-  getSafeboxByType, // ✅ Correct spelling
-  refetch: () => {
-    fetchSafeboxData(); // ✅ Also fixed typo here
-    fetchTransactions();
-  }
+    safebox,
+    transactions,
+    isLoading,
+    getTotalBalance,
+    getSafeboxByType,
+    refetch: () => {
+      fetchSafeboxData();
+      fetchTransactions();
+    }
+  };
 };
-  
