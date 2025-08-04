@@ -21,9 +21,9 @@ import {
   BarChart3,
   Lightbulb
 } from 'lucide-react';
-import { useEnhancedSpendToStocks } from '@/hooks/useEnhancedSpendToStocks';
+import { useSpendToStocks } from '@/hooks/useSpendToStocks';
 
-export const EnhancedSpendsToStocks = () => {
+export const SpendsToStocks = () => {
   const { 
     spendLogs,
     investmentStatus,
@@ -33,7 +33,7 @@ export const EnhancedSpendsToStocks = () => {
     processOCRText,
     getInvestmentOpportunities,
     getTotalSpendingByStock
-  } = useEnhancedSpendToStocks();
+  } = useSpendToStocks();
   
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
