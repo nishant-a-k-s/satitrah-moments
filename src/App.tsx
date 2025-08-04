@@ -21,7 +21,6 @@ import PayBills from "./pages/PayBills";
 import Statements from "./pages/Statements";
 import Notifications from "./pages/Notifications";
 import HelpSupport from "./pages/HelpSupport";
-import safebox from "./pages/safebox";
 import Investments from "./pages/Investments";
 import SquirrelLending from "./pages/SquirrelLending";
 import SpendsToStocks from "./pages/SpendsToStocks";
