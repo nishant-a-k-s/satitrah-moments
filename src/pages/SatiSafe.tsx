@@ -18,7 +18,7 @@ import {
   Banknote
 } from "lucide-react";
 
-const SatiSafe = () => {
+const safebox = () => {
   const [balance, setBalance] = useState(45000);
   const [target, setTarget] = useState(150000);
   const [monthlyContribution, setMonthlyContribution] = useState(2000);
@@ -46,18 +46,18 @@ const SatiSafe = () => {
               <Shield className="h-12 w-12 text-primary" />
             </div>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground">SatiSafe Wallet</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground">safebox </h1>
           <p className="text-sm md:text-base text-muted-foreground px-4">
             "Your safety net for emergencies, trauma, and dignity. Because every woman deserves security and peace of mind."
           </p>
         </div>
 
-        {/* Main Wallet Card */}
+        {/* Main safebox Card */}
         <Card className="p-4 md:p-6 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
           <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <h2 className="text-lg md:text-xl font-semibold text-foreground">SatiSafe Balance</h2>
+                <h2 className="text-lg md:text-xl font-semibold text-foreground">safebox Balance</h2>
                 <p className="text-2xl md:text-3xl font-bold text-primary">₹{balance.toLocaleString()}</p>
                 <p className="text-sm text-muted-foreground">+ {squirrelBalance} Squirrels Auto-Invested</p>
               </div>
@@ -112,7 +112,7 @@ const SatiSafe = () => {
 
             <TabsContent value="features" className="space-y-4">
               <h3 className="text-lg md:text-xl font-semibold text-foreground">
-                What SatiSafe Covers
+                What safebox Covers
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {features.map((feature, index) => (
@@ -141,7 +141,7 @@ const SatiSafe = () => {
                   <div className="space-y-2">
                     <h4 className="font-semibold text-blue-700 dark:text-blue-300">Professionals</h4>
                     <p className="text-sm text-muted-foreground">
-                      Get 80% of Wallet + Squirrel balance for 30 days interest-free
+                      Get 80% of safebox + Squirrel balance for 30 days interest-free
                     </p>
                     <p className="text-lg font-bold text-blue-600">₹{Math.floor((balance + squirrelBalance) * 0.8).toLocaleString()}</p>
                     <Badge variant="secondary" className="text-xs">Premium Feature</Badge>
@@ -163,7 +163,7 @@ const SatiSafe = () => {
                     <Badge className="bg-green-500/10 text-green-600 border-green-500/20">Active</Badge>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    All earned Squirrels are automatically invested into your SatiSafe wallet for maximum security.
+                    All earned Squirrels are automatically invested into your safebox for maximum security.
                   </p>
                   <div className="grid grid-cols-2 gap-4 p-4 bg-muted/30 rounded-lg">
                     <div>
@@ -242,4 +242,4 @@ const SatiSafe = () => {
   );
 };
 
-export default SatiSafe;
+export default safebox;
