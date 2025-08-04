@@ -22,7 +22,7 @@ import {
   Lightbulb
 } from 'lucide-react';
 
-export const SpendToStocks = () => {
+export const SpendsToStocks = () => {
   const { 
     spendLogs,
     investmentStatus,
@@ -32,7 +32,7 @@ export const SpendToStocks = () => {
     processOCRText,
     getInvestmentOpportunities,
     getTotalSpendingByStock
-  } = SpendToStocks();
+  } = SpendsToStocks();
   
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
