@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
-export interface WalletData {
+export interface SafeboxData {
   id: string;
-  wallet_type: string;
+  safeboxsafebox_type: string;
   balance: number;
   currency: string;
   is_active: boolean;
@@ -22,24 +22,24 @@ export interface TransactionData {
   created_at: string;
   status?: string;
   reference_id?: string | null;
-  wallet_id: string;
+  safebox_id: string;
   user_id: string;
-  to_wallet_id?: string | null;
+  to_safebox_id?: string | null;
   metadata?: any;
 }
 
-export const useWalletData = () => {
-  const [wallets, setWallets] = useState<WalletData[]>([]);
+export const useSafeboxData = () => {
+  const [safebox, setsafebox] = useState<SafeboxData[]>([]);
   const [transactions, setTransactions] = useState<TransactionData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
-    fetchWalletData();
+    fetchSafeboxData();
     fetchTransactions();
   }, []);
 
-  const fetchWalletData = async () => {
+  const fetchSafeboxData = async () => {
     try {
       const { data: { user }, error: authError } = await supabase.auth.getUser();
       
@@ -62,21 +62,21 @@ export const useWalletData = () => {
         return;
       }
 
-      // Then get wallets
-      const { data: walletsData, error: walletsError } = await supabase
-        .from('wallets')
+      // Then get Safebox
+      const { data: safeboxData, error: safeboxError } = await supabase
+        .from('safebox')
         .select('*')
         .eq('user_id', profile.id);
 
-      if (walletsError) {
-        console.error('Error fetching wallets:', walletsError);
+      if (safeboxError) {
+        console.error('Error fetching safeboxs:', safeboxError);
         toast({
           title: "Error",
-          description: "Failed to fetch wallet data",
+          description: "Failed to fetch safebox data",
           variant: "destructive",
         });
       } else {
-        setWallets(walletsData || []);
+        setSafebox(safeboxData || []);
       }
     } catch (error) {
       console.error('Unexpected error:', error);
@@ -124,21 +124,21 @@ export const useWalletData = () => {
   };
 
   const getTotalBalance = () => {
-    return wallets.reduce((total, wallet) => total + parseFloat(wallet.balance.toString()), 0);
+    return safebox.reduce((total, safebox) => total + parseFloat(safebox.balance.toString()), 0);
   };
 
-  const getWalletByType = (type: string) => {
-    return wallets.find(wallet => wallet.wallet_type === type);
+  const getSafeboxByType = (type: string) => {
+    return safebox.find(safebox => safebox.safebox_type === type);
   };
 
   return {
-    wallets,
+    safebox,
     transactions,
     isLoading,
     getTotalBalance,
-    getWalletByType,
+    getsafeboxByType,
     refetch: () => {
-      fetchWalletData();
+      fetchsafeboxData();
       fetchTransactions();
     }
   };
