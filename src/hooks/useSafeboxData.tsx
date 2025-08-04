@@ -4,7 +4,7 @@ import { useToast } from '@/hooks/use-toast';
 
 export interface SafeboxData {
   id: string;
-  safeboxsafebox_type: string;
+  safebox_type: string;
   balance: number;
   currency: string;
   is_active: boolean;
@@ -67,7 +67,7 @@ export const useSafeboxData = () => {
         .eq('user_id', profile.id);
 
       if (safeboxError) {
-        console.error('Error fetching safeboxs:', safeboxError);
+        console.error('Error fetching safebox:', safeboxError);
         toast({
           title: "Error",
           description: "Failed to fetch safebox data",
@@ -124,7 +124,7 @@ export const useSafeboxData = () => {
   };
 
   const getSafeboxByType = (type: string) => {
-    return safebox.find(s => s.safeboxsafebox_type === type);
+    return safebox.find(s => s.safebox_type === type);
   };
 
   return {
