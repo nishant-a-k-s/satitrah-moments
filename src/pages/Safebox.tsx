@@ -32,7 +32,7 @@ const safebox = () => {
   const [isPregnancyMode, setIsPregnancyMode] = useState(false);
   const [ambulanceBenefit, setAmbulanceBenefit] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('INR');
-  const { safebox, isLoading, getTotalBalance } = usesafeboxData();
+  const { safebox, isLoading, getTotalBalance } = useSafeboxData();
   const navigate = useNavigate();
 
   const currencies = [
