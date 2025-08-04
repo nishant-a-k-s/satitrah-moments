@@ -167,7 +167,7 @@ export type Database = {
         }
         Relationships: []
       }
-      goal_wallets: {
+      goal_safeboxs: {
         Row: {
           created_at: string
           current_amount: number | null
@@ -545,7 +545,7 @@ export type Database = {
           id: string
           transaction_id: string | null
           user_id: string
-          wallet_type: string | null
+          safebox_type: string | null
         }
         Insert: {
           amount: number
@@ -555,7 +555,7 @@ export type Database = {
           id?: string
           transaction_id?: string | null
           user_id: string
-          wallet_type?: string | null
+          safebox_type?: string | null
         }
         Update: {
           amount?: number
@@ -565,7 +565,7 @@ export type Database = {
           id?: string
           transaction_id?: string | null
           user_id?: string
-          wallet_type?: string | null
+          safebox_type?: string | null
         }
         Relationships: []
       }
@@ -750,10 +750,10 @@ export type Database = {
           metadata: Json | null
           reference_id: string | null
           status: string | null
-          to_wallet_id: string | null
+          to_safebox_id: string | null
           type: Database["public"]["Enums"]["transaction_type"]
           user_id: string
-          wallet_id: string
+          safebox_id: string
         }
         Insert: {
           amount: number
@@ -768,10 +768,10 @@ export type Database = {
           metadata?: Json | null
           reference_id?: string | null
           status?: string | null
-          to_wallet_id?: string | null
+          to_safebox_id?: string | null
           type: Database["public"]["Enums"]["transaction_type"]
           user_id: string
-          wallet_id: string
+          safebox_id: string
         }
         Update: {
           amount?: number
@@ -786,17 +786,17 @@ export type Database = {
           metadata?: Json | null
           reference_id?: string | null
           status?: string | null
-          to_wallet_id?: string | null
+          to_safebox_id?: string | null
           type?: Database["public"]["Enums"]["transaction_type"]
           user_id?: string
-          wallet_id?: string
+          safebox_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "transactions_to_wallet_id_fkey"
-            columns: ["to_wallet_id"]
+            foreignKeyName: "transactions_to_safebox_id_fkey"
+            columns: ["to_safebox_id"]
             isOneToOne: false
-            referencedRelation: "wallets"
+            referencedRelation: "safeboxs"
             referencedColumns: ["id"]
           },
           {
@@ -807,10 +807,10 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "transactions_wallet_id_fkey"
-            columns: ["wallet_id"]
+            foreignKeyName: "transactions_safebox_id_fkey"
+            columns: ["safebox_id"]
             isOneToOne: false
-            referencedRelation: "wallets"
+            referencedRelation: "safeboxs"
             referencedColumns: ["id"]
           },
         ]
@@ -962,7 +962,7 @@ export type Database = {
         }
         Relationships: []
       }
-      wallets: {
+      safeboxs: {
         Row: {
           balance: number
           created_at: string
@@ -971,7 +971,7 @@ export type Database = {
           is_active: boolean | null
           updated_at: string
           user_id: string
-          wallet_type: Database["public"]["Enums"]["wallet_type"]
+          safebox_type: Database["public"]["Enums"]["safebox_type"]
         }
         Insert: {
           balance?: number
@@ -981,7 +981,7 @@ export type Database = {
           is_active?: boolean | null
           updated_at?: string
           user_id: string
-          wallet_type: Database["public"]["Enums"]["wallet_type"]
+          safebox_type: Database["public"]["Enums"]["safebox_type"]
         }
         Update: {
           balance?: number
@@ -991,11 +991,11 @@ export type Database = {
           is_active?: boolean | null
           updated_at?: string
           user_id?: string
-          wallet_type?: Database["public"]["Enums"]["wallet_type"]
+          safebox_type?: Database["public"]["Enums"]["safebox_type"]
         }
         Relationships: [
           {
-            foreignKeyName: "wallets_user_id_fkey"
+            foreignKeyName: "safeboxs_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
@@ -1049,7 +1049,7 @@ export type Database = {
         Args: { mpin_plain: string }
         Returns: string
       }
-      initialize_user_wallets: {
+      initialize_user_safeboxs: {
         Args: { user_uuid: string }
         Returns: undefined
       }
@@ -1066,18 +1066,18 @@ export type Database = {
           currency: string
         }[]
       }
-      update_wallet_balance: {
+      update_safebox_balance: {
         Args: {
-          wallet_uuid: string
+          safebox_uuid: string
           amount_change: number
           trans_type: Database["public"]["Enums"]["transaction_type"]
           description_text?: string
         }
         Returns: string
       }
-      update_wallet_balance_with_stock_matching: {
+      update_safebox_balance_with_stock_matching: {
         Args: {
-          wallet_uuid: string
+          safebox_uuid: string
           amount_change: number
           trans_type: Database["public"]["Enums"]["transaction_type"]
           description_text?: string
@@ -1108,7 +1108,7 @@ export type Database = {
       subscription_status: "active" | "inactive" | "cancelled" | "expired"
       transaction_type: "add" | "withdraw" | "transfer" | "payment" | "refund"
       user_type: "student" | "professional" | "homemaker" | "other"
-      wallet_type: "sati" | "maternity" | "savings" | "emergency"
+      safebox_type: "sati" | "maternity" | "savings" | "emergency"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1246,7 +1246,7 @@ export const Constants = {
       subscription_status: ["active", "inactive", "cancelled", "expired"],
       transaction_type: ["add", "withdraw", "transfer", "payment", "refund"],
       user_type: ["student", "professional", "homemaker", "other"],
-      wallet_type: ["sati", "maternity", "savings", "emergency"],
+      safebox_type: ["sati", "maternity", "savings", "emergency"],
     },
   },
 } as const
