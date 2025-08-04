@@ -11,12 +11,12 @@ interface PremiumsafeboxCardProps {
 
 export const PremiumsafeboxCard = ({ className }: PremiumsafeboxCardProps) => {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
-  const { Safebox, isLoading, getTotalBalance } = useSafeboxData();
+  const { Safebox: safeboxList, isLoading, getTotalBalance } = useSafeboxData();
   const navigate = useNavigate();
   
   const totalBalance = getTotalBalance();
-  const Safebox = Safebox.find(w => w.safebox_type === 'Safebox');
-  const availableBalance = Safebox?.balance || 0;
+  const safebox = safeboxList.find(w => w.safebox_type === 'Safebox');
+  const availableBalance = safebox?.balance || 0;
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-IN', {
