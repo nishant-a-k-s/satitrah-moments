@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Plus, Send, Smartphone } from "lucide-react";
 import { useState } from "react";
 
-interface WalletCardProps {
+interface safeboxCardProps {
   balance: number;
   currency?: string;
 }
 
-export const WalletCard = ({ balance, currency = "INR" }: WalletCardProps) => {
+export const safeboxCard = ({ balance, currency = "INR" }: safeboxCardProps) => {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
 
   const formatCurrency = (amount: number) => {
