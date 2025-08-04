@@ -30,7 +30,8 @@ import squirrelMascot from "@/assets/squirrel-mascot.png";
 
 const mainItems = [
   { title: "Home", url: "/", icon: Home },
-  { title: "Wallet", url: "/wallet", icon: CreditCard },
+  { title: "Safebox", url: "/Safebox", icon: CreditCard },
+  { title: "Spends to Stocks", url: "/spends-to-stocks", icon: TrendingUp }
   { title: "Transfers", url: "/transfers", icon: ArrowRightLeft },
   { title: "Pay Bills", url: "/bills", icon: Smartphone },
   { title: "Statements", url: "/statements", icon: FileText },
@@ -38,8 +39,8 @@ const mainItems = [
 
 const specialItems = [
   { title: "SOS Emergency", url: "/sos", icon: Shield, urgent: true },
-  { title: "SatiSafe Wallet", url: "/satisafe", icon: Shield },
-  { title: "Maternity Wallet", url: "/maternity", icon: Baby, femaleOnly: true },
+  { title: "Safebox", url: "/Safebox", icon: Shield },
+  { title: "Maternity Safebox", url: "/maternity", icon: Baby, femaleOnly: true },
   { title: "Squirrel Lending", url: "/lending", icon: Coins },
   { title: "Investments", url: "/investments", icon: TrendingUp },
 ];
