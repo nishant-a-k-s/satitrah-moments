@@ -25,7 +25,7 @@ export const GetStartedScreen = ({ onGetStarted }: { onGetStarted: () => void })
     {
       icon: Heart,
       title: "Maternity Support",
-      subtitle: "Special wallet for expecting mothers",
+      subtitle: "Special safebox for expecting mothers",
       color: "text-secondary",
       bgColor: "bg-secondary/10"
     },
