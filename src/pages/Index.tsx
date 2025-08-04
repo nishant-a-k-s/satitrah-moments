@@ -4,7 +4,7 @@ import { AdvancedInsights } from "@/components/AdvancedInsights";
 import { BudgetingTools } from "@/components/BudgetingTools";
 import { AIInsights } from "@/components/AIInsights";
 import { GamifiedLearning } from "@/components/GamifiedLearning";
-import { SpendsToStocks } from "@/components/SpendsToStocks";
+import SpendsToStocks from "@/components/SpendsToStocks";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Index = () => {
