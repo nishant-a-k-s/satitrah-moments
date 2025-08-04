@@ -1,247 +1,442 @@
-import { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useState, useRef } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
 import { 
   TrendingUp, 
-  TrendingDown, 
   ArrowUpRight, 
-  Building2, 
+  Camera,
+  Upload,
   DollarSign,
-  Plus,
+  ShoppingCart,
   Eye,
-  Target
-} from "lucide-react";
+  Plus,
+  Star,
+  Target,
+  BarChart3,
+  Lightbulb
+} from 'lucide-react';
+import { useEnhancedSpendToStocks } from '@/hooks/useEnhancedSpendToStocks';
 
-interface StockMatch {
-  merchantName: string;
-  companyName: string;
-  symbol: string;
-  currentPrice: number;
-  change: number;
-  changePercent: number;
-  transactionAmount: number;
-  transactionDate: string;
-}
-
-interface StockWatchlistItem {
-  id: string;
-  company_name: string;
-  symbol: string;
-  price_at_addition: number;
-  is_invested: boolean;
-}
-
-export const SpendsToStocks = () => {
-  const [stockMatches, setStockMatches] = useState<StockMatch[]>([]);
-  const [watchlist, setWatchlist] = useState<StockWatchlistItem[]>([]);
-  const [investmentAmount, setInvestmentAmount] = useState("");
-  const [selectedStock, setSelectedStock] = useState<StockMatch | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+export const EnhancedSpendsToStocks = () => {
+  const { 
+    spendLogs,
+    investmentStatus,
+    loading, 
+    logSpend,
+    markInvestmentMade,
+    processOCRText,
+    getInvestmentOpportunities,
+    getTotalSpendingByStock
+  } = useEnhancedSpendToStocks();
+  
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  const [manualSpend, setManualSpend] = useState({
+    amount: '',
+    merchantName: '',
+    brandDetected: '',
+    productCategory: ''
+  });
+  
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchStockMatches();
-    fetchWatchlist();
-  }, []);
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
 
-  const fetchStockMatches = async () => {
-    // For now, show mock data since we need to populate transactions with stock matches
-    const mockMatches: StockMatch[] = [
-      {
-        merchantName: "Amazon",
-        companyName: "Amazon Inc.",
-        symbol: "AMZN",
-        currentPrice: 3245.50,
-        change: 45.25,
-        changePercent: 1.4,
-        transactionAmount: 1250,
-        transactionDate: new Date().toISOString()
-      },
-      {
-        merchantName: "Zomato",
-        companyName: "Zomato Ltd",
-        symbol: "ZOMATO.NS",
-        currentPrice: 78.30,
-        change: -2.15,
-        changePercent: -2.7,
-        transactionAmount: 450,
-        transactionDate: new Date().toISOString()
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: "Invalid file",
+        description: "Please upload an image file",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsProcessing(true);
+    try {
+      // Create preview URL
+      const imageUrl = URL.createObjectURL(file);
+      setUploadedImage(imageUrl);
+
+      // Process OCR
+      const { text, matches } = await processOCRText(file);
+      
+      if (matches.length > 0) {
+        const match = matches[0];
+        
+        // Auto-populate spend log with OCR results
+        await logSpend({
+          amount: 850, // This would be extracted from OCR in production
+          merchantName: match.brand_name,
+          brandDetected: match.brand_name,
+          detectionMethod: 'ocr',
+          imageUrl: imageUrl,
+          ocrText: text
+        });
+
+        toast({
+          title: "OCR Processed",
+          description: `Detected spending at ${match.brand_name}. Investment opportunity found!`
+        });
+      } else {
+        toast({
+          title: "OCR Processed",
+          description: "Receipt processed but no investment opportunities detected"
+        });
       }
-    ];
-    
-    setStockMatches(mockMatches);
-    setIsLoading(false);
+    } catch (error) {
+      toast({
+        title: "Processing failed",
+        description: "Failed to process the image",
+        variant: "destructive"
+      });
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
-  const fetchWatchlist = async () => {
-    // Mock watchlist data for now
-    const mockWatchlist: StockWatchlistItem[] = [];
-    setWatchlist(mockWatchlist);
-  };
+  const handleManualSpendSubmit = async () => {
+    if (!manualSpend.amount || !manualSpend.merchantName) {
+      toast({
+        title: "Missing information",
+        description: "Please fill in amount and merchant name",
+        variant: "destructive"
+      });
+      return;
+    }
 
-  const addToWatchlist = async (stock: StockMatch) => {
-    // Simulate adding to watchlist
-    const newItem: StockWatchlistItem = {
-      id: Date.now().toString(),
-      company_name: stock.companyName,
-      symbol: stock.symbol,
-      price_at_addition: stock.currentPrice,
-      is_invested: false
-    };
-    
-    setWatchlist(prev => [...prev, newItem]);
-    
-    toast({
-      title: "Added to watchlist",
-      description: `${stock.companyName} added to your stock watchlist`,
+    await logSpend({
+      amount: parseFloat(manualSpend.amount),
+      merchantName: manualSpend.merchantName,
+      brandDetected: manualSpend.brandDetected,
+      productCategory: manualSpend.productCategory,
+      detectionMethod: 'manual'
+    });
+
+    setManualSpend({
+      amount: '',
+      merchantName: '',
+      brandDetected: '',
+      productCategory: ''
     });
   };
 
-  const simulateInvestment = (stock: StockMatch) => {
-    setSelectedStock(stock);
-    // In a real app, this would navigate to broker integration
-    toast({
-      title: "Investment simulated",
-      description: `Investment of ₹${investmentAmount || 'amount'} in ${stock.companyName} would be processed`,
-    });
-    setInvestmentAmount("");
-    setSelectedStock(null);
-  };
+  const investmentOpportunities = getInvestmentOpportunities();
+  const spendingByStock = getTotalSpendingByStock();
 
-  if (isLoading) {
-    return (
-      <Card className="p-6">
-        <div className="animate-pulse space-y-4">
-          <div className="h-4 bg-muted rounded w-1/2"></div>
-          <div className="space-y-3">
-            <div className="h-20 bg-muted rounded"></div>
-            <div className="h-20 bg-muted rounded"></div>
-          </div>
-        </div>
-      </Card>
-    );
-  }
+  const formatCurrency = (amount: number) => {
+    return `₹${amount.toLocaleString()}`;
+  };
 
   return (
-    <div className="space-y-6">
-      <Card className="p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="p-2 bg-primary/10 rounded-lg">
-            <Building2 className="h-6 w-6 text-primary" />
+    <div className="min-h-screen bg-background">
+      <div className="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
+        {/* Header */}
+        <div className="text-center space-y-4">
+          <div className="flex justify-center">
+            <div className="p-4 bg-primary/10 rounded-full">
+              <TrendingUp className="h-12 w-12 text-primary" />
+            </div>
           </div>
-          <div>
-            <h3 className="text-lg font-semibold">Spends-to-Stocks</h3>
-            <p className="text-sm text-muted-foreground">
-              Invest in companies where you spend
-            </p>
-          </div>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground">Smart Spends-to-Stocks</h1>
+          <p className="text-sm md:text-base text-muted-foreground px-4">
+            Upload receipts or log spending to discover investment opportunities
+          </p>
         </div>
 
-        {stockMatches.length === 0 ? (
-          <div className="text-center py-8">
-            <Target className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <h4 className="font-medium text-foreground mb-2">No stock matches found</h4>
-            <p className="text-sm text-muted-foreground">
-              Start making transactions and we'll detect investable companies for you
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {stockMatches.map((stock, index) => (
-              <Card key={index} className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20">
-                <div className="space-y-3">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">
-                        You spent ₹{stock.transactionAmount.toLocaleString()} at {stock.merchantName}
-                      </p>
-                      <h4 className="font-semibold text-lg">{stock.companyName}</h4>
-                      <div className="flex items-center gap-2">
-                        <Badge variant="outline" className="text-xs">
-                          {stock.symbol}
-                        </Badge>
-                        <span className="text-sm font-medium">
-                          ₹{stock.currentPrice.toFixed(2)}
-                        </span>
-                        <span className={`text-xs flex items-center gap-1 ${
-                          stock.change >= 0 ? 'text-green-600' : 'text-red-600'
-                        }`}>
-                          {stock.change >= 0 ? (
-                            <TrendingUp className="h-3 w-3" />
-                          ) : (
-                            <TrendingDown className="h-3 w-3" />
-                          )}
-                          {stock.changePercent.toFixed(2)}%
-                        </span>
+        <Tabs defaultValue="upload" className="w-full">
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="upload">Upload Receipt</TabsTrigger>
+            <TabsTrigger value="manual">Manual Entry</TabsTrigger>
+            <TabsTrigger value="opportunities">Opportunities</TabsTrigger>
+            <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="history">History</TabsTrigger>
+          </TabsList>
+
+          {/* Upload Receipt Tab */}
+          <TabsContent value="upload" className="space-y-6">
+            <Card className="p-6">
+              <div className="space-y-4">
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold mb-2">Upload Receipt for OCR Processing</h3>
+                  <p className="text-muted-foreground text-sm">
+                    Take a photo or upload an image of your receipt to automatically detect spending patterns
+                  </p>
+                </div>
+
+                <div className="flex gap-4 justify-center">
+                  <Button
+                    onClick={() => fileInputRef.current?.click()}
+                    className="flex items-center gap-2"
+                    disabled={isProcessing}
+                  >
+                    <Upload className="h-4 w-4" />
+                    Upload Image
+                  </Button>
+                  
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      // In a real app, this would open camera
+                      toast({
+                        title: "Camera",
+                        description: "Camera functionality would open here"
+                      });
+                    }}
+                    disabled={isProcessing}
+                  >
+                    <Camera className="h-4 w-4" />
+                    Take Photo
+                  </Button>
+                </div>
+
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                />
+
+                {uploadedImage && (
+                  <div className="mt-4 text-center">
+                    <img 
+                      src={uploadedImage} 
+                      alt="Uploaded receipt" 
+                      className="max-w-xs mx-auto rounded-lg border"
+                    />
+                    <p className="text-sm text-muted-foreground mt-2">
+                      {isProcessing ? "Processing..." : "Processed successfully"}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </Card>
+          </TabsContent>
+
+          {/* Manual Entry Tab */}
+          <TabsContent value="manual" className="space-y-6">
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4">Log Spending Manually</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="amount">Amount *</Label>
+                  <Input
+                    id="amount"
+                    type="number"
+                    placeholder="₹850"
+                    value={manualSpend.amount}
+                    onChange={(e) => setManualSpend(prev => ({ ...prev, amount: e.target.value }))}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="merchant">Merchant/Brand *</Label>
+                  <Input
+                    id="merchant"
+                    placeholder="Zomato, Amazon, etc."
+                    value={manualSpend.merchantName}
+                    onChange={(e) => setManualSpend(prev => ({ ...prev, merchantName: e.target.value }))}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="brand">Brand Detected</Label>
+                  <Input
+                    id="brand"
+                    placeholder="Specific brand if different"
+                    value={manualSpend.brandDetected}
+                    onChange={(e) => setManualSpend(prev => ({ ...prev, brandDetected: e.target.value }))}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="category">Product Category</Label>
+                  <Input
+                    id="category"
+                    placeholder="Food, Electronics, etc."
+                    value={manualSpend.productCategory}
+                    onChange={(e) => setManualSpend(prev => ({ ...prev, productCategory: e.target.value }))}
+                  />
+                </div>
+              </div>
+              <Button 
+                className="mt-4" 
+                onClick={handleManualSpendSubmit}
+                disabled={loading}
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Log Spending
+              </Button>
+            </Card>
+          </TabsContent>
+
+          {/* Investment Opportunities Tab */}
+          <TabsContent value="opportunities" className="space-y-6">
+            {investmentOpportunities.length === 0 ? (
+              <Card className="p-8 text-center">
+                <Lightbulb className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
+                <h3 className="text-lg font-semibold mb-2">No Investment Opportunities Yet</h3>
+                <p className="text-muted-foreground">
+                  Start logging your spending to see personalized investment suggestions
+                </p>
+              </Card>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {investmentOpportunities.map((opportunity) => (
+                  <Card key={opportunity.id} className="p-4">
+                    <div className="space-y-4">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <h4 className="font-semibold text-sm">{opportunity.company_name}</h4>
+                          <p className="text-xs text-muted-foreground">{opportunity.stock_symbol}</p>
+                          <Badge className="text-xs mt-1">
+                            Opportunity
+                          </Badge>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-lg font-bold text-primary">
+                            {formatCurrency(opportunity.total_spent_amount)}
+                          </p>
+                          <p className="text-xs text-muted-foreground">Total spent</p>
+                        </div>
+                      </div>
+
+                      <div className="p-3 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg">
+                        <p className="text-xs text-muted-foreground">Suggested investment</p>
+                        <p className="font-semibold text-primary">
+                          {formatCurrency(opportunity.suggested_amount || 0)}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          10% of your spending
+                        </p>
+                      </div>
+
+                      <div className="flex gap-2">
+                        <Button 
+                          size="sm" 
+                          className="flex-1"
+                          onClick={() => markInvestmentMade(opportunity.stock_symbol)}
+                        >
+                          <DollarSign className="h-3 w-3 mr-1" />
+                          Invest Now
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                        >
+                          <Eye className="h-3 w-3" />
+                        </Button>
                       </div>
                     </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => addToWatchlist(stock)}
-                    >
-                      <Eye className="h-4 w-4 mr-1" />
-                      Watch
-                    </Button>
-                  </div>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </TabsContent>
 
-                  <div className="flex gap-2">
-                    <Input
-                      type="number"
-                      placeholder="Investment amount"
-                      value={selectedStock?.symbol === stock.symbol ? investmentAmount : ""}
-                      onChange={(e) => {
-                        setSelectedStock(stock);
-                        setInvestmentAmount(e.target.value);
-                      }}
-                      className="flex-1"
-                    />
-                    <Button 
-                      onClick={() => simulateInvestment(stock)}
-                      disabled={!investmentAmount}
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                    >
-                      <DollarSign className="h-4 w-4 mr-1" />
-                      Invest
-                    </Button>
+          {/* Analytics Tab */}
+          <TabsContent value="analytics" className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <BarChart3 className="h-5 w-5" />
+                  Spending by Stock
+                </h3>
+                <div className="space-y-3">
+                  {spendingByStock.slice(0, 5).map((item) => (
+                    <div key={item.symbol} className="flex justify-between items-center">
+                      <div>
+                        <p className="font-medium text-sm">{item.company}</p>
+                        <p className="text-xs text-muted-foreground">{item.symbol}</p>
+                      </div>
+                      <p className="font-semibold">{formatCurrency(item.amount)}</p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <Target className="h-5 w-5" />
+                  Investment Summary
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Total Opportunities</span>
+                    <span className="font-semibold">{investmentStatus.length}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Investments Made</span>
+                    <span className="font-semibold">
+                      {investmentStatus.filter(s => s.investment_made).length}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Total Spent</span>
+                    <span className="font-semibold">
+                      {formatCurrency(
+                        investmentStatus.reduce((sum, s) => sum + s.total_spent_amount, 0)
+                      )}
+                    </span>
                   </div>
                 </div>
               </Card>
-            ))}
-          </div>
-        )}
-      </Card>
+            </div>
+          </TabsContent>
 
-      {watchlist.length > 0 && (
-        <Card className="p-6">
-          <h4 className="font-semibold mb-4 flex items-center gap-2">
-            <Eye className="h-5 w-5 text-primary" />
-            Your Stock Watchlist
-          </h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {watchlist.map((item) => (
-              <Card key={item.id} className="p-3 bg-muted/50">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium text-sm">{item.company_name}</p>
-                    <p className="text-xs text-muted-foreground">{item.symbol}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-medium">₹{item.price_at_addition.toFixed(2)}</p>
-                    {item.is_invested && (
-                      <Badge variant="secondary" className="text-xs">Invested</Badge>
-                    )}
-                  </div>
-                </div>
+          {/* History Tab */}
+          <TabsContent value="history" className="space-y-6">
+            {spendLogs.length === 0 ? (
+              <Card className="p-8 text-center">
+                <ShoppingCart className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
+                <h3 className="text-lg font-semibold mb-2">No Spending History</h3>
+                <p className="text-muted-foreground">
+                  Start logging your purchases to see your spending history here
+                </p>
               </Card>
-            ))}
-          </div>
-        </Card>
-      )}
+            ) : (
+              <div className="space-y-4">
+                {spendLogs.map((log) => (
+                  <Card key={log.id} className="p-4">
+                    <div className="flex justify-between items-start">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium">{log.merchant_name || log.brand_detected}</p>
+                          <Badge variant="outline" className="text-xs">
+                            {log.detection_method}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          {log.product_category && `${log.product_category} • `}
+                          {new Date(log.transaction_date).toLocaleDateString()}
+                        </p>
+                        {log.matched_company && (
+                          <p className="text-xs text-primary">
+                            → Investment opportunity: {log.matched_company}
+                          </p>
+                        )}
+                      </div>
+                      <div className="text-right">
+                        <p className="font-semibold">{formatCurrency(log.amount)}</p>
+                        {log.matched_stock_symbol && (
+                          <p className="text-xs text-muted-foreground">{log.matched_stock_symbol}</p>
+                        )}
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 };
