@@ -1,66 +1,71 @@
-import React, { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { TrendingUp } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { useSafeboxData } from "@/hooks/useSafeboxData";
 import { Badge } from "@/components/ui/badge";
 
-interface SpendLog {
-  merchant: string;
-  amount: number;
-  stockSymbol: string;
-  stockPrice: number;
-}
+type CompanySpending = {
+  [company: string]: {
+    amount: number;
+    symbol: string;
+    price: number;
+  };
+};
 
-const SpendsToStocks = () => {
-  const [spendLogs, setSpendLogs] = useState<SpendLog[]>([]);
+export default function SpendsToStocks() {
+  const { spendLogs } = useSafeboxData();
+  const [spendingByStock, setSpendingByStock] = useState<CompanySpending>({});
 
   useEffect(() => {
-    const fetchSpendLogs = async () => {
-      try {
-        const response = await fetch("/api/spend-logs");
-        const data = await response.json();
-        setSpendLogs(data || []);
-      } catch (error) {
-        console.error("Error fetching spend logs:", error);
-        setSpendLogs([]);
+    if (!spendLogs || !Array.isArray(spendLogs)) return;
+
+    const byStock: CompanySpending = {};
+
+    spendLogs.forEach((log: any) => {
+      const { company, amount, stockSymbol, currentPrice } = log;
+
+      if (!company || !amount || !stockSymbol || !currentPrice) return;
+
+      if (!byStock[company]) {
+        byStock[company] = {
+          amount: 0,
+          symbol: stockSymbol,
+          price: currentPrice,
+        };
       }
-    };
 
-    fetchSpendLogs();
-  }, []);
+      byStock[company].amount += amount;
+    });
 
-  const spendingByStock = spendLogs.reduce((acc: Record<string, number>, curr) => {
-    const { stockSymbol, amount } = curr;
-    acc[stockSymbol] = (acc[stockSymbol] || 0) + amount;
-    return acc;
-  }, {});
+    setSpendingByStock(byStock);
+  }, [spendLogs]);
 
   return (
     <div className="p-4 space-y-4">
-      {spendLogs.length === 0 ? (
-        <p className="text-center text-gray-500">No spend data available.</p>
+      <h2 className="text-lg font-bold">Your Spending Insights</h2>
+
+      {Object.entries(spendingByStock).length === 0 ? (
+        <p>No spending data found.</p>
       ) : (
-        Object.entries(spendingByStock).map(([symbol, total]) => {
-          const stock = spendLogs.find((log) => log.stockSymbol === symbol);
-          return (
-            <Card key={symbol}>
-              <CardContent className="flex items-center justify-between p-4">
-                <div>
-                  <h4 className="text-lg font-semibold">{symbol}</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Total Spent: ₹{total.toFixed(2)}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-green-500" />
-                  <Badge variant="outline">₹{stock?.stockPrice ?? "--"}</Badge>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })
+        Object.entries(spendingByStock).map(([company, data]) => (
+          <Card
+            key={company}
+            className="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center"
+          >
+            <div>
+              <h3 className="text-md font-semibold">{company}</h3>
+              <p className="text-sm text-muted-foreground">
+                You've spent ₹{data.amount.toFixed(2)} here.
+              </p>
+            </div>
+            <div className="text-right mt-2 sm:mt-0">
+              <p className="text-sm">Stock: {data.symbol}</p>
+              <Badge className="text-xs mt-1">
+                Current Price: ₹{data.price.toFixed(2)}
+              </Badge>
+            </div>
+          </Card>
+        ))
       )}
     </div>
   );
-};
-
-export default SpendsToStocks;
+}
