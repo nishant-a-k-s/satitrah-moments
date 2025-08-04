@@ -135,7 +135,7 @@ export const EnhancedSpendsToStocks = () => {
   const spendingByStock = getTotalSpendingByStock();
 
   const formatCurrency = (amount: number) => {
-    return ₹${amount.toLocaleString()};
+    return `₹${amount.toLocaleString()}`;
   };
 
   return (
