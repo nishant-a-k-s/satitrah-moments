@@ -21,7 +21,6 @@ import {
   BarChart3,
   Lightbulb
 } from 'lucide-react';
-import { useSpendToStocks } from '@/hooks/useSpendToStocks';
 
 export const SpendsToStocks = () => {
   const { 
