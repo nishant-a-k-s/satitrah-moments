@@ -31,7 +31,6 @@ export const SpendsToStocks = () => {
     logSpend,
     markInvestmentMade,
     processOCRText,
-    getTotalSpendingByStock
   } = useSafeboxData(); // ✅ call the hook here
   
   const { toast } = useToast();
@@ -128,8 +127,6 @@ export const SpendsToStocks = () => {
       productCategory: ''
     });
   };
-
-  const spendingByStock = getTotalSpendingByStock();
 
   const formatCurrency = (amount: number) => {
     return `₹${amount.toLocaleString()}`;
