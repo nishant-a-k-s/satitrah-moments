@@ -84,10 +84,9 @@ export const EnhancedSpendsToStocks = () => {
         });
 
         toast({
-  title: "OCR Processed",
-  description: `Detected spending at ${match.brand_name}. Investment opportunity found!`
-});
-
+          title: "OCR Processed",
+          description: Detected spending at ${match.brand_name}. Investment opportunity found!
+        });
       } else {
         toast({
           title: "OCR Processed",
@@ -135,7 +134,7 @@ export const EnhancedSpendsToStocks = () => {
   const spendingByStock = getTotalSpendingByStock();
 
   const formatCurrency = (amount: number) => {
-    return `₹${amount.toLocaleString()}`;
+    return ₹${amount.toLocaleString()};
   };
 
   return (
@@ -183,13 +182,14 @@ export const EnhancedSpendsToStocks = () => {
                     <Upload className="h-4 w-4" />
                     Upload Image
                   </Button>
-
+                  
                   <Button
                     variant="outline"
                     onClick={() => {
+                      // In a real app, this would open camera
                       toast({
                         title: "Camera",
-                        description: "Camera functionality would open here",
+                        description: "Camera functionality would open here"
                       });
                     }}
                     disabled={isProcessing}
@@ -288,90 +288,7 @@ export const EnhancedSpendsToStocks = () => {
                 </p>
               </Card>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-  <div>
-    <Label htmlFor="amount">Amount *</Label>
-    <Input
-      id="amount"
-      type="number"
-      placeholder="₹850"
-      value={manualSpend.amount}
-      onChange={(e) => setManualSpend(prev => ({ ...prev, amount: e.target.value }))}
-    />
-  </div>
-  <div>
-    <Label htmlFor="merchant">Merchant/Brand *</Label>
-    <Input
-      id="merchant"
-      placeholder="Zomato, Amazon, etc."
-      value={manualSpend.merchantName}
-      onChange={(e) => setManualSpend(prev => ({ ...prev, merchantName: e.target.value }))}
-    />
-  </div>
-  <div>
-    <Label htmlFor="product">Product Name</Label>
-    <Input
-      id="product"
-      placeholder="e.g., Paracetamol, Bata shoes, Nilkamal Chair"
-      onChange={(e) => {
-        const product = e.target.value.toLowerCase();
-        setManualSpend(prev => ({ ...prev, productName: product }));
-
-        // Sample brand-product mapping logic
-        const productBrandMap: Record<string, string> = {
-          "paracetamol": "Cipla",
-          "crocin": "GSK",
-          "bata": "Bata India",
-          "apache": "TVS Motor",
-          "bulb": "Surya Roshni",
-          "nilkamal": "Nilkamal",
-          "airtel": "Bharti Airtel",
-          "jio": "Reliance Industries",
-          "chair": "Nilkamal",
-          "tyre": "MRF",
-          "milk": "Hatsun Agro",
-          "tata salt": "Tata Consumer",
-          "swiggy": "Bundl Technologies", // Private but often requested
-          "zomato": "Zomato Ltd.",
-          "makemytrip": "MakeMyTrip Ltd.",
-          "shampoo": "HUL",
-          "laptop": "HP", // fallback to HP India if needed
-        };
-
-        const detected = Object.entries(productBrandMap).find(([keyword]) =>
-          product.includes(keyword)
-        );
-
-        if (detected) {
-          setManualSpend(prev => ({
-            ...prev,
-            brandDetected: detected[1],
-            productCategory: prev.productCategory || "General"
-          }));
-        }
-      }}
-    />
-  </div>
-  <div>
-    <Label htmlFor="brand">Brand Detected</Label>
-    <Input
-      id="brand"
-      placeholder="Auto-detected brand"
-      value={manualSpend.brandDetected}
-      readOnly
-    />
-  </div>
-  <div>
-    <Label htmlFor="category">Product Category</Label>
-    <Input
-      id="category"
-      placeholder="Food, Electronics, etc."
-      value={manualSpend.productCategory}
-      onChange={(e) => setManualSpend(prev => ({ ...prev, productCategory: e.target.value }))}
-    />
-  </div>
-</div>
-
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {investmentOpportunities.map((opportunity) => (
                   <Card key={opportunity.id} className="p-4">
                     <div className="space-y-4">
