@@ -70,10 +70,10 @@ export const JupiterStyleQuickActions = () => {
   const specialFeatures = [
     { 
       icon: ShieldCheck, 
-      label: "SatiSafe Wallet", 
+      label: "Safebox", 
       subtitle: "Emergency & safety",
       color: "text-emerald-600 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/20 dark:hover:bg-emerald-950/30",
-      route: "/satisafe"
+      route: "/Safebox"
     },
     { 
       icon: Coins, 
@@ -203,7 +203,7 @@ export const JupiterStyleQuickActions = () => {
               variant="ghost"
               onClick={() => {
                 if (action.label === "Investments") navigate("/investments");
-                else if (action.label === "Goals") navigate("/wallet");
+                else if (action.label === "Goals") navigate("/Safebox");
               }}
               className="h-auto py-3 md:py-4 px-2 flex-col gap-2 bg-muted/30 hover:bg-muted/50 transition-all duration-200"
               style={{
