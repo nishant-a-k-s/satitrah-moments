@@ -16,12 +16,12 @@ import Index from "./pages/Index";
 import SOS from "./pages/SOS";
 import Transfers from "./pages/Transfers";
 import Profile from "./pages/Profile";
-import Wallet from "./pages/Wallet";
+import safebox from "./pages/safebox";
 import PayBills from "./pages/PayBills";
 import Statements from "./pages/Statements";
 import Notifications from "./pages/Notifications";
 import HelpSupport from "./pages/HelpSupport";
-import SatiSafe from "./pages/SatiSafe";
+import safebox from "./pages/safebox";
 import Investments from "./pages/Investments";
 import SquirrelLending from "./pages/SquirrelLending";
 import Maternity from "./pages/Maternity";
@@ -78,14 +78,14 @@ const AuthenticatedApp = () => {
             <div className="flex-1 overflow-auto">
               <Routes>
                 <Route path="/" element={<Index />} />
-                <Route path="/wallet" element={<Wallet />} />
+                <Route path="/safebox" element={<safebox />} />
                 <Route path="/transfers" element={<Transfers />} />
                 <Route path="/bills" element={<PayBills />} />
                 <Route path="/statements" element={<Statements />} />
                 <Route path="/sos" element={<SOS />} />
                 <Route path="/notifications" element={<Notifications />} />
                 <Route path="/help" element={<HelpSupport />} />
-                <Route path="/satisafe" element={<SatiSafe />} />
+                <Route path="/safebox" element={<safebox />} />
                 <Route path="/investments" element={<Investments />} />
                 <Route path="/lending" element={<SquirrelLending />} />
                 <Route path="/maternity" element={<Maternity />} />
