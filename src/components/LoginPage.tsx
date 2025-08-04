@@ -78,8 +78,12 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
             <p className="text-xs text-muted-foreground">SOS Emergency</p>
           </Card>
           <Card className="p-4 text-center bg-card-elevated border-0">
+            <Shield className="h-6 w-6 mx-auto mb-2 text-destructive" />
+            <p className="text-xs text-muted-foreground">Spends to Stocks</p>
+          </Card>
+          <Card className="p-4 text-center bg-card-elevated border-0">
             <Baby className="h-6 w-6 mx-auto mb-2 text-secondary" />
-            <p className="text-xs text-muted-foreground">SatiSafe Wallet</p>
+            <p className="text-xs text-muted-foreground">Safebox</p>
           </Card>
           <Card className="p-4 text-center bg-card-elevated border-0">
             <Coins className="h-6 w-6 mx-auto mb-2 text-accent" />
