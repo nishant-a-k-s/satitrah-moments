@@ -5,11 +5,11 @@ import { useState } from "react";
 import { useSafeboxData } from "@/hooks/useSafeboxData";
 import { useNavigate } from "react-router-dom";
 
-interface PremiumWalletCardProps {
+interface PremiumsafeboxCardProps {
   className?: string;
 }
 
-export const PremiumWalletCard = ({ className }: PremiumWalletCardProps) => {
+export const PremiumsafeboxCard = ({ className }: PremiumsafeboxCardProps) => {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
   const { Safebox, isLoading, getTotalBalance } = useSafeboxData();
   const navigate = useNavigate();
