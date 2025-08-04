@@ -1,4 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
+import { TrendingUp } from "lucide-react";
 import { Home, CreditCard, ArrowRightLeft, Shield, User } from "lucide-react";
 
 const bottomNavItems = [
