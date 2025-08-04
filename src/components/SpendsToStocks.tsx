@@ -31,7 +31,6 @@ export const SpendsToStocks = () => {
     logSpend,
     markInvestmentMade,
     processOCRText,
-    getInvestmentOpportunities,
     getTotalSpendingByStock
   } = useSafeboxData(); // ✅ call the hook here
   
@@ -130,7 +129,6 @@ export const SpendsToStocks = () => {
     });
   };
 
-  const investmentOpportunities = getInvestmentOpportunities();
   const spendingByStock = getTotalSpendingByStock();
 
   const formatCurrency = (amount: number) => {
