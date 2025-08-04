@@ -84,9 +84,10 @@ export const EnhancedSpendsToStocks = () => {
         });
 
         toast({
-          title: "OCR Processed",
-          description: Detected spending at ${match.brand_name}. Investment opportunity found!
-        });
+  title: "OCR Processed",
+  description: `Detected spending at ${match.brand_name}. Investment opportunity found!`
+});
+
       } else {
         toast({
           title: "OCR Processed",
