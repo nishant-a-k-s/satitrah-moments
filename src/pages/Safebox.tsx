@@ -6,13 +6,13 @@ import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useSafeboxData } from "@/hooks/useSafeboxData";
+import { useWalletData } from "@/hooks/useWalletData";
 import { useNavigate } from "react-router-dom";
 import { 
-  safebox as safeboxIcon, 
+  Vault, 
   Baby, 
   Shield, 
-  Briefcase, 
+  Briefcase,
   Smartphone, 
   ShoppingBag, 
   Plus,
@@ -32,7 +32,7 @@ const safebox = () => {
   const [isPregnancyMode, setIsPregnancyMode] = useState(false);
   const [ambulanceBenefit, setAmbulanceBenefit] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('INR');
-  const { safebox, isLoading, getTotalBalance } = useSafeboxData();
+  const { wallets, isLoading, getTotalBalance } = useWalletData();
   const navigate = useNavigate();
 
   const currencies = [
@@ -106,7 +106,7 @@ const safebox = () => {
         <div className="text-center space-y-4">
           <div className="flex justify-center">
             <div className="p-4 bg-primary/10 rounded-full">
-              <safeboxIcon className="h-12 w-12 text-primary" />
+              <Vault className="h-12 w-12 text-primary" />
             </div>
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-foreground">Safebox</h1>

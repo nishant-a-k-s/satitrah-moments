@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Plus, ArrowUpRight, MoreHorizontal, Zap } from "lucide-react";
 import { useState } from "react";
-import { useSafeboxData } from "@/hooks/useSafeboxData";
+import { useWalletData } from "@/hooks/useWalletData";
 import { useNavigate } from "react-router-dom";
 
 interface PremiumsafeboxCardProps {
@@ -13,11 +13,11 @@ export const PremiumsafeboxCard = ({ className }: PremiumsafeboxCardProps) => {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
   const navigate = useNavigate();
 
-  const { safeboxList, isLoading, getTotalBalance } = useSafeboxData();
-  const safebox = safeboxList?.find(w => w.safebox_type === 'Safebox');
+  const { wallets, isLoading, getTotalBalance } = useWalletData();
+  const safeboxData = wallets?.find(w => w.wallet_type === 'safebox');
 
   const totalBalance = getTotalBalance?.() || 0;
-  const availableBalance = safebox?.balance || 0;
+  const availableBalance = safeboxData?.balance || 0;
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-IN', {
@@ -53,7 +53,7 @@ export const PremiumsafeboxCard = ({ className }: PremiumsafeboxCardProps) => {
         <div className="relative flex items-start justify-between mb-8">
           <div>
             <p className="text-sm opacity-80 font-medium">Satitrah Safebox</p>
-            <p className="text-xs opacity-60 font-mono mt-1">•••• •••• •••• {safebox?.id?.slice(-4) || '0000'}</p>
+            <p className="text-xs opacity-60 font-mono mt-1">•••• •••• •••• {safeboxData?.id?.slice(-4) || '0000'}</p>
           </div>
           <Button
             variant="ghost"

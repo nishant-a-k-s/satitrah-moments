@@ -10,7 +10,7 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
   const [loginMethod, setLoginMethod] = useState<'main' | 'phone' | 'signup'>('main');
 
   if (loginMethod === 'phone') {
-    return <PhoneLoginPage onBack={() => setLoginMethod('main')} onLogin={onLogin} />;
+    return <PhoneLoginPage onSuccess={onLogin} />;
   }
 
   if (loginMethod === 'signup') {

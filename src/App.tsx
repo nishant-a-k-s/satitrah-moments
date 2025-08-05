@@ -37,6 +37,7 @@ import Rewards from "./pages/Rewards";
 import SplitBills from "./pages/SplitBills";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
+import LogoutScreen from "./pages/LogoutScreen";
 
 const queryClient = new QueryClient();
 
@@ -99,6 +100,8 @@ const AuthenticatedApp = () => {
                 <Route path="/rewards" element={<Rewards />} />
                 <Route path="/split-bills" element={<SplitBills />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/spends-to-stocks" element={<SpendsToStocks />} />
+                <Route path="/logout" element={<LogoutScreen />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
