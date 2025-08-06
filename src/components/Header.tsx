@@ -2,10 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Bell, Menu, User, Wifi, Signal, Battery } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useAuth } from "@/hooks/useAuth";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
 export const Header = () => {
   const navigate = useNavigate();
+  const { userData } = useAuth();
+  const userName = userData?.name || "User";
   return (
     <div className="flex items-center justify-between p-4 bg-background">
       {/* Status Bar Simulation */}
@@ -32,7 +35,7 @@ export const Header = () => {
             />
             <div>
               <h1 className="text-lg font-bold text-foreground">Satitrah</h1>
-              <p className="text-xs text-muted-foreground">Good morning, @username </p>
+              <p className="text-xs text-muted-foreground">Good morning, {userName}</p>
             </div>
           </div>
         </div>

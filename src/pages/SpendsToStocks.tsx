@@ -1,6 +1,6 @@
 import React from "react";
-import SpendsToStocks from "@/components/SpendsToStocks";
+import EnhancedSpendsToStocks from "@/components/EnhancedSpendsToStocks";
 
 export default function SpendsToStocksPage() {
-  return <SpendsToStocks />;
+  return <EnhancedSpendsToStocks />;
 }
