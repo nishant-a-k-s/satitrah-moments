@@ -39,7 +39,7 @@ const mainItems = [
 
 const specialItems = [
   { title: "SOS Emergency", url: "/sos", icon: Shield, urgent: true },
-  { title: "SatiSafebox", url: "/SatiSafebox", icon: Shield },
+  { title: "Ivy", url: "/Ivy", icon: Shield },
   { title: "Maternity Safebox", url: "/maternity", icon: Baby, femaleOnly: true },
   { title: "Squirrel Lending", url: "/lending", icon: Coins },
   { title: "Investments", url: "/investments", icon: TrendingUp },
@@ -91,7 +91,7 @@ export function AppSidebar() {
             {!collapsed && (
               <div>
                 <h1 className="text-lg font-bold text-foreground">Ivysta</h1>
-                <p className="text-xs text-muted-foreground">Financial Companion</p>
+                <p className="text-xs text-muted-foreground">Leaves that carry your journey 🍁</p>
               </div>
             )}
           </div>
