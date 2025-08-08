@@ -17,7 +17,7 @@ import SOS from "./pages/SOS";
 import Transfers from "./pages/Transfers";
 import Profile from "./pages/Profile";
 import Safebox from "./pages/Safebox";
-import SatiSafebox from "./pages/SatiSafebox";
+import Ivy from "./pages/Ivy";
 import PayBills from "./pages/PayBills";
 import Statements from "./pages/Statements";
 import Notifications from "./pages/Notifications";
