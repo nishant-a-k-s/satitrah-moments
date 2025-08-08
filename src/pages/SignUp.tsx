@@ -45,12 +45,12 @@ export default function SignUp() {
           <div className="flex justify-center">
             <img 
               src={squirrelMascot} 
-              alt="Satitrah" 
+              alt="Ivysta" 
               className="w-20 h-20 rounded-2xl shadow-premium"
             />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Join Satitrah</h1>
+            <h1 className="text-3xl font-bold text-foreground">Join Ivysta</h1>
             <p className="text-muted-foreground">Create your secure wallet account</p>
           </div>
         </div>
