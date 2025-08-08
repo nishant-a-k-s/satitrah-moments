@@ -43,7 +43,7 @@ export default function ForgotPassword() {
           <div className="flex justify-center">
             <img 
               src={squirrelMascot} 
-              alt="Satitrah" 
+              alt="Ivysta" 
               className="w-20 h-20 rounded-2xl shadow-premium"
             />
           </div>
