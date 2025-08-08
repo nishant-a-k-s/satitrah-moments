@@ -33,13 +33,13 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
           <div className="flex justify-center">
             <img
               src={squirrelMascot}
-              alt="Satitrah"
+              alt="Ivysta"
               className="w-20 h-20 rounded-2xl shadow-premium"
             />
           </div>
           <div>
-            <h1 className="text-4xl font-bold text-foreground">Satitrah</h1>
-            <p className="text-muted-foreground text-lg mt-2">Built for Her. Backed by All.</p>
+            <h1 className="text-4xl font-bold text-foreground">Ivysta</h1>
+            <p className="text-muted-foreground text-lg mt-2">Every leaf holds a whisper 🍃</p>
           </div>
         </div>
 
@@ -83,7 +83,7 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
           </Card>
           <Card className="p-4 text-center bg-card-elevated border-0">
             <Baby className="h-6 w-6 mx-auto mb-2 text-secondary" />
-            <p className="text-xs text-muted-foreground">Safebox</p>
+            <p className="text-xs text-muted-foreground"> Ivy Safebox</p>
           </Card>
           <Card className="p-4 text-center bg-card-elevated border-0">
             <Coins className="h-6 w-6 mx-auto mb-2 text-accent" />
