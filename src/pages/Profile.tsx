@@ -47,7 +47,7 @@ const Profile = () => {
 
   const userProfile = {
     name: "@username",
-    email: "sati@example.com",
+    email: "Ivy@example.com",
     phone: "+91 98765 43210",
     gender: "female",
     address: "Mumbai, Maharashtra",
