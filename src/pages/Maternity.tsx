@@ -126,7 +126,7 @@ const Maternity = () => {
                             />
                           </div>
                           <p className="text-xs text-muted-foreground">
-                            One-time offer: You pay 50%, Satitrah covers 50% of ambulance charges. 
+                            One-time offer: You pay 50%, Ivysta covers 50% of ambulance charges. 
                             20% less than market prices for all users.
                           </p>
                         </Card>
@@ -239,7 +239,7 @@ const Maternity = () => {
                 <Gift className="h-8 w-8 text-amber-500" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Auto-investing to SatiSafe</p>
+                <p className="text-sm text-muted-foreground">Auto-investing to Ivy</p>
                 <Badge variant="secondary" className="text-xs mt-1">Auto Active</Badge>
               </div>
             </div>
@@ -367,7 +367,7 @@ const Maternity = () => {
                         />
                       </div>
                       <p className="text-xs text-muted-foreground">
-                        One-time offer: You pay 50%, Satitrah covers 50% of ambulance charges. 
+                        One-time offer: You pay 50%, Ivysta covers 50% of ambulance charges. 
                         20% less than market prices for all users.
                       </p>
                     </Card>
