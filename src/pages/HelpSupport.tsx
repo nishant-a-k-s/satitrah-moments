@@ -24,7 +24,7 @@ const HelpSupport = () => {
   const [isAIChatActive, setIsAIChatActive] = useState(false);
   
   const chatMessages = [
-    { type: 'ai', message: 'Hi! I\'m Sati AI. How can I help you today?', time: '10:30 AM' },
+    { type: 'ai', message: 'Hi! I\'m Ivy AI. How can I help you today?', time: '10:30 AM' },
     { type: 'user', message: 'I want to know about squirrel lending', time: '10:31 AM' },
     { type: 'ai', message: 'Squirrel lending allows you to borrow money for free for 45 days. You can borrow up to 80% of your  and squirrel balance. Would you like to know more about eligibility?', time: '10:31 AM' }
   ];
@@ -49,7 +49,7 @@ const HelpSupport = () => {
     {
       category: 'SOS & Safety',
       questions: [
-        { q: 'How does Voice-Activated SOS work?', a: 'Say "Help Satitrah SOS" to trigger emergency mode. It shares your location and vital signs automatically.' },
+        { q: 'How does Voice-Activated SOS work?', a: 'Say "Help Ivy SOS" to trigger emergency mode. It shares your location and vital signs automatically.' },
         { q: 'What is Walk With Me feature?', a: 'Real-time location sharing for safety. Limited to 2 sessions per day for fair use.' },
         { q: 'How do ambulance benefits work?', a: 'Pregnant users get 50/50 split (one-time), all users get 20% discount on standard rates.' }
       ]
@@ -112,7 +112,7 @@ const HelpSupport = () => {
                 <Bot className="h-6 w-6 text-blue-600 dark:text-blue-400" />
               </div>
               <h3 className="font-semibold text-foreground">AI Assistant</h3>
-              <p className="text-sm text-muted-foreground">Get instant answers from Sati AI</p>
+              <p className="text-sm text-muted-foreground">Get instant answers from Ivy AI</p>
               <Badge variant="secondary">24/7 Available</Badge>
             </div>
           </Card>
@@ -259,14 +259,14 @@ const HelpSupport = () => {
                       <Phone className="h-5 w-5 text-primary" />
                       <div>
                         <p className="font-medium text-sm">Support Helpline</p>
-                        <p className="text-sm text-muted-foreground">1800-123-SATI (7284)</p>
+                        <p className="text-sm text-muted-foreground">1800-123-Ivy (7284)</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Mail className="h-5 w-5 text-primary" />
                       <div>
                         <p className="font-medium text-sm">Email Support</p>
-                        <p className="text-sm text-muted-foreground">help@satitrah.com</p>
+                        <p className="text-sm text-muted-foreground">help@Ivysta.com</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
