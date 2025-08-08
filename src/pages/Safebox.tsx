@@ -44,8 +44,8 @@ const safebox = () => {
 
   const safeboxTypes = [
     {
-      id: 'satisafe',
-      name: 'SatiSafe safebox',
+      id: 'Ivy',
+      name: 'Ivy safebox',
       icon: ShieldCheck,
       description: 'Emergency, trauma, safety, and dignity coverage - your primary protection',
       balance: 89000,
