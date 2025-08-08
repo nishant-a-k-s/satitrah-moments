@@ -158,7 +158,7 @@ export const SignUpPage = ({ onBack, onSignUpComplete }: SignUpPageProps) => {
   const hashMPIN = async (mpin: string): Promise<string> => {
     // Simple client-side hashing - in production, use a proper hashing library
     const encoder = new TextEncoder();
-    const data = encoder.encode(mpin + 'satitrah_salt');
+    const data = encoder.encode(mpin + 'Ivysta_salt');
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
@@ -180,7 +180,7 @@ export const SignUpPage = ({ onBack, onSignUpComplete }: SignUpPageProps) => {
             <div className="flex justify-center">
               <img 
                 src={squirrelMascot} 
-                alt="Satitrah" 
+                alt="Ivysta" 
                 className="w-20 h-20 rounded-2xl shadow-premium"
               />
             </div>
@@ -235,13 +235,13 @@ export const SignUpPage = ({ onBack, onSignUpComplete }: SignUpPageProps) => {
           <div className="flex justify-center">
             <img 
               src={squirrelMascot} 
-              alt="Satitrah" 
+              alt="Ivysta" 
               className="w-20 h-20 rounded-2xl shadow-premium"
             />
           </div>
           <div>
             <h1 className="text-4xl font-bold text-foreground">Create Account</h1>
-            <p className="text-muted-foreground text-lg mt-2">Join Satitrah today</p>
+            <p className="text-muted-foreground text-lg mt-2">Join Ivysta today</p>
           </div>
         </div>
 
