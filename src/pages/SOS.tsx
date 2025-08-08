@@ -50,7 +50,7 @@ const SOS = () => {
               <Mic className="h-6 w-6 text-primary" />
               <div>
                 <h3 className="text-lg font-semibold text-foreground">Voice-Activated SOS</h3>
-                <p className="text-sm text-muted-foreground">Say "Help Satitrah SOS" to trigger emergency mode</p>
+                <p className="text-sm text-muted-foreground">Say "Help Ivy SOS" to trigger emergency mode</p>
               </div>
             </div>
             <Switch 
@@ -170,7 +170,7 @@ const SOS = () => {
                 </div>
                 <div>
                   <p className="font-medium">Partner/Caregiver Contact</p>
-                  <p className="text-sm text-muted-foreground">Registered contacts can call Satitrah for fund access</p>
+                  <p className="text-sm text-muted-foreground">Registered contacts can call Ivysta for fund access</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
