@@ -49,7 +49,7 @@ const AuthenticatedApp = () => {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-xl font-semibold mb-2">Loading...</h2>
-          <p className="text-muted-foreground">Setting up your Satitrah experience</p>
+          <p className="text-muted-foreground">Setting up your Ivysta experience</p>
         </div>
       </div>
     );
@@ -87,7 +87,7 @@ const AuthenticatedApp = () => {
                 <Route path="/sos" element={<SOS />} />
                 <Route path="/notifications" element={<Notifications />} />
                 <Route path="/help" element={<HelpSupport />} />
-                <Route path="/SatiSafebox" element={<SatiSafebox />} />
+                <Route path="/Ivy" element={<Ivy />} />
                 <Route path="/investments" element={<Investments />} />
                 <Route path="/lending" element={<SquirrelLending />} />
                 <Route path="/maternity" element={<Maternity />} />
