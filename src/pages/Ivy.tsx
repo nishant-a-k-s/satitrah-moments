@@ -18,7 +18,7 @@ import {
   Banknote
 } from "lucide-react";
 
-const SatiSafeboxCard = () => {
+const IvyCard = () => {
   const [balance, setBalance] = useState(45000);
   const [target, setTarget] = useState(150000);
   const [monthlyContribution, setMonthlyContribution] = useState(2000);
@@ -242,4 +242,4 @@ const SatiSafeboxCard = () => {
   );
 };
 
-export default SatiSafeboxCard;
+export default IvyCard;
