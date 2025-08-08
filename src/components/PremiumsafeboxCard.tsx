@@ -52,7 +52,7 @@ export const PremiumsafeboxCard = ({ className }: PremiumsafeboxCardProps) => {
         {/* Card Header */}
         <div className="relative flex items-start justify-between mb-4 md:mb-8">
           <div>
-            <p className="text-xs md:text-sm opacity-80 font-medium">Ivysta Safebox</p>
+            <p className="text-xs md:text-sm opacity-80 font-medium">Ivy Safebox</p>
             <p className="text-[10px] md:text-xs opacity-60 font-mono mt-1">•••• •••• •••• {safeboxData?.id?.slice(-4) || '0000'}</p>
           </div>
           <Button
