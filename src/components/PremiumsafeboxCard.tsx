@@ -14,7 +14,7 @@ export const PremiumsafeboxCard = ({ className }: PremiumsafeboxCardProps) => {
   const navigate = useNavigate();
 
   const { wallets, isLoading, getTotalBalance } = useWalletData();
-  const safeboxData = wallets?.find(w => w.wallet_type === 'safebox');
+  const safeboxData = wallets?.find(w => w.wallet_type === 'Ivy Safebox');
 
   const totalBalance = getTotalBalance?.() || 0;
   const availableBalance = safeboxData?.balance || 0;
@@ -41,7 +41,7 @@ export const PremiumsafeboxCard = ({ className }: PremiumsafeboxCardProps) => {
 
   return (
     <div className={`space-y-3 md:space-y-4 animate-fade-in ${className}`}>
-      {/* Main Safebox Card */}
+      {/* Main Ivy Safebox Card */}
       <Card className="relative overflow-hidden bg-gradient-primary p-4 md:p-8 text-primary-foreground border-0 shadow-premium">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
@@ -52,7 +52,7 @@ export const PremiumsafeboxCard = ({ className }: PremiumsafeboxCardProps) => {
         {/* Card Header */}
         <div className="relative flex items-start justify-between mb-4 md:mb-8">
           <div>
-            <p className="text-xs md:text-sm opacity-80 font-medium">Satitrah Safebox</p>
+            <p className="text-xs md:text-sm opacity-80 font-medium">Ivysta Safebox</p>
             <p className="text-[10px] md:text-xs opacity-60 font-mono mt-1">•••• •••• •••• {safeboxData?.id?.slice(-4) || '0000'}</p>
           </div>
           <Button
@@ -76,10 +76,10 @@ export const PremiumsafeboxCard = ({ className }: PremiumsafeboxCardProps) => {
           </p>
         </div>
 
-        {/* SatiSafe Savings Goal */}
+        {/* Ivy Savings Goal */}
         <div className="relative mb-4 md:mb-6 p-3 md:p-4 bg-white/10 rounded-lg backdrop-blur-sm">
           <h2 className="text-sm md:text-lg font-semibold text-primary-foreground mb-2">
-            Safebox Savings Goal
+            Ivy Savings Goal
           </h2>
           <div className="space-y-2">
             <div className="flex justify-between text-xs md:text-sm">
