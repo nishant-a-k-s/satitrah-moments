@@ -103,12 +103,12 @@ const PhoneLoginPage = ({ onSuccess }: PhoneLoginPageProps) => {
           <div className="flex justify-center">
             <img
               src={squirrelMascot}
-              alt="Satitrah"
+              alt="Ivysta"
               className="w-20 h-20 rounded-2xl shadow-premium"
             />
           </div>
           <div>
-            <h1 className="text-4xl font-bold text-foreground">Satitrah</h1>
+            <h1 className="text-4xl font-bold text-foreground">Ivysta</h1>
             <p className="text-muted-foreground text-lg mt-2">
               {step === 'phone' && 'Enter Phone Number'}
               {step === 'otp' && 'Verify OTP'}
