@@ -14,7 +14,119 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      product_company_mappings: {
+        Row: {
+          brand_name: string | null
+          company_name: string
+          created_at: string
+          exchange: string | null
+          id: string
+          product_name: string
+          stock_ticker: string | null
+          updated_at: string
+        }
+        Insert: {
+          brand_name?: string | null
+          company_name: string
+          created_at?: string
+          exchange?: string | null
+          id?: string
+          product_name: string
+          stock_ticker?: string | null
+          updated_at?: string
+        }
+        Update: {
+          brand_name?: string | null
+          company_name?: string
+          created_at?: string
+          exchange?: string | null
+          id?: string
+          product_name?: string
+          stock_ticker?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          auth_user_id: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          is_mpin_setup: boolean | null
+          mobile_number: string
+          mpin_hash: string
+          updated_at: string
+        }
+        Insert: {
+          auth_user_id?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          is_mpin_setup?: boolean | null
+          mobile_number: string
+          mpin_hash: string
+          updated_at?: string
+        }
+        Update: {
+          auth_user_id?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          is_mpin_setup?: boolean | null
+          mobile_number?: string
+          mpin_hash?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_spends: {
+        Row: {
+          amount: number
+          category: string | null
+          created_at: string
+          id: string
+          mapped_company: string | null
+          mapped_ticker: string | null
+          merchant_name: string | null
+          product_name: string
+          spend_date: string
+          user_id: string | null
+        }
+        Insert: {
+          amount: number
+          category?: string | null
+          created_at?: string
+          id?: string
+          mapped_company?: string | null
+          mapped_ticker?: string | null
+          merchant_name?: string | null
+          product_name: string
+          spend_date?: string
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number
+          category?: string | null
+          created_at?: string
+          id?: string
+          mapped_company?: string | null
+          mapped_ticker?: string | null
+          merchant_name?: string | null
+          product_name?: string
+          spend_date?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_spends_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
