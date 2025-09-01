@@ -6,11 +6,11 @@ import { AIInsights } from "@/components/AIInsights";
 import { GamifiedLearning } from "@/components/GamifiedLearning";
 import SpendsToStocks from "@/components/SpendsToStocks";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAuth } from "@/hooks/useAuth";
+import { useSimpleAuth } from "@/hooks/useSimpleAuth";
 
 const Index = () => {
-  const { userData } = useAuth();
-  const userName = userData?.name || "User";
+  const { user } = useSimpleAuth();
+  const userName = user?.full_name || "User";
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -44,7 +44,7 @@ const Index = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
               <div className="lg:col-span-2 space-y-4 md:space-y-8">
                 <JupiterStyleQuickActions />
-                <SpendsToStocks />
+          <SpendsToStocks />
               </div>
               <div className="lg:col-span-1">
                 <AdvancedInsights />

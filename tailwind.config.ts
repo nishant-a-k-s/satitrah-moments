@@ -82,10 +82,9 @@ export default {
 				'gradient-secondary': 'var(--gradient-secondary)',
 				'gradient-accent': 'var(--gradient-accent)',
 				'gradient-card': 'var(--gradient-card)',
-				'gradient-caribbean': 'var(--gradient-caribbean)',
-				'gradient-sapphire': 'var(--gradient-sapphire)',
-				'gradient-indigo': 'var(--gradient-indigo)',
-				'gradient-honeydew': 'var(--gradient-honeydew)'
+				'gradient-red': 'var(--gradient-red)',
+				'gradient-green': 'var(--gradient-green)',
+				'gradient-abstract': 'var(--gradient-abstract)'
 			},
 			boxShadow: {
 				'premium': 'var(--shadow-premium)',
@@ -93,9 +92,8 @@ export default {
 				'elevated': 'var(--shadow-elevated)',
 				'glow': 'var(--glow-primary)',
 				'glow-accent': 'var(--glow-accent)',
-				'glow-caribbean': 'var(--glow-caribbean)',
-				'glow-sapphire': 'var(--glow-sapphire)',
-				'glow-indigo': 'var(--glow-indigo)'
+				'glow-red': 'var(--glow-red)',
+				'glow-green': 'var(--glow-green)'
 			},
 			keyframes: {
 				'accordion-down': {

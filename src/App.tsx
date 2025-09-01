@@ -8,8 +8,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { AppSidebar } from "@/components/AppSidebar";
 import { GetStartedScreen } from "@/components/GetStartedScreen";
-import { AuthProvider, useAuth } from "@/hooks/useAuth";
-import PhoneLoginPage from "@/components/PhoneLoginPage";
+import { SimpleAuthProvider, useSimpleAuth } from "@/hooks/useSimpleAuth";
+import { MobileAuthPage } from "@/components/MobileAuthPage";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import Index from "./pages/Index";
@@ -42,21 +42,21 @@ import LogoutScreen from "./pages/LogoutScreen";
 const queryClient = new QueryClient();
 
 const AuthenticatedApp = () => {
-  const { user, loading } = useAuth();
+  const { user, loading } = useSimpleAuth();
 
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-xl font-semibold mb-2">Loading...</h2>
-          <p className="text-muted-foreground">Setting up your Ivysta experience</p>
+          <p className="text-muted-foreground">Setting up your Lifelin3 experience</p>
         </div>
       </div>
     );
   }
 
   if (!user) {
-    return <PhoneLoginPage onSuccess={() => window.location.reload()} />;
+    return <MobileAuthPage onSuccess={() => window.location.reload()} />;
   }
 
   return (
@@ -69,9 +69,9 @@ const AuthenticatedApp = () => {
             <header className="h-14 flex items-center border-b border-border bg-card px-4">
               <SidebarTrigger className="mr-4" />
               <div className="flex-1">
-                <h1 className="text-sm font-medium text-muted-foreground">
-                  Dashboard
-                </h1>
+          <h1 className="text-sm font-medium text-muted-foreground">
+            Lifelin3 Dashboard
+          </h1>
               </div>
               <ThemeToggle />
             </header>
@@ -122,7 +122,7 @@ const App = () => {
 
   if (currentScreen === "getStarted") {
     return (
-      <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <Toaster />
@@ -135,14 +135,14 @@ const App = () => {
   }
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <AuthProvider>
+          <SimpleAuthProvider>
             <AuthenticatedApp />
-          </AuthProvider>
+          </SimpleAuthProvider>
         </TooltipProvider>
       </QueryClientProvider>
     </ThemeProvider>
