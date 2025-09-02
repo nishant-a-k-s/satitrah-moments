@@ -50,7 +50,7 @@ export const useWalletData = () => {
       }
 
       const { data: profile, error: profileError } = await supabase
-        .from('users')
+        .from('profiles')
         .select('id')
         .eq('auth_user_id', user.id)
         .single();
@@ -61,19 +61,19 @@ export const useWalletData = () => {
         return;
       }
 
-      // Use a direct query that works with the existing types
-      const { data: walletData, error: walletError } = await supabase
-        .from('transactions') // Use a table that exists in types
-        .select('*')
-        .eq('user_id', profile.id)
-        .limit(0); // Get no results, just test the query
-
-      // For now, return mock data since the types don't match
+      // Return mock data since we don't have wallet tables yet
       setWallets([
         {
           id: '1',
           wallet_type: 'safebox',
-          balance: 0,
+          balance: 25000,
+          currency: 'INR',
+          is_active: true
+        },
+        {
+          id: '2',
+          wallet_type: 'main',
+          balance: 12500,
           currency: 'INR',
           is_active: true
         }
@@ -95,7 +95,7 @@ export const useWalletData = () => {
       }
 
       const { data: profile, error: profileError } = await supabase
-        .from('users')
+        .from('profiles')
         .select('id')
         .eq('auth_user_id', user.id)
         .single();
@@ -105,18 +105,36 @@ export const useWalletData = () => {
         return;
       }
 
-      const { data: transactionsData, error: transactionsError } = await supabase
-        .from('transactions')
+      // Use user_spends as the base for transactions
+      const { data: spendsData, error: spendsError } = await supabase
+        .from('user_spends')
         .select('*')
         .eq('user_id', profile.id)
         .order('created_at', { ascending: false })
         .limit(10);
 
-      if (transactionsError) {
-        console.error('Error fetching transactions:', transactionsError);
+      if (spendsError) {
+        console.error('Error fetching spends:', spendsError);
+        setTransactions([]);
       } else {
-        // For now, just use empty array since types don't match exactly
-        const mappedTransactions: TransactionData[] = [];
+        // Map user_spends to transaction format
+        const mappedTransactions: TransactionData[] = (spendsData || []).map(spend => ({
+          id: spend.id,
+          amount: Number(spend.amount),
+          type: 'debit',
+          description: spend.product_name,
+          merchant_name: spend.merchant_name,
+          matched_stock_symbol: spend.mapped_ticker,
+          matched_company_name: spend.mapped_company,
+          current_stock_price: null,
+          created_at: spend.created_at,
+          status: 'completed',
+          reference_id: null,
+          wallet_id: '1',
+          user_id: spend.user_id || '',
+          to_wallet_id: null,
+          metadata: null
+        }));
         setTransactions(mappedTransactions);
       }
     } catch (error) {

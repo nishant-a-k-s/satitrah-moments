@@ -62,11 +62,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const fetchUserData = async (authUserId: string) => {
     try {
       const { data, error } = await supabase
-        .from('users')
-        .select(`
-          *,
-          wallets(*)
-        `)
+        .from('profiles')
+        .select('*')
         .eq('auth_user_id', authUserId)
         .single();
 
@@ -173,7 +170,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (!user) throw new Error('No user logged in');
 
       const { error } = await supabase
-        .from('users')
+        .from('profiles')
         .update(data)
         .eq('auth_user_id', user.id);
 

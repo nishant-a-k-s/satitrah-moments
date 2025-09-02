@@ -15,9 +15,8 @@ export const useMPIN = () => {
         throw new Error('User not authenticated');
       }
 
-      // For now, use a simple approach - store in user metadata and update user table
       // Hash the MPIN
-      const hashedMPin = btoa(mpin + 'satitrah_salt');
+      const hashedMPin = btoa(mpin + 'lifelin3_salt');
 
       // Update user metadata with MPIN info
       const { error: authError } = await supabase.auth.updateUser({
@@ -26,17 +25,14 @@ export const useMPIN = () => {
 
       if (authError) throw authError;
 
-      // Update users table to mark MPIN as setup (use raw SQL if needed)
+      // Update profiles table to mark MPIN as setup
       const { error: updateError } = await supabase
-        .from('users')
-        .update({ is_mpin_setup: true } as any)
+        .from('profiles')
+        .update({ is_mpin_setup: true })
         .eq('auth_user_id', user.id);
 
       if (updateError) {
-        console.warn('User table update failed, trying direct SQL:', updateError);
-        // Try with SQL if the direct update fails
-        // Skip the SQL call for now since types don't match
-        console.log('User table update failed but continuing...');
+        console.warn('Profile update failed:', updateError);
       }
 
       toast({
@@ -80,7 +76,7 @@ export const useMPIN = () => {
       }
 
       // Hash the entered MPIN and compare
-      const enteredHash = btoa(mpin + 'satitrah_salt');
+      const enteredHash = btoa(mpin + 'lifelin3_salt');
       
       if (storedHash !== enteredHash) {
         toast({

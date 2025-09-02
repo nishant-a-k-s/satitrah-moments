@@ -112,29 +112,19 @@ export const SignUpPage = ({ onBack, onSignUpComplete }: SignUpPageProps) => {
       }
 
       if (authData.user) {
-        // Store MPIN hash in user_security table
-        const { error: mpinError } = await supabase
-          .from('user_security')
+        // Create profile in profiles table
+        const { error: profileError } = await supabase
+          .from('profiles')
           .insert({
-            user_id: authData.user.id,
+            auth_user_id: authData.user.id,
+            full_name: formData.name,
+            mobile_number: formData.phone,
             mpin_hash: await hashMPIN(formData.mpin),
-            phone_verified: false
+            is_mpin_setup: true
           });
 
-        if (mpinError) {
-          console.error('MPIN storage error:', mpinError);
-        }
-
-        // Update user profile
-        const { error: profileError } = await supabase
-          .from('users')
-          .update({
-            is_mpin_setup: true
-          })
-          .eq('auth_user_id', authData.user.id);
-
         if (profileError) {
-          console.error('Profile update error:', profileError);
+          console.error('Profile creation error:', profileError);
         }
 
         setStep('verification');
@@ -158,7 +148,7 @@ export const SignUpPage = ({ onBack, onSignUpComplete }: SignUpPageProps) => {
   const hashMPIN = async (mpin: string): Promise<string> => {
     // Simple client-side hashing - in production, use a proper hashing library
     const encoder = new TextEncoder();
-    const data = encoder.encode(mpin + 'Ivysta_salt');
+    const data = encoder.encode(mpin + 'Lifelin3_salt');
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
@@ -180,7 +170,7 @@ export const SignUpPage = ({ onBack, onSignUpComplete }: SignUpPageProps) => {
             <div className="flex justify-center">
               <img 
                 src={squirrelMascot} 
-                alt="Ivysta" 
+                alt="Lifelin3" 
                 className="w-20 h-20 rounded-2xl shadow-premium"
               />
             </div>
@@ -235,13 +225,13 @@ export const SignUpPage = ({ onBack, onSignUpComplete }: SignUpPageProps) => {
           <div className="flex justify-center">
             <img 
               src={squirrelMascot} 
-              alt="Ivysta" 
+              alt="Lifelin3" 
               className="w-20 h-20 rounded-2xl shadow-premium"
             />
           </div>
           <div>
             <h1 className="text-4xl font-bold text-foreground">Create Account</h1>
-            <p className="text-muted-foreground text-lg mt-2">Join Ivysta today</p>
+            <p className="text-muted-foreground text-lg mt-2">Join Lifelin3 today</p>
           </div>
         </div>
 

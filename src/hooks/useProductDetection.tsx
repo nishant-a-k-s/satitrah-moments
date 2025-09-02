@@ -161,7 +161,7 @@ export const useProductDetection = () => {
           if (!spendsByStock[spend.mapped_ticker]) {
             spendsByStock[spend.mapped_ticker] = { totalSpent: 0, spends: [] };
           }
-          spendsByStock[spend.mapped_ticker].totalSpent += parseFloat(spend.amount);
+          spendsByStock[spend.mapped_ticker].totalSpent += Number(spend.amount);
           spendsByStock[spend.mapped_ticker].spends.push(spend);
         }
       });

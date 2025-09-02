@@ -117,36 +117,25 @@ const AuthenticatedApp = () => {
   );
 };
 
-const App = () => {
-  const [currentScreen, setCurrentScreen] = useState("getStarted"); // "getStarted", "main"
-
-  if (currentScreen === "getStarted") {
-    return (
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <GetStartedScreen onGetStarted={() => setCurrentScreen("main")} />
-          </TooltipProvider>
-        </QueryClientProvider>
-      </ThemeProvider>
-    );
-  }
-
-  return (
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <SimpleAuthProvider>
-            <AuthenticatedApp />
-          </SimpleAuthProvider>
-        </TooltipProvider>
-      </QueryClientProvider>
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <ThemeProvider 
+      attribute="class" 
+      defaultTheme="dark" 
+      enableSystem={false}
+      storageKey="lifelin3-theme"
+    >
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
     </ThemeProvider>
-  );
-};
+  </QueryClientProvider>
+);
 
 export default App;
