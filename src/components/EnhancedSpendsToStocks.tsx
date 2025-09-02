@@ -23,7 +23,7 @@ import {
   CheckCircle
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/hooks/useAuth";
+import { useSimpleAuth } from "@/hooks/useSimpleAuth";
 import { supabase } from "@/integrations/supabase/client";
 
 interface SpendEntry {
@@ -58,7 +58,7 @@ interface InvestmentOpportunity {
 export default function EnhancedSpendsToStocks() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
-  const { userData } = useAuth();
+  const { user } = useSimpleAuth();
   const [isProcessing, setIsProcessing] = useState(false);
   const [ocrProgress, setOcrProgress] = useState(0);
   const [manualEntry, setManualEntry] = useState({
@@ -76,12 +76,12 @@ export default function EnhancedSpendsToStocks() {
   });
 
   useEffect(() => {
-    if (userData?.id) {
+    if (user?.id) {
       loadSpendHistory();
       loadOpportunities();
       loadAnalytics();
     }
-  }, [userData]);
+  }, [user]);
 
   const loadSpendHistory = async () => {
     // Mock data for now since user_spend_logs table isn't in current schema
