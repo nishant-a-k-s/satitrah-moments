@@ -27,21 +27,21 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { useSimpleAuth } from "@/hooks/useSimpleAuth";
 import squirrelMascot from "@/assets/squirrel-mascot.png";
 
 const Profile = () => {
   const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
-  const { signOut } = useAuth();
+  const { signOut } = useSimpleAuth();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [biometricEnabled, setBiometricEnabled] = useState(true);
   const [sosEnabled, setSosEnabled] = useState(true);
   const [showBalance, setShowBalance] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleLogout = async () => {
-    await signOut();
+  const handleLogout = () => {
+    signOut();
     navigate('/logout');
   };
 
