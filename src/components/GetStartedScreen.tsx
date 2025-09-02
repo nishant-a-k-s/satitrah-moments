@@ -52,14 +52,14 @@ export const GetStartedScreen = ({ onGetStarted }: { onGetStarted: () => void })
         <div className="flex justify-center animate-fade-in">
           <img 
             src={squirrelMascot} 
-            alt="Ivysta" 
+            alt="Lifelin3" 
             className="w-24 h-24 rounded-3xl shadow-premium animate-bounce-in"
           />
         </div>
 
         {/* App Name */}
         <div className="space-y-2 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <h1 className="text-4xl font-bold text-foreground">Ivysta</h1>
+          <h1 className="text-4xl font-bold text-foreground">Lifelin3</h1>
           <p className="text-muted-foreground text-lg">Every leaf holds a whisper 🍃</p>
         </div>
 

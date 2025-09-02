@@ -166,7 +166,7 @@ export const JupiterStyleQuickActions = () => {
 
       {/* Special Features */}
       <Card className="p-6 bg-card border-0 shadow-card">
-        <h3 className="text-lg font-semibold mb-4 text-foreground">Ivysta Special</h3>
+        <h3 className="text-lg font-semibold mb-4 text-foreground">Lifelin3 Special</h3>
         <div className="grid grid-cols-2 gap-3 md:gap-4">
           {specialFeatures.map((action, index) => (
             <Button

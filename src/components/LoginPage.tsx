@@ -33,12 +33,12 @@ export const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
           <div className="flex justify-center">
             <img
               src={squirrelMascot}
-              alt="Ivysta"
+              alt="Lifelin3"
               className="w-20 h-20 rounded-2xl shadow-premium"
             />
           </div>
           <div>
-            <h1 className="text-4xl font-bold text-foreground">Ivysta</h1>
+            <h1 className="text-4xl font-bold text-foreground">Lifelin3</h1>
             <p className="text-muted-foreground text-lg mt-2">Every leaf holds a whisper 🍃</p>
           </div>
         </div>

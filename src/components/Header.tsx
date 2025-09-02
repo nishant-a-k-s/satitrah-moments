@@ -30,11 +30,11 @@ export const Header = () => {
           <div className="flex items-center gap-2">
             <img 
               src={squirrelMascot} 
-              alt="Ivysta Squirrel" 
+              alt="Lifelin3 Squirrel" 
               className="w-8 h-8 rounded-full"
             />
             <div>
-              <h1 className="text-lg font-bold text-foreground">Ivysta</h1>
+              <h1 className="text-lg font-bold text-foreground">Lifelin3</h1>
               <p className="text-xs text-muted-foreground">Good morning, {userName}</p>
             </div>
           </div>

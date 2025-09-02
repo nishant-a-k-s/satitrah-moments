@@ -126,7 +126,7 @@ const Maternity = () => {
                             />
                           </div>
                           <p className="text-xs text-muted-foreground">
-                            One-time offer: You pay 50%, Ivysta covers 50% of ambulance charges. 
+                            One-time offer: You pay 50%, Lifelin3 covers 50% of ambulance charges.
                             20% less than market prices for all users.
                           </p>
                         </Card>
@@ -367,7 +367,7 @@ const Maternity = () => {
                         />
                       </div>
                       <p className="text-xs text-muted-foreground">
-                        One-time offer: You pay 50%, Ivysta covers 50% of ambulance charges. 
+                        One-time offer: You pay 50%, Lifelin3 covers 50% of ambulance charges. 
                         20% less than market prices for all users.
                       </p>
                     </Card>

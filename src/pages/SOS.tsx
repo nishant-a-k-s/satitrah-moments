@@ -170,7 +170,7 @@ const SOS = () => {
                 </div>
                 <div>
                   <p className="font-medium">Partner/Caregiver Contact</p>
-                  <p className="text-sm text-muted-foreground">Registered contacts can call Ivysta for fund access</p>
+                  <p className="text-sm text-muted-foreground">Registered contacts can call Lifelin3 for fund access</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">

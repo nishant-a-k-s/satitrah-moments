@@ -253,9 +253,9 @@ export default function Settings() {
         {/* App Info */}
         <Card className="p-6">
           <div className="text-center space-y-2">
-            <p className="text-sm text-muted-foreground">Ivysta App</p>
+            <p className="text-sm text-muted-foreground">Lifelin3 App</p>
             <p className="text-sm text-muted-foreground">Version 1.0.0</p>
-            <p className="text-xs text-muted-foreground">© 2024 Ivysta Technologies</p>
+            <p className="text-xs text-muted-foreground">© 2024 Lifelin3 Technologies</p>
           </div>
         </Card>
       </div>

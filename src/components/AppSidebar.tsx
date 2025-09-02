@@ -85,12 +85,12 @@ export function AppSidebar() {
           <div className="flex items-center gap-3">
             <img 
               src={squirrelMascot} 
-              alt="Ivysta" 
+              alt="Lifelin3" 
               className="w-8 h-8 rounded-lg"
             />
             {!collapsed && (
               <div>
-                <h1 className="text-lg font-bold text-foreground">Ivysta</h1>
+                <h1 className="text-lg font-bold text-foreground">Lifelin3</h1>
                 <p className="text-xs text-muted-foreground">Leaves that carry your journey 🍁</p>
               </div>
             )}

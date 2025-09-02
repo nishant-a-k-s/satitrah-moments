@@ -59,7 +59,7 @@ export const MagicLinkLoginPage = ({ onBack }: MagicLinkLoginPageProps) => {
           <div className="flex justify-center">
             <img
               src={squirrelMascot}
-              alt="Ivysta"
+              alt="Lifelin3"
               className="w-20 h-20 rounded-2xl shadow-premium"
             />
           </div>
