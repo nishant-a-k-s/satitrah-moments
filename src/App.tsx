@@ -90,6 +90,7 @@ const AuthenticatedApp = () => {
                 <Route path="/Ivy" element={<Ivy />} />
                 <Route path="/investments" element={<Investments />} />
                 <Route path="/lending" element={<SquirrelLending />} />
+                <Route path="/walk-with-me" element={<WalkWithMePage />} />
                 <Route path="/maternity" element={<Maternity />} />
                 <Route path="/add-money" element={<AddMoney />} />
                 <Route path="/send-money" element={<SendMoney />} />
