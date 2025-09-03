@@ -14,6 +14,224 @@ export type Database = {
   }
   public: {
     Tables: {
+      agent_actions: {
+        Row: {
+          action_details: Json | null
+          action_type: string
+          agent_id: string
+          id: string
+          reason: string | null
+          sos_event_id: string | null
+          timestamp: string
+        }
+        Insert: {
+          action_details?: Json | null
+          action_type: string
+          agent_id: string
+          id?: string
+          reason?: string | null
+          sos_event_id?: string | null
+          timestamp?: string
+        }
+        Update: {
+          action_details?: Json | null
+          action_type?: string
+          agent_id?: string
+          id?: string
+          reason?: string | null
+          sos_event_id?: string | null
+          timestamp?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_actions_sos_event_id_fkey"
+            columns: ["sos_event_id"]
+            isOneToOne: false
+            referencedRelation: "sos_events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      escalation_records: {
+        Row: {
+          agent_id: string | null
+          created_at: string
+          escalation_status: string
+          escalation_type: string
+          id: string
+          metadata: Json | null
+          reason: string | null
+          recipient_info: Json | null
+          sos_event_id: string | null
+          updated_at: string
+          webhook_response: Json | null
+        }
+        Insert: {
+          agent_id?: string | null
+          created_at?: string
+          escalation_status: string
+          escalation_type: string
+          id?: string
+          metadata?: Json | null
+          reason?: string | null
+          recipient_info?: Json | null
+          sos_event_id?: string | null
+          updated_at?: string
+          webhook_response?: Json | null
+        }
+        Update: {
+          agent_id?: string | null
+          created_at?: string
+          escalation_status?: string
+          escalation_type?: string
+          id?: string
+          metadata?: Json | null
+          reason?: string | null
+          recipient_info?: Json | null
+          sos_event_id?: string | null
+          updated_at?: string
+          webhook_response?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "escalation_records_sos_event_id_fkey"
+            columns: ["sos_event_id"]
+            isOneToOne: false
+            referencedRelation: "sos_events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      heartbeats: {
+        Row: {
+          battery_level: number | null
+          connectivity_status: string | null
+          device_status: string | null
+          id: string
+          location: Json
+          metadata: Json | null
+          timestamp: string
+          user_id: string
+          walk_session_id: string | null
+        }
+        Insert: {
+          battery_level?: number | null
+          connectivity_status?: string | null
+          device_status?: string | null
+          id?: string
+          location: Json
+          metadata?: Json | null
+          timestamp?: string
+          user_id: string
+          walk_session_id?: string | null
+        }
+        Update: {
+          battery_level?: number | null
+          connectivity_status?: string | null
+          device_status?: string | null
+          id?: string
+          location?: Json
+          metadata?: Json | null
+          timestamp?: string
+          user_id?: string
+          walk_session_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "heartbeats_walk_session_id_fkey"
+            columns: ["walk_session_id"]
+            isOneToOne: false
+            referencedRelation: "walk_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      media_files: {
+        Row: {
+          duration_seconds: number | null
+          encryption_key_id: string | null
+          file_path: string
+          file_size: number | null
+          file_type: string
+          id: string
+          metadata: Json | null
+          retention_expires_at: string | null
+          sequence_number: number | null
+          sos_event_id: string | null
+          uploaded_at: string
+        }
+        Insert: {
+          duration_seconds?: number | null
+          encryption_key_id?: string | null
+          file_path: string
+          file_size?: number | null
+          file_type: string
+          id?: string
+          metadata?: Json | null
+          retention_expires_at?: string | null
+          sequence_number?: number | null
+          sos_event_id?: string | null
+          uploaded_at?: string
+        }
+        Update: {
+          duration_seconds?: number | null
+          encryption_key_id?: string | null
+          file_path?: string
+          file_size?: number | null
+          file_type?: string
+          id?: string
+          metadata?: Json | null
+          retention_expires_at?: string | null
+          sequence_number?: number | null
+          sos_event_id?: string | null
+          uploaded_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "media_files_sos_event_id_fkey"
+            columns: ["sos_event_id"]
+            isOneToOne: false
+            referencedRelation: "sos_events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      misuse_flags: {
+        Row: {
+          flag_count: number | null
+          flag_type: string
+          id: string
+          last_flagged_at: string
+          metadata: Json | null
+          notes: string | null
+          resolved_at: string | null
+          resolved_by: string | null
+          user_id: string
+        }
+        Insert: {
+          flag_count?: number | null
+          flag_type: string
+          id?: string
+          last_flagged_at?: string
+          metadata?: Json | null
+          notes?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          user_id: string
+        }
+        Update: {
+          flag_count?: number | null
+          flag_type?: string
+          id?: string
+          last_flagged_at?: string
+          metadata?: Json | null
+          notes?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       product_company_mappings: {
         Row: {
           brand_name: string | null
@@ -80,6 +298,98 @@ export type Database = {
         }
         Relationships: []
       }
+      sos_events: {
+        Row: {
+          agent_id: string | null
+          closed_at: string | null
+          created_at: string
+          escalation_timer_duration: number | null
+          escalation_timer_started_at: string | null
+          handled: boolean | null
+          id: string
+          location: Json | null
+          metadata: Json | null
+          risk_score: number | null
+          status: string
+          updated_at: string
+          user_id: string
+          walk_session_id: string | null
+        }
+        Insert: {
+          agent_id?: string | null
+          closed_at?: string | null
+          created_at?: string
+          escalation_timer_duration?: number | null
+          escalation_timer_started_at?: string | null
+          handled?: boolean | null
+          id?: string
+          location?: Json | null
+          metadata?: Json | null
+          risk_score?: number | null
+          status: string
+          updated_at?: string
+          user_id: string
+          walk_session_id?: string | null
+        }
+        Update: {
+          agent_id?: string | null
+          closed_at?: string | null
+          created_at?: string
+          escalation_timer_duration?: number | null
+          escalation_timer_started_at?: string | null
+          handled?: boolean | null
+          id?: string
+          location?: Json | null
+          metadata?: Json | null
+          risk_score?: number | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+          walk_session_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sos_events_walk_session_id_fkey"
+            columns: ["walk_session_id"]
+            isOneToOne: false
+            referencedRelation: "walk_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_consent: {
+        Row: {
+          background_location: boolean | null
+          consent_timestamp: string
+          consent_version: string
+          id: string
+          location_sharing: boolean | null
+          media_capture: boolean | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          background_location?: boolean | null
+          consent_timestamp?: string
+          consent_version: string
+          id?: string
+          location_sharing?: boolean | null
+          media_capture?: boolean | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          background_location?: boolean | null
+          consent_timestamp?: string
+          consent_version?: string
+          id?: string
+          location_sharing?: boolean | null
+          media_capture?: boolean | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_spends: {
         Row: {
           amount: number
@@ -127,12 +437,73 @@ export type Database = {
           },
         ]
       }
+      walk_sessions: {
+        Row: {
+          battery_saver_mode: boolean | null
+          created_at: string
+          end_location: Json | null
+          ended_at: string | null
+          id: string
+          location_sharing_enabled: boolean | null
+          media_capture_enabled: boolean | null
+          risk_score: number | null
+          sampling_interval: number | null
+          session_metadata: Json | null
+          start_location: Json | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          battery_saver_mode?: boolean | null
+          created_at?: string
+          end_location?: Json | null
+          ended_at?: string | null
+          id?: string
+          location_sharing_enabled?: boolean | null
+          media_capture_enabled?: boolean | null
+          risk_score?: number | null
+          sampling_interval?: number | null
+          session_metadata?: Json | null
+          start_location?: Json | null
+          status: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          battery_saver_mode?: boolean | null
+          created_at?: string
+          end_location?: Json | null
+          ended_at?: string | null
+          id?: string
+          location_sharing_enabled?: boolean | null
+          media_capture_enabled?: boolean | null
+          risk_score?: number | null
+          sampling_interval?: number | null
+          session_metadata?: Json | null
+          start_location?: Json | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      calculate_risk_score: {
+        Args: {
+          p_location?: Json
+          p_phone_offline?: boolean
+          p_recent_sos_count?: number
+          p_sos_triggered?: boolean
+          p_time_of_day?: string
+          p_user_flagged?: boolean
+        }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never
