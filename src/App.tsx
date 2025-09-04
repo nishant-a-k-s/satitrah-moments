@@ -38,6 +38,7 @@ import SplitBills from "./pages/SplitBills";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import LogoutScreen from "./pages/LogoutScreen";
+import WalkWithMePage from "./pages/WalkWithMePage";
 
 const queryClient = new QueryClient();
 
