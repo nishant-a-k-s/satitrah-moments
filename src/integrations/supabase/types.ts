@@ -360,30 +360,36 @@ export type Database = {
       user_consent: {
         Row: {
           background_location: boolean | null
+          battery_saver_mode: boolean | null
           consent_timestamp: string
           consent_version: string
           id: string
           location_sharing: boolean | null
+          location_update_interval: number | null
           media_capture: boolean | null
           updated_at: string
           user_id: string
         }
         Insert: {
           background_location?: boolean | null
+          battery_saver_mode?: boolean | null
           consent_timestamp?: string
           consent_version: string
           id?: string
           location_sharing?: boolean | null
+          location_update_interval?: number | null
           media_capture?: boolean | null
           updated_at?: string
           user_id: string
         }
         Update: {
           background_location?: boolean | null
+          battery_saver_mode?: boolean | null
           consent_timestamp?: string
           consent_version?: string
           id?: string
           location_sharing?: boolean | null
+          location_update_interval?: number | null
           media_capture?: boolean | null
           updated_at?: string
           user_id?: string
