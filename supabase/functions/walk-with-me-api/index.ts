@@ -40,10 +40,6 @@ serve(async (req) => {
   }
 
   try {
-    const url = new URL(req.url);
-    const path = url.pathname;
-    const method = req.method;
-
     // Get user from JWT
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
@@ -71,40 +67,32 @@ serve(async (req) => {
 
     const userId = profile.id;
 
-    // Route handling
-    if (path === '/walk-with-me-api/sessions' && method === 'POST') {
-      return await createWalkSession(req, userId);
-    }
-    
-    if (path === '/walk-with-me-api/sessions' && method === 'GET') {
-      return await getUserSessions(userId);
-    }
+    // Get operation from request body
+    const body = await req.json();
+    const { op } = body;
 
-    if (path.startsWith('/walk-with-me-api/sessions/') && method === 'PUT') {
-      const sessionId = path.split('/')[3];
-      return await updateWalkSession(req, sessionId, userId);
+    // Route handling based on operation
+    switch (op) {
+      case 'start-session':
+        return await createWalkSession(req, userId, body);
+      case 'end-session':
+        return await updateWalkSession(req, body.session_id, userId, body);
+      case 'heartbeat':
+        return await recordHeartbeat(req, userId, body);
+      case 'sos':
+        return await createSOSEvent(req, userId, body);
+      case 'consent':
+        return await updateConsent(req, userId, body);
+      case 'risk-score':
+        return await calculateRiskScore(req, userId, body);
+      case 'get-sessions':
+        return await getUserSessions(userId);
+      default:
+        return new Response(JSON.stringify({ error: 'Invalid operation' }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
     }
-
-    if (path === '/walk-with-me-api/heartbeat' && method === 'POST') {
-      return await recordHeartbeat(req, userId);
-    }
-
-    if (path === '/walk-with-me-api/sos' && method === 'POST') {
-      return await createSOSEvent(req, userId);
-    }
-
-    if (path === '/walk-with-me-api/consent' && method === 'POST') {
-      return await updateConsent(req, userId);
-    }
-
-    if (path === '/walk-with-me-api/risk-score' && method === 'POST') {
-      return await calculateRiskScore(req, userId);
-    }
-
-    return new Response(JSON.stringify({ error: 'Not found' }), {
-      status: 404,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
 
   } catch (error) {
     console.error('Error in walk-with-me-api:', error);
@@ -115,8 +103,7 @@ serve(async (req) => {
   }
 });
 
-async function createWalkSession(req: Request, userId: string) {
-  const body = await req.json();
+async function createWalkSession(req: Request, userId: string, body: any) {
   const { start_location, sampling_interval, location_sharing_enabled, media_capture_enabled } = body;
 
   // Check daily session limit (2 per day unless high risk)
@@ -164,8 +151,7 @@ async function createWalkSession(req: Request, userId: string) {
   });
 }
 
-async function updateWalkSession(req: Request, sessionId: string, userId: string) {
-  const body = await req.json();
+async function updateWalkSession(req: Request, sessionId: string, userId: string, body: any) {
   const { status, end_location } = body;
 
   const updates: any = { status };
@@ -193,8 +179,7 @@ async function updateWalkSession(req: Request, sessionId: string, userId: string
   });
 }
 
-async function recordHeartbeat(req: Request, userId: string) {
-  const body = await req.json();
+async function recordHeartbeat(req: Request, userId: string, body: any) {
   const { walk_session_id, location, battery_level, device_status, connectivity_status } = body;
 
   const { data, error } = await supabase
@@ -217,8 +202,7 @@ async function recordHeartbeat(req: Request, userId: string) {
   });
 }
 
-async function createSOSEvent(req: Request, userId: string) {
-  const body = await req.json();
+async function createSOSEvent(req: Request, userId: string, body: any) {
   const { walk_session_id, location, media_files } = body;
 
   // Calculate risk score
@@ -326,8 +310,7 @@ async function getUserSessions(userId: string) {
   });
 }
 
-async function updateConsent(req: Request, userId: string) {
-  const body = await req.json();
+async function updateConsent(req: Request, userId: string, body: any) {
   const { location_sharing, media_capture, background_location, consent_version } = body;
 
   const { data, error } = await supabase
@@ -351,8 +334,7 @@ async function updateConsent(req: Request, userId: string) {
   });
 }
 
-async function calculateRiskScore(req: Request, userId: string) {
-  const body = await req.json();
+async function calculateRiskScore(req: Request, userId: string, body: any) {
   const { location, sos_triggered, phone_offline } = body;
 
   const riskScore = await calculateSOSRiskScore(userId, location);

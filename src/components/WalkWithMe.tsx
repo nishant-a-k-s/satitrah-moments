@@ -28,6 +28,8 @@ interface ConsentSettings {
   location_sharing: boolean;
   media_capture: boolean;
   background_location: boolean;
+  location_update_interval: number;
+  battery_saver_mode: boolean;
 }
 
 const WalkWithMe = () => {
@@ -42,7 +44,9 @@ const WalkWithMe = () => {
   const [consent, setConsent] = useState<ConsentSettings>({
     location_sharing: true,
     media_capture: false,
-    background_location: false
+    background_location: false,
+    location_update_interval: 15,
+    battery_saver_mode: false
   });
   const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
   const [batteryLevel, setBatteryLevel] = useState<number>(100);
@@ -74,7 +78,9 @@ const WalkWithMe = () => {
         setConsent({
           location_sharing: data.location_sharing,
           media_capture: data.media_capture,
-          background_location: data.background_location
+          background_location: data.background_location,
+          location_update_interval: data.location_update_interval || 15,
+          battery_saver_mode: data.battery_saver_mode || false
         });
       } else {
         setShowConsentModal(true);
@@ -116,6 +122,7 @@ const WalkWithMe = () => {
     try {
       const response = await supabase.functions.invoke('walk-with-me-api', {
         body: {
+          op: 'consent',
           ...consent,
           consent_version: '1.0'
         }
@@ -155,8 +162,9 @@ const WalkWithMe = () => {
       // Create session
       const response = await supabase.functions.invoke('walk-with-me-api', {
         body: {
+          op: 'start-session',
           start_location: location,
-          sampling_interval: batteryLevel < 20 ? 30 : 15, // Battery saver mode
+          sampling_interval: consent.battery_saver_mode ? 30 : consent.location_update_interval,
           location_sharing_enabled: consent.location_sharing,
           media_capture_enabled: consent.media_capture
         }
@@ -196,6 +204,8 @@ const WalkWithMe = () => {
       
       const response = await supabase.functions.invoke('walk-with-me-api', {
         body: {
+          op: 'end-session',
+          session_id: currentSession.id,
           status: 'ended',
           end_location: location
         }
@@ -236,6 +246,7 @@ const WalkWithMe = () => {
       
       const response = await supabase.functions.invoke('walk-with-me-api', {
         body: {
+          op: 'sos',
           walk_session_id: currentSession.id,
           location,
           media_files: mediaFiles
@@ -321,7 +332,7 @@ const WalkWithMe = () => {
   };
 
   const startLocationTracking = (sessionId: string) => {
-    const interval = batteryLevel < 20 ? 30000 : 15000; // Battery saver mode
+    const interval = consent.battery_saver_mode ? 30000 : (consent.location_update_interval * 1000);
     
     locationTrackingRef.current = window.setInterval(async () => {
       try {
@@ -341,6 +352,7 @@ const WalkWithMe = () => {
         try {
           await supabase.functions.invoke('walk-with-me-api', {
             body: {
+              op: 'heartbeat',
               walk_session_id: sessionId,
               location: currentLocation,
               battery_level: batteryLevel,
@@ -572,6 +584,44 @@ const WalkWithMe = () => {
               />
               <label htmlFor="background-location" className="text-sm font-medium">
                 Allow background location access
+              </label>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Location update interval (seconds)</label>
+              <div className="flex space-x-2">
+                <Button
+                  variant={consent.location_update_interval === 10 ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setConsent(prev => ({ ...prev, location_update_interval: 10 }))}
+                >
+                  10s
+                </Button>
+                <Button
+                  variant={consent.location_update_interval === 15 ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setConsent(prev => ({ ...prev, location_update_interval: 15 }))}
+                >
+                  15s
+                </Button>
+                <Button
+                  variant={consent.location_update_interval === 30 ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setConsent(prev => ({ ...prev, location_update_interval: 30 }))}
+                >
+                  30s
+                </Button>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="battery-saver"
+                checked={consent.battery_saver_mode}
+                onCheckedChange={(checked) => setConsent(prev => ({ ...prev, battery_saver_mode: checked }))}
+              />
+              <label htmlFor="battery-saver" className="text-sm font-medium">
+                Battery saver mode (reduces location accuracy)
               </label>
             </div>
           </div>

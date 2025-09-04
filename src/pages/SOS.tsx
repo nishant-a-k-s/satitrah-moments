@@ -4,11 +4,15 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Shield, Mic, Ambulance, Heart, MapPin, Phone, Clock, AlertTriangle } from "lucide-react";
+import WalkWithMe from "@/components/WalkWithMe";
+import SOSButton from "@/components/SOSButton";
 
 const SOS = () => {
   const [isVoiceSOSEnabled, setIsVoiceSOSEnabled] = useState(true);
-  const [isWalkWithMeActive, setIsWalkWithMeActive] = useState(false);
-  const [ambulanceAccepted, setAmbulanceAccepted] = useState(false);
+
+  const handleSOSActivated = () => {
+    console.log("SOS activated from main button");
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -27,15 +31,7 @@ const SOS = () => {
         {/* Emergency SOS Button */}
         <Card className="p-8 bg-gradient-to-br from-destructive/5 to-destructive/10 border-destructive/20">
           <div className="text-center space-y-6">
-            <Button 
-              size="lg" 
-              className="h-32 w-32 rounded-full bg-destructive hover:bg-destructive/90 text-white text-lg font-bold animate-pulse"
-            >
-              <div className="flex flex-col items-center gap-2">
-                <AlertTriangle className="h-8 w-8" />
-                SOS
-              </div>
-            </Button>
+            <SOSButton onSOSActivated={handleSOSActivated} />
             <div>
               <h3 className="text-xl font-semibold text-foreground mb-2">Emergency SOS</h3>
               <p className="text-muted-foreground">Tap for immediate emergency assistance</p>
@@ -49,8 +45,8 @@ const SOS = () => {
             <div className="flex items-center gap-3">
               <Mic className="h-6 w-6 text-primary" />
               <div>
-                <h3 className="text-lg font-semibold text-foreground">Voice-Activated SOS</h3>
-                <p className="text-sm text-muted-foreground">Say "Help Ivy SOS" to trigger emergency mode</p>
+                <h3 className="text-lg font-semibold text-foreground">Help Lifelin3 SOS</h3>
+                <p className="text-sm text-muted-foreground">Say "Help Lifelin3 SOS" to trigger emergency mode</p>
               </div>
             </div>
             <Switch 
@@ -71,48 +67,7 @@ const SOS = () => {
         </Card>
 
         {/* Walk With Me Feature */}
-        <Card className="p-6">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <MapPin className="h-6 w-6 text-accent" />
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground">Walk With Me</h3>
-                  <p className="text-sm text-muted-foreground">Real-time location sharing for safety</p>
-                </div>
-              </div>
-              <Button 
-                variant={isWalkWithMeActive ? "destructive" : "default"}
-                onClick={() => setIsWalkWithMeActive(!isWalkWithMeActive)}
-              >
-                {isWalkWithMeActive ? "Stop Session" : "Start Session"}
-              </Button>
-            </div>
-            
-            {isWalkWithMeActive && (
-              <div className="bg-accent/10 p-4 rounded-lg space-y-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  <span className="text-sm font-medium">Live tracking active</span>
-                </div>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4" />
-                    <span>Duration: 15 min</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4" />
-                    <span>Support connected</span>
-                  </div>
-                </div>
-              </div>
-            )}
-            
-            <div className="text-xs text-muted-foreground">
-              Limited to 2 sessions per day • Available for college students and working professionals
-            </div>
-          </div>
-        </Card>
+        <WalkWithMe />
 
         {/* Ambulance Services */}
         <Card className="p-6">
