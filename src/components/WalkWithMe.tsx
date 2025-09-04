@@ -79,8 +79,8 @@ const WalkWithMe = () => {
           location_sharing: data.location_sharing,
           media_capture: data.media_capture,
           background_location: data.background_location,
-          location_update_interval: data.location_update_interval || 15,
-          battery_saver_mode: data.battery_saver_mode || false
+          location_update_interval: (data as any).location_update_interval || 15,
+          battery_saver_mode: (data as any).battery_saver_mode || false
         });
       } else {
         setShowConsentModal(true);
