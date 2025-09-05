@@ -39,6 +39,15 @@ import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import LogoutScreen from "./pages/LogoutScreen";
 import WalkWithMePage from "./pages/WalkWithMePage";
+import WeekendBudget from "./pages/WeekendBudget";
+import AutoInvestSetup from "./pages/AutoInvestSetup";
+import InvestmentRecommendations from "./pages/InvestmentRecommendations";
+import BudgetSuggestions from "./pages/BudgetSuggestions";
+import SmartGoalsSetup from "./pages/SmartGoalsSetup";
+import FinancialBasics from "./pages/FinancialBasics";
+import SmartBudgeting from "./pages/SmartBudgeting";
+import InvestmentStrategies from "./pages/InvestmentStrategies";
+import CustomSafeboxSetup from "./pages/CustomSafeboxSetup";
 
 const queryClient = new QueryClient();
 
@@ -103,6 +112,15 @@ const AuthenticatedApp = () => {
                 <Route path="/split-bills" element={<SplitBills />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/spends-to-stocks" element={<SpendsToStocks />} />
+                <Route path="/weekend-budget" element={<WeekendBudget />} />
+                <Route path="/auto-invest-setup" element={<AutoInvestSetup />} />
+                <Route path="/investment-recommendations" element={<InvestmentRecommendations />} />
+                <Route path="/budget-suggestions" element={<BudgetSuggestions />} />
+                <Route path="/smart-goals-setup" element={<SmartGoalsSetup />} />
+                <Route path="/financial-basics" element={<FinancialBasics />} />
+                <Route path="/smart-budgeting" element={<SmartBudgeting />} />
+                <Route path="/investment-strategies" element={<InvestmentStrategies />} />
+                <Route path="/custom-safebox-setup" element={<CustomSafeboxSetup />} />
                 <Route path="/logout" element={<LogoutScreen />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
