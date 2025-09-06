@@ -116,6 +116,14 @@ export const PremiumsafeboxCard = ({ className }: PremiumsafeboxCardProps) => {
           </Button>
           <Button 
             size="sm" 
+            className="flex-1 bg-white/10 hover:bg-white/20 text-primary-foreground border-0 backdrop-blur-sm text-[10px] md:text-xs h-8 md:h-9"
+            onClick={() => navigate('/custom-safebox-setup')}
+          >
+            <Zap size={12} className="mr-1 md:w-[14px] md:h-[14px]" />
+            Safebox
+          </Button>
+          <Button 
+            size="sm" 
             className="bg-white/10 hover:bg-white/20 text-primary-foreground border-0 backdrop-blur-sm px-2 h-8 md:h-9"
             onClick={() => navigate('/safebox')}
           >

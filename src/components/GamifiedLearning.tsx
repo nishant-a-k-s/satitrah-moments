@@ -15,8 +15,10 @@ import {
   Target,
   TrendingUp
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export const GamifiedLearning = () => {
+  const navigate = useNavigate();
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
 
   const learningModules = [
@@ -31,6 +33,7 @@ export const GamifiedLearning = () => {
       unlocked: true,
       points: 500,
       icon: BookOpen,
+      route: "/financial-basics",
       lessons: [
         { title: "What is Money?", completed: true },
         { title: "Budgeting 101", completed: true },
@@ -49,6 +52,7 @@ export const GamifiedLearning = () => {
       unlocked: true,
       points: 750,
       icon: Target,
+      route: "/smart-budgeting",
       lessons: [
         { title: "50/30/20 Rule", completed: true },
         { title: "Expense Tracking", completed: true },
@@ -67,6 +71,7 @@ export const GamifiedLearning = () => {
       unlocked: false,
       points: 1000,
       icon: TrendingUp,
+      route: "/investment-strategies",
       lessons: [
         { title: "Types of Investments", completed: false },
         { title: "Risk Assessment", completed: false },
@@ -167,7 +172,11 @@ export const GamifiedLearning = () => {
                       <Zap size={14} />
                       <span className="text-sm font-medium">{module.points} points</span>
                     </div>
-                    <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20">
+                    <Button 
+                      size="sm" 
+                      className="bg-primary/10 text-primary hover:bg-primary/20"
+                      onClick={() => navigate(module.route)}
+                    >
                       <Play size={14} className="mr-1" />
                       {module.progress > 0 ? 'Continue' : 'Start'}
                     </Button>

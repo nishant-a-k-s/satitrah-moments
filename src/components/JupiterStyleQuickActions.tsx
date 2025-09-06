@@ -87,14 +87,14 @@ export const JupiterStyleQuickActions = () => {
       label: "Auto Invest", 
       subtitle: "Smart savings",
       color: "text-success bg-success/10 hover:bg-success/20",
-      route: "/investments"
+      route: "/auto-invest-setup"
     },
     { 
       icon: Gift, 
       label: "Rewards", 
       subtitle: "Earn & redeem",
       color: "text-primary bg-primary/10 hover:bg-primary/20",
-      route: "/profile"
+      route: "/rewards"
     },
   ];
 

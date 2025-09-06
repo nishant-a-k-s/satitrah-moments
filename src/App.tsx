@@ -48,6 +48,13 @@ import FinancialBasics from "./pages/FinancialBasics";
 import SmartBudgeting from "./pages/SmartBudgeting";
 import InvestmentStrategies from "./pages/InvestmentStrategies";
 import CustomSafeboxSetup from "./pages/CustomSafeboxSetup";
+import InsurancePlanning from "./pages/InsurancePlanning";
+import TaxPlanning from "./pages/TaxPlanning";
+import RetirementPlanning from "./pages/RetirementPlanning";
+import DebtManagement from "./pages/DebtManagement";
+import CreditScore from "./pages/CreditScore";
+import RealEstate from "./pages/RealEstate";
+import Cryptocurrency from "./pages/Cryptocurrency";
 
 const queryClient = new QueryClient();
 
@@ -117,10 +124,17 @@ const AuthenticatedApp = () => {
                 <Route path="/investment-recommendations" element={<InvestmentRecommendations />} />
                 <Route path="/budget-suggestions" element={<BudgetSuggestions />} />
                 <Route path="/smart-goals-setup" element={<SmartGoalsSetup />} />
-                <Route path="/financial-basics" element={<FinancialBasics />} />
-                <Route path="/smart-budgeting" element={<SmartBudgeting />} />
-                <Route path="/investment-strategies" element={<InvestmentStrategies />} />
-                <Route path="/custom-safebox-setup" element={<CustomSafeboxSetup />} />
+          <Route path="/financial-basics" element={<FinancialBasics />} />
+          <Route path="/smart-budgeting" element={<SmartBudgeting />} />
+          <Route path="/investment-strategies" element={<InvestmentStrategies />} />
+          <Route path="/insurance-planning" element={<InsurancePlanning />} />
+          <Route path="/tax-planning" element={<TaxPlanning />} />
+          <Route path="/retirement-planning" element={<RetirementPlanning />} />
+          <Route path="/debt-management" element={<DebtManagement />} />
+          <Route path="/credit-score" element={<CreditScore />} />
+          <Route path="/real-estate" element={<RealEstate />} />
+          <Route path="/cryptocurrency" element={<Cryptocurrency />} />
+          <Route path="/custom-safebox-setup" element={<CustomSafeboxSetup />} />
                 <Route path="/logout" element={<LogoutScreen />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

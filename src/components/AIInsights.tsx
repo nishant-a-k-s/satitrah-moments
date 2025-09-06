@@ -10,8 +10,10 @@ import {
   ArrowRight,
   Sparkles
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export const AIInsights = () => {
+  const navigate = useNavigate();
   const insights = [
     {
       title: "Spending Analysis",
@@ -19,7 +21,8 @@ export const AIInsights = () => {
       impact: "High",
       color: "primary",
       icon: Brain,
-      action: "Set Weekend Budget"
+      action: "Set Weekend Budget",
+      route: "/weekend-budget"
     },
     {
       title: "Savings Optimization",
@@ -27,7 +30,8 @@ export const AIInsights = () => {
       impact: "Medium",
       color: "success",
       icon: PiggyBank,
-      action: "Enable Auto-Invest"
+      action: "Enable Auto-Invest",
+      route: "/auto-invest-setup"
     },
     {
       title: "Investment Recommendation",
@@ -35,7 +39,8 @@ export const AIInsights = () => {
       impact: "High",
       color: "accent",
       icon: TrendingUp,
-      action: "View Recommendations"
+      action: "View Recommendations",
+      route: "/investment-recommendations"
     },
     {
       title: "Budget Optimization",
@@ -43,7 +48,8 @@ export const AIInsights = () => {
       impact: "Medium",
       color: "secondary",
       icon: Target,
-      action: "See Suggestions"
+      action: "See Suggestions",
+      route: "/budget-suggestions"
     }
   ];
 
@@ -133,6 +139,7 @@ export const AIInsights = () => {
                   size="sm" 
                   variant="ghost" 
                   className="text-primary hover:bg-primary/10 p-0 h-auto font-medium"
+                  onClick={() => navigate(insight.route)}
                 >
                   {insight.action}
                   <ArrowRight size={14} className="ml-1" />
@@ -151,12 +158,18 @@ export const AIInsights = () => {
         </div>
         
         <div className="grid grid-cols-2 gap-3">
-          <Button className="h-auto py-3 px-4 flex-col gap-2 bg-primary/10 hover:bg-primary/20 text-primary">
+          <Button 
+            className="h-auto py-3 px-4 flex-col gap-2 bg-primary/10 hover:bg-primary/20 text-primary"
+            onClick={() => navigate("/smart-goals-setup")}
+          >
             <Target size={20} />
             <span className="text-xs">Set Smart Goals</span>
           </Button>
           
-          <Button className="h-auto py-3 px-4 flex-col gap-2 bg-success/10 hover:bg-success/20 text-success">
+          <Button 
+            className="h-auto py-3 px-4 flex-col gap-2 bg-success/10 hover:bg-success/20 text-success"
+            onClick={() => navigate("/smart-goals-setup")}
+          >
             <PiggyBank size={20} />
             <span className="text-xs">Auto Save</span>
           </Button>
